@@ -8,6 +8,10 @@ import {ObjectivesComponent} from './objectives/objectives.component';
 import {KeyResultsComponent} from './key-results/key-results.component';
 import {KpisComponent} from './kpis/kpis.component';
 import {DashboardComponent} from './dashboard/dashboard.component';
+import { DashboardModule } from './dashboard/dashboard.module';
+import { KeyResultsModule } from './key-results/key-results.module';
+import { KpisModule } from './kpis/kpis.module';
+import { ObjectivesModule } from './objectives/objectives.module';
 
 @NgModule({
   declarations: [
@@ -20,7 +24,11 @@ import {DashboardComponent} from './dashboard/dashboard.component';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    NgbModule
+    NgbModule,
+    DashboardModule,
+    KeyResultsModule,
+    KpisModule,
+    ObjectivesModule
   ],
   providers: [],
   bootstrap: [AppComponent]
