@@ -13,16 +13,29 @@ import { KeyResultsModule } from './key-results/key-results.module';
 import { KpisModule } from './kpis/kpis.module';
 import { ObjectivesModule } from './objectives/objectives.module';
 
+import { FormsModule } from '@angular/forms';
+
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { ComposeMessageComponent } from './compose-message/compose-message.component';
+
+import { AuthModule } from './auth/auth.module';
+
+
 @NgModule({
   declarations: [
     AppComponent,
     ObjectivesComponent,
     KeyResultsComponent,
     KpisComponent,
-    DashboardComponent
+    DashboardComponent,
+    ComposeMessageComponent,
+    PageNotFoundComponent
   ],
   imports: [
     BrowserModule,
+    FormsModule,
+    AuthModule,
+    AppRoutingModule,
     AppRoutingModule,
     NgbModule,
     DashboardModule,
@@ -34,3 +47,5 @@ import { ObjectivesModule } from './objectives/objectives.module';
   bootstrap: [AppComponent]
 })
 export class AppModule { }
+
+
