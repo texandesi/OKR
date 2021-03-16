@@ -7,7 +7,7 @@
     <label>Message: </label>
   </div>
   <div>
-    <textarea [(ngModel)]="message" rows="10" cols="35" [disabled]="sending"></textarea>
+    <textarea [(ngModel)]="message" [disabled]="sending" cols="35" rows="10"></textarea>
   </div>
 </div>
 <p *ngIf="!sending">
@@ -16,7 +16,7 @@
 </p>
 
 
-<!-- 
+<!--
 Copyright Google LLC. All Rights Reserved.
 Use of this source code is governed by an MIT-style license that
 can be found in the LICENSE file at https://angular.io/license
