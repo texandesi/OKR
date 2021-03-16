@@ -3,8 +3,6 @@ import {ActivatedRoute} from '@angular/router';
 import {Observable} from 'rxjs';
 import {map} from 'rxjs/operators';
 
-import {SelectivePreloadingStrategyService} from '../../selective-preloading-strategy.service';
-
 @Component({
   selector: 'app-admin-dashboard',
   templateUrl: './admin-dashboard.component.html',
@@ -17,12 +15,13 @@ export class AdminDashboardComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    preloadStrategy: SelectivePreloadingStrategyService
   ) {
-    this.modules = preloadStrategy.preloadedModules;
+    this.sessionId = new Observable<string>();
+    this.token = new Observable<string>();
+    this.modules = [];
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     // Capture the session ID if available
     this.sessionId = this.route
       .queryParamMap
@@ -36,8 +35,3 @@ export class AdminDashboardComponent implements OnInit {
 }
 
 
-/*
-Copyright Google LLC. All Rights Reserved.
-Use of this source code is governed by an MIT-style license that
-can be found in the LICENSE file at https://angular.io/license
-*/

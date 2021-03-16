@@ -8,7 +8,7 @@ import {AuthService} from '../auth.service';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent {
-  message: string;
+  message: string = '';
 
   constructor(public authService: AuthService, public router: Router) {
     this.setMessage();

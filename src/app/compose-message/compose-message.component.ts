@@ -7,8 +7,8 @@ import {Router} from '@angular/router';
   styleUrls: ['./compose-message.component.css']
 })
 export class ComposeMessageComponent {
-  details: string;
-  message: string;
+  details: string = '';
+  message: string = '';
   sending = false;
 
   constructor(private router: Router) {
