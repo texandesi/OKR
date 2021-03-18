@@ -5,19 +5,19 @@ import {ComposeMessageComponent} from './compose-message/compose-message.compone
 import {PageNotFoundComponent} from './page-not-found/page-not-found.component';
 
 import {AuthGuard} from './auth/auth.guard';
+import {KeyResultsComponent} from './key-results/key-results.component';
+import {DashboardComponent} from './dashboard/dashboard.component';
+import {ObjectivesComponent} from './objectives/objectives.component';
+import {KpisComponent} from './kpis/kpis.component';
+import {AdminComponent} from './admin/admin/admin.component';
 
 const appRoutes: Routes = [
-  {
-    path: 'compose',
-    component: ComposeMessageComponent,
-    outlet: 'popup'
-  },
-  {
-    path: 'admin',
-    loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule),
-    canLoad: [AuthGuard]
-  },
-  {path: '', redirectTo: '/objectives', pathMatch: 'full'},
+  { path: 'key-results', component: KeyResultsComponent },
+  { path: 'objectives', component: ObjectivesComponent },
+  { path: 'kpis', component: KpisComponent },
+  { path: 'admin', component: AdminComponent },
+  { path: 'dashboard', component: DashboardComponent },
+  {path: '', redirectTo: '/dashboard', pathMatch: 'full'},
   {path: '**', component: PageNotFoundComponent}
 ];
 
@@ -37,9 +37,3 @@ const appRoutes: Routes = [
 export class AppRoutingModule {
 }
 
-
-/*
-Copyright Google LLC. All Rights Reserved.
-Use of this source code is governed by an MIT-style license that
-can be found in the LICENSE file at https://angular.io/license
-*/

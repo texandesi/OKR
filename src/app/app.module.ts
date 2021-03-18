@@ -35,13 +35,12 @@ import {AuthModule} from './auth/auth.module';
     BrowserModule,
     FormsModule,
     AuthModule,
-    AppRoutingModule,
-    AppRoutingModule,
     NgbModule,
     DashboardModule,
     KeyResultsModule,
     KpisModule,
-    ObjectivesModule
+    ObjectivesModule,
+    AppRoutingModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,10 +1,24 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import {KeyResultsComponent} from './key-results.component';
 
-const routes: Routes = [];
+const routes: Routes = [
+  {
+    path: '',
+    component: KeyResultsComponent,
+    children: [
+      {
+        path: '',
+        component: KeyResultsComponent,
+      }
+    ]
+  }
+];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
 export class KeyResultsRoutingModule { }
+
+
