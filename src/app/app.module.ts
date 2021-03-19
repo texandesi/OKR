@@ -3,7 +3,6 @@ import {BrowserModule} from '@angular/platform-browser';
 
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
-import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {KeyResultsComponent} from './key-results/key-results.component';
 import {KpisComponent} from './kpis/kpis.component';
 import {DashboardComponent} from './dashboard/dashboard.component';
@@ -12,6 +11,7 @@ import {KeyResultsModule} from './key-results/key-results.module';
 import {KpisModule} from './kpis/kpis.module';
 import {ObjectivesModule} from './objectives/objectives.module';
 
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {FormsModule} from '@angular/forms';
 
 import {PageNotFoundComponent} from './page-not-found/page-not-found.component';
@@ -27,18 +27,18 @@ import {AuthModule} from './auth/auth.module';
     KpisComponent,
     DashboardComponent,
     ComposeMessageComponent,
-    PageNotFoundComponent
+    PageNotFoundComponent,
   ],
   imports: [
     BrowserModule,
     FormsModule,
     AuthModule,
-    NgbModule,
     DashboardModule,
     KeyResultsModule,
     KpisModule,
     ObjectivesModule,
     AppRoutingModule,
+    NgbModule,
     FormsModule,
   ],
   providers: [],
