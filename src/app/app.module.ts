@@ -39,6 +39,7 @@ import {AuthModule} from './auth/auth.module';
     KpisModule,
     ObjectivesModule,
     AppRoutingModule,
+    FormsModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
