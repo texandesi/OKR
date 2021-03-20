@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/techniti_okr.iml" filepath="$PROJECT_DIR$/.idea/techniti_okr.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/techniti-okr-backend.iml" filepath="$PROJECT_DIR$/.idea/techniti-okr-backend.iml" />
     </modules>
   </component>
 </project>
