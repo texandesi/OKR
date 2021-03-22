@@ -32,7 +32,7 @@
             ],
             "styles": [
               "src/styles.scss",
-              "node_modules/bootswatch/dist/superhero/bootstrap.min.css",
+              "node_modules/bootswatch/dist/litera/bootstrap.min.css",
             ],
             "scripts": [
               "node_modules/jquery/dist/jquery.min.js",

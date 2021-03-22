@@ -1,10 +1,35 @@
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
+import {NgModule} from '@angular/core';
+import {RouterModule, Routes} from '@angular/router';
 
-const routes: Routes = [];
+import {PageNotFoundComponent} from './modules/page-not-found/page-not-found.component';
+
+import {KeyResultsComponent} from './modules/key-results/key-results.component';
+import {DashboardComponent} from './modules/dashboard/dashboard.component';
+import {KpisComponent} from './modules/kpis/kpis.component';
+import {AdminComponent} from './modules/admin/admin/admin.component';
+
+const appRoutes: Routes = [
+  { path: '', redirectTo: '/dashboard', pathMatch: 'full'},
+  { path: 'key-results', component: KeyResultsComponent },
+  { path: 'kpis', component: KpisComponent },
+  { path: 'admin', component: AdminComponent },
+  { path: 'dashboard', component: DashboardComponent },
+  { path: '**', component: PageNotFoundComponent}
+];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  imports: [
+    RouterModule.forRoot(
+      appRoutes,
+      {
+        enableTracing: false, // <-- debugging purposes only
+      }
+    )
+  ],
+  exports: [
+    RouterModule
+  ]
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {
+}
+
