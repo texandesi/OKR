@@ -24,9 +24,9 @@
             <div class="form-group">
               <label for="details">Details</label>
               <textarea #name="ngModel" [(ngModel)]="model.details" class="form-control"
-                     id="details"
-                     name="details" required
-                      rows="3">
+                        id="details"
+                        name="details" required
+                        rows="3">
 
               </textarea>
               <div [hidden]="name.valid || name.pristine"
@@ -41,20 +41,22 @@
                 <input #d="ngbDatepicker" [(ngModel)]="model.date"
                        class="form-control" id="alterEgo" name="alterEgo" ngbDatepicker placeholder="yyyy-mm-dd">
                 <div class="input-group-append">
-                  <button (click)="d.toggle()" class="btn btn-outline-secondary calendar" type="button"></button>
+                  <button (click)="d.toggle()" class="btn btn-outline-secondary calendar" type="button">
+                    <svg class="bi bi-calendar" fill="currentColor" height="16" viewBox="0 0 16 16"
+                         width="16" xmlns="http://www.w3.org/2000/svg">
+                      <path
+                        d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z"/>
+                    </svg>
+                  </button>
                 </div>
               </div>
             </div>
 
-            <button [disabled]="!ObjectiveForm.form.valid" class="btn btn-success" type="submit">Submit</button>
+            <div class="p-5">
+            <button [disabled]="!ObjectiveForm.form.valid" class="btn btn-success" type="submit">Save Objective</button>
             <button (click)="newObjective(); ObjectiveForm.reset()" class="btn btn-default" type="button">New Objective
             </button>
-            <i>with</i> reset
-
-            &nbsp;&nbsp;
-            <button (click)="newObjective()" class="btn btn-default" type="button">New Objective</button>
-            <i>without</i> reset
-
+            </div>
           </form>
         </div>
 
