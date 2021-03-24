@@ -4,10 +4,10 @@
 # Sample app to learn Angular to build a simple app to track OKRs
 
 This repository is for my work to build a simple OKR app. I am learning Angular 2 and now seems as a good time as any to
-open my code to publuc scrutiny.
+open my code to public scrutiny.
 
 We use OKRs and KPIs to identify and deliver results. The OKRs are managed on spreadsheets that get unwieldy over time.
-The goal of this app is simpe:
+The goal of this app is simple:
 
 - Provide ability to document an objective
 - Attach key results to objectives
@@ -17,4 +17,4 @@ The goal of this app is simpe:
 - Get feedback on the OKR at every stage
 - Provide ability to change the OKR, including adding and deleting.
 
-This is as simple as it gets. 
+This is as simple as it gets.
