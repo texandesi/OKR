@@ -1,4 +1,23 @@
+<h2>My Objectives</h2>
 
-<p>objectives works!</p>
+<div>
+  <label id="new-objective">Objective name: </label>
+  <input for="new-objective" #objectiveName />
+
+  <!-- (click) passes input value to add() and then clears the input -->
+  <button class="add-button" (click)="add(objectiveName.value); objectiveName.value=''">
+    Add objective
+  </button>
+</div>
+
+<ul class="objectives">
+  <li *ngFor="let objective of objectives">
+    <a routerLink="/detail/{{objective.id}}">
+      <span class="badge">{{objective.id}}</span> {{objective.name}}
+    </a>
+    <button class="delete" title="delete objective"
+            (click)="delete(objective)">x</button>
+  </li>
+</ul>
 
 <router-outlet></router-outlet>

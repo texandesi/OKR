@@ -18,7 +18,9 @@ import {PageNotFoundComponent} from './modules/page-not-found/page-not-found.com
 import {ComposeMessageComponent} from './modules/compose-message/compose-message.component';
 
 import {AuthModule} from './modules/auth/auth.module';
-
+import {HttpClientInMemoryWebApiModule} from 'angular-in-memory-web-api';
+import {InMemoryDataService} from './services/in-memory-data.service';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -38,8 +40,18 @@ import {AuthModule} from './modules/auth/auth.module';
     KpisModule,
     ObjectivesModule,
     AppRoutingModule,
+    HttpClientModule,
     NgbModule,
     FormsModule,
+
+    // The HttpClientInMemoryWebApiModule module intercepts HTTP requests
+    // and returns simulated server responses.
+    // Remove it when a real server is ready to receive requests.
+    HttpClientInMemoryWebApiModule.forRoot(
+      InMemoryDataService, { dataEncapsulation: false }
+    )
+
+
   ],
   providers: [],
   bootstrap: [AppComponent]
