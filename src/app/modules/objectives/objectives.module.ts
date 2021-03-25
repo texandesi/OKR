@@ -8,7 +8,7 @@ import { ObjectiveFormComponent } from './objective-form/objective-form.componen
 
 import {NgbDate, NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {FormsModule} from '@angular/forms';
-import { ObjectiveDetailComponent } from './objective-detail/objective-detail.component';
+import {ObjectiveDetailComponent} from './objective-detail/objective-detail.component';
 
 
 @NgModule({
@@ -24,6 +24,9 @@ import { ObjectiveDetailComponent } from './objective-detail/objective-detail.co
     FormsModule,
     NgbModule,
   ],
+  exports: [
+    ObjectiveSearchComponent,
+  ]
 })
 export class ObjectivesModule {
 

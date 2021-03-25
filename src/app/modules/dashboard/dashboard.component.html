@@ -1,2 +1,9 @@
-<p>dashboard works!</p>
+<h2>Top Objectives</h2>
+<div class="objectives-menu">
+  <a *ngFor="let objective of objectives"
+     routerLink="/detail/{{objective.id}}">
+    {{objective.name}}
+  </a>
+</div>
 
+<app-objective-search></app-objective-search>

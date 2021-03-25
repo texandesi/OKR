@@ -14,12 +14,12 @@ const routes: Routes = [
         component: ObjectivesComponent,
       },
       {
-        path: 'objective-form',
+        path: 'form',
         component: ObjectiveFormComponent
       },
 
       {
-        path: 'objective-detail',
+        path: 'detail/:id',
         component: ObjectiveDetailComponent
       },
       {
@@ -32,6 +32,8 @@ const routes: Routes = [
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [
+    RouterModule,
+  ]
 })
 export class ObjectivesRoutingModule { }
