@@ -3,7 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import {ObjectivesComponent} from './objectives/objectives.component';
 import {ObjectiveSearchComponent} from './objective-search/objective-search.component';
 import {ObjectiveFormComponent} from './objective-form/objective-form.component';
-import {ObjectiveDetailComponent} from '../../objectives/objective-detail/objective-detail.component';
+import {ObjectiveDetailComponent} from './objective-detail/objective-detail.component';
 
 const routes: Routes = [
   {
@@ -17,6 +17,7 @@ const routes: Routes = [
         path: 'objective-form',
         component: ObjectiveFormComponent
       },
+
       {
         path: 'objective-detail',
         component: ObjectiveDetailComponent
