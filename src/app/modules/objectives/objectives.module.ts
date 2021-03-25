@@ -13,10 +13,10 @@ import {ObjectiveDetailComponent} from './objective-detail/objective-detail.comp
 
 @NgModule({
   declarations: [
-    ObjectiveSearchComponent,
     ObjectivesComponent,
     ObjectiveFormComponent,
     ObjectiveDetailComponent,
+    ObjectiveSearchComponent,
   ],
   imports: [
     CommonModule,
