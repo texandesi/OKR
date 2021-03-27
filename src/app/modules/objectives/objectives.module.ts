@@ -9,6 +9,10 @@ import { ObjectiveFormComponent } from './objective-form/objective-form.componen
 import {NgbDate, NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {FormsModule} from '@angular/forms';
 import {ObjectiveDetailComponent} from './objective-detail/objective-detail.component';
+import { ObjectiveListComponent } from './objective-list/objective-list.component';
+import { MatTableModule } from '@angular/material/table';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatSortModule } from '@angular/material/sort';
 
 
 @NgModule({
@@ -17,12 +21,16 @@ import {ObjectiveDetailComponent} from './objective-detail/objective-detail.comp
     ObjectiveFormComponent,
     ObjectiveDetailComponent,
     ObjectiveSearchComponent,
+    ObjectiveListComponent,
   ],
   imports: [
     CommonModule,
     ObjectivesRoutingModule,
     FormsModule,
     NgbModule,
+    MatTableModule,
+    MatPaginatorModule,
+    MatSortModule,
   ],
   exports: [
     ObjectiveSearchComponent,

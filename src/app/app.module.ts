@@ -21,9 +21,9 @@ import {HttpClientInMemoryWebApiModule} from 'angular-in-memory-web-api';
 import {InMemoryDataService} from './services/in-memory-data.service';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import {MatSliderModule} from '@angular/material/slider';
-import {MatInputModule} from '@angular/material/input';
-import {MatButtonModule} from '@angular/material/button';
+import { MatTableModule } from '@angular/material/table';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatSortModule } from '@angular/material/sort';
 
 @NgModule({
   declarations: [
@@ -54,7 +54,13 @@ import {MatButtonModule} from '@angular/material/button';
       InMemoryDataService, { dataEncapsulation: false }
     ),
 
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+
+    MatTableModule,
+
+    MatPaginatorModule,
+
+    MatSortModule
 
 
   ],
