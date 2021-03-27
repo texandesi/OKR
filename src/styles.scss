@@ -5,6 +5,8 @@
 
 
 /* Putting the imports here instead of the variables file enables the variables to be overidden */
-@import "../node_modules/bootstrap/scss/bootstrap";
-@import "../node_modules/bootswatch/dist/litera/bootswatch";
+@import '~@angular/material/prebuilt-themes/deeppurple-amber.css';
 
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

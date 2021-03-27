@@ -11,7 +11,6 @@ import {KeyResultsModule} from './modules/key-results/key-results.module';
 import {KpisModule} from './modules/kpis/kpis.module';
 import {ObjectivesModule} from './modules/objectives/objectives.module';
 
-import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {FormsModule} from '@angular/forms';
 
 import {PageNotFoundComponent} from './modules/page-not-found/page-not-found.component';
@@ -21,6 +20,10 @@ import {AuthModule} from './modules/auth/auth.module';
 import {HttpClientInMemoryWebApiModule} from 'angular-in-memory-web-api';
 import {InMemoryDataService} from './services/in-memory-data.service';
 import { HttpClientModule } from '@angular/common/http';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {MatSliderModule} from '@angular/material/slider';
+import {MatInputModule} from '@angular/material/input';
+import {MatButtonModule} from '@angular/material/button';
 
 @NgModule({
   declarations: [
@@ -41,15 +44,17 @@ import { HttpClientModule } from '@angular/common/http';
     ObjectivesModule,
     AppRoutingModule,
     HttpClientModule,
-    NgbModule,
     FormsModule,
+
 
     // The HttpClientInMemoryWebApiModule module intercepts HTTP requests
     // and returns simulated server responses.
     // Remove it when a real server is ready to receive requests.
     HttpClientInMemoryWebApiModule.forRoot(
       InMemoryDataService, { dataEncapsulation: false }
-    )
+    ),
+
+    BrowserAnimationsModule
 
 
   ],
