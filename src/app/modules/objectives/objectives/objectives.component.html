@@ -10,37 +10,35 @@
   </button>
 </div>
 
-<hr/>
-
 <div class="table-responsive">
 
-<table class="objectives table table-hover table-striped">
-  <thead>
-  <tr>
-    <th scope="col">Objective</th>
-    <th scope="col">Delete</th>
-    <th scope="col">Comments</th>
-  </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let objective of objectives">
+  <table class="objectives table table-hover table-striped">
+    <thead>
+    <tr class="text-center">
+      <th scope="col">Objective</th>
+      <th scope="col">Delete</th>
+      <th scope="col">Comments</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr class="text-center" *ngFor="let objective of objectives">
       <td>
         <a routerLink="/detail/{{objective.id}}">
           {{objective.name}}
         </a>
       </td>
-      <td>
+      <td class="text-center">
         <button (click)="delete(objective)" class="delete"
-                title="delete objective">x
+                title="delete objective"><i class="bi bi-trash"></i>
         </button>
       </td>
-      <td>
+      <td class="text-center">
         <textarea rows="1"></textarea>
       </td>
     </tr>
 
-  </tbody>
-</table>
+    </tbody>
+  </table>
 
 </div>
 
@@ -120,8 +118,5 @@
   </tr>
   </tbody>
 </table>
-
-<router-outlet></router-outlet>
-
 
 
