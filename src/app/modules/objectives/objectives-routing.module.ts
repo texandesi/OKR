@@ -11,14 +11,9 @@ const routes: Routes = [
     path: 'objectives',
     children: [
       {
-        path: '',
-        component: ObjectivesComponent
-      },
-      {
         path: 'form',
         component: ObjectiveFormComponent
       },
-
       {
         path: 'detail/:id',
         component: ObjectiveDetailComponent
@@ -28,8 +23,12 @@ const routes: Routes = [
         component: ObjectiveSearchComponent
       },
       {
-        path: 'list',
+        path: 'objectivelist',
         component: ObjectiveListComponent
+      },
+      {
+        path: '',
+        component: ObjectivesComponent
       },
     ]
   },

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {Objective} from '../objective';
 
 @Component({
-  selector: 'app-objective-form',
+  selector: 'app-objectiveslist',
   templateUrl: './objective-form.component.html',
   styleUrls: ['./objective-form.component.scss']
 })
@@ -15,7 +15,7 @@ export class ObjectiveFormComponent implements OnInit {
     'Objective 4'
   ];
 
-  model = new Objective(18,  this.objectiveList[0], 'Description of objective');
+  model = new Objective(18,  this.objectiveList[0]);
 
   submitted = false;
 
@@ -36,7 +36,7 @@ export class ObjectiveFormComponent implements OnInit {
   }
 
   newObjective() {
-    this.model = new Objective(42, '', '');
+    this.model = new Objective(42, '');
   }
 
 }

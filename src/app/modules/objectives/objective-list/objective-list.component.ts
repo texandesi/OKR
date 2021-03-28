@@ -1,30 +1,25 @@
-import { AfterViewInit, Component, ViewChild } from '@angular/core';
-import { MatPaginator } from '@angular/material/paginator';
-import { MatSort } from '@angular/material/sort';
-import { MatTable } from '@angular/material/table';
-import { ObjectiveListDataSource, ObjectiveListItem } from './objective-list-datasource';
+import {AfterViewInit, Component, OnInit} from '@angular/core';
+import { ObjectiveListDataSource } from './objective-list-datasource';
+import {Objective as MyObjective} from '../objective';
+import {ObjectivesDataService} from '../../../services/objectives-data-service.service';
 
 @Component({
   selector: 'app-objective-list',
   templateUrl: './objective-list.component.html',
   styleUrls: ['./objective-list.component.scss']
 })
-export class ObjectiveListComponent implements AfterViewInit {
-  @ViewChild(MatPaginator) paginator!: MatPaginator;
-  @ViewChild(MatSort) sort!: MatSort;
-  @ViewChild(MatTable) table!: MatTable<ObjectiveListItem>;
-  dataSource: ObjectiveListDataSource;
+export class ObjectiveListComponent implements OnInit {
+  myDataSource : ObjectiveListDataSource;
 
   /** Columns displayed in the table. Columns IDs can be added, removed, or reordered. */
   displayedColumns = ['id', 'name'];
 
-  constructor() {
-    this.dataSource = new ObjectiveListDataSource();
+  constructor(private dataService : ObjectivesDataService) {
+    this.myDataSource = new ObjectiveListDataSource(dataService);
   }
 
-  ngAfterViewInit(): void {
-    this.dataSource.sort = this.sort;
-    this.dataSource.paginator = this.paginator;
-    this.table.dataSource = this.dataSource;
+  ngOnInit() {
   }
+
+
 }

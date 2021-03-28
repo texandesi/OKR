@@ -9,11 +9,11 @@ import {KpisComponent} from './modules/kpis/kpis.component';
 import {AdminComponent} from './modules/admin/admin/admin.component';
 
 const appRoutes: Routes = [
-  { path: '', redirectTo: '/dashboard', pathMatch: 'full'},
   { path: 'key-results', component: KeyResultsComponent },
   { path: 'kpis', component: KpisComponent },
   { path: 'admin', component: AdminComponent },
   { path: 'dashboard', component: DashboardComponent },
+  { path: '', redirectTo: '/objectives/objectivelist', pathMatch: 'full'},
   { path: '**', component: PageNotFoundComponent}
 ];
 
@@ -22,7 +22,7 @@ const appRoutes: Routes = [
     RouterModule.forRoot(
       appRoutes,
       {
-        enableTracing: true, // <-- debugging purposes only
+        enableTracing: false, // <-- debugging purposes only
       }
     )
   ],

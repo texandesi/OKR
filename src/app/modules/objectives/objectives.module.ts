@@ -6,7 +6,6 @@ import { ObjectiveSearchComponent } from './objective-search/objective-search.co
 import {ObjectivesComponent} from './objectives/objectives.component';
 import { ObjectiveFormComponent } from './objective-form/objective-form.component';
 
-import {NgbDate, NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {FormsModule} from '@angular/forms';
 import {ObjectiveDetailComponent} from './objective-detail/objective-detail.component';
 import { ObjectiveListComponent } from './objective-list/objective-list.component';
@@ -27,13 +26,13 @@ import { MatSortModule } from '@angular/material/sort';
     CommonModule,
     ObjectivesRoutingModule,
     FormsModule,
-    NgbModule,
     MatTableModule,
     MatPaginatorModule,
     MatSortModule,
   ],
   exports: [
     ObjectiveSearchComponent,
+    ObjectiveListComponent,
   ]
 })
 export class ObjectivesModule {
