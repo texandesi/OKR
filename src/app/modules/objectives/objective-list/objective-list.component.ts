@@ -1,5 +1,5 @@
 import {AfterViewInit, Component, OnInit} from '@angular/core';
-import { ObjectiveListDataSource } from './objective-list-datasource';
+import { ObjectiveListDataSource } from '../../../data-sources/objective-list-datasource';
 import {Objective as MyObjective} from '../objective';
 import {ObjectivesDataService} from '../../../services/objectives-data-service.service';
 

@@ -3,8 +3,8 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { map } from 'rxjs/operators';
 import { Observable, of as observableOf, merge } from 'rxjs';
-import {ObjectivesDataService} from '../../../services/objectives-data-service.service';
-import {Objective as OriginalObjective} from '../objective';
+import {ObjectivesDataService} from '../services/objectives-data-service.service';
+import {Objective as OriginalObjective} from '../modules/objectives/objective';
 
 /**
  * Data source for the ObjectiveList view. This class should
