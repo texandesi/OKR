@@ -53,6 +53,7 @@ export class ObjectivesComponent implements OnInit,  AfterViewInit  {
     this.getObjectives();
   }
 
+  // TODO Implement back the page refresh and delete functionality for the Objectives list.
   delete(hero: Objective): void {
     this.objectives = this.objectives.filter(h => h !== hero);
     this.objectiveService.deleteObjective(hero.id).subscribe();
