@@ -13,7 +13,7 @@ const appRoutes: Routes = [
   { path: 'kpis', component: KpisComponent },
   { path: 'admin', component: AdminComponent },
   { path: 'dashboard', component: DashboardComponent },
-  { path: '', redirectTo: '/objectives/objectivelist', pathMatch: 'full'},
+  { path: '', redirectTo: '/dashboard', pathMatch: 'full'},
   { path: '**', component: PageNotFoundComponent}
 ];
 
