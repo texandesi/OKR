@@ -8,7 +8,6 @@ import { ObjectiveFormComponent } from './objective-form/objective-form.componen
 
 import {FormsModule} from '@angular/forms';
 import {ObjectiveDetailComponent} from './objective-detail/objective-detail.component';
-import { ObjectiveListComponent } from './objective-list/objective-list.component';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
@@ -20,7 +19,6 @@ import { MatSortModule } from '@angular/material/sort';
     ObjectiveFormComponent,
     ObjectiveDetailComponent,
     ObjectiveSearchComponent,
-    ObjectiveListComponent,
   ],
   imports: [
     CommonModule,
@@ -32,7 +30,6 @@ import { MatSortModule } from '@angular/material/sort';
   ],
   exports: [
     ObjectiveSearchComponent,
-    ObjectiveListComponent,
   ]
 })
 export class ObjectivesModule {

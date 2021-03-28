@@ -1,24 +1,45 @@
-import { Component, OnInit } from '@angular/core';
+import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
 import {Objective} from '../objective';
 import {ObjectivesDataService} from '../../../services/objectives-data-service.service';
+import {MatPaginator} from '@angular/material/paginator';
+import {MatSort} from '@angular/material/sort';
+import {MatTable} from '@angular/material/table';
+import {ObjectiveListDataSource} from '../../../data-sources/objective-list-datasource';
 
 @Component({
   selector: 'app-objectives',
   templateUrl: './objectives.component.html',
   styleUrls: ['./objectives.component.scss']
 })
-export class ObjectivesComponent implements OnInit {
+export class ObjectivesComponent implements OnInit,  AfterViewInit  {
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  @ViewChild(MatSort) sort!: MatSort;
+  @ViewChild(MatTable) table!: MatTable<Objective>;
+  dataSource : ObjectiveListDataSource;
+  objectiveService : ObjectivesDataService;
+
+  /** Columns displayed in the table. Columns IDs can be added, removed, or reordered. */
+  displayedColumns = ['id', 'name'];
   objectives!: Objective[];
 
-  constructor(private objectiveService: ObjectivesDataService) { }
+  constructor(private dataService : ObjectivesDataService) {
+    this.dataSource = new ObjectiveListDataSource(dataService);
+    this.objectiveService = dataService;
+  }
+
 
   ngOnInit() {
-    this.getObjectives();
+    this.dataSource.getObjectives();
+  }
+
+  ngAfterViewInit(): void {
+    this.dataSource.sort = this.sort;
+    this.dataSource.paginator = this.paginator;
+    this.table.dataSource = this.dataSource;
   }
 
   getObjectives(): void {
-    this.objectiveService.getObjectives()
-      .subscribe(objectives => this.objectives = objectives);
+    this.dataSource.getObjectives();
   }
 
   add(name: string): void {
@@ -28,11 +49,15 @@ export class ObjectivesComponent implements OnInit {
       .subscribe(hero => {
         this.objectives.push(hero);
       });
+
+    this.getObjectives();
   }
 
   delete(hero: Objective): void {
     this.objectives = this.objectives.filter(h => h !== hero);
     this.objectiveService.deleteObjective(hero.id).subscribe();
+
+    this.getObjectives();
   }
 
 }
