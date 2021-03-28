@@ -19,8 +19,7 @@ export class ObjectivesComponent implements OnInit,  AfterViewInit  {
   objectiveService : ObjectivesDataService;
 
   /** Columns displayed in the table. Columns IDs can be added, removed, or reordered. */
-  displayedColumns = ['id', 'name'];
-  objectives!: Objective[];
+  displayedColumns = ['id', 'name', 'details', 'delete' ];
 
   constructor(private dataService : ObjectivesDataService) {
     this.dataSource = new ObjectiveListDataSource(dataService);
@@ -38,27 +37,23 @@ export class ObjectivesComponent implements OnInit,  AfterViewInit  {
     this.table.dataSource = this.dataSource;
   }
 
-  getObjectives(): void {
-    this.dataSource.getObjectives();
-  }
-
   add(name: string): void {
     name = name.trim();
     if (!name) { return; }
     this.objectiveService.addObjective({ name } as Objective)
-      .subscribe(hero => {
-        this.objectives.push(hero);
+      .subscribe(objective => {
+        this.dataSource.data.push(objective);
       });
 
-    this.getObjectives();
+    this.dataSource.getObjectives();
   }
 
   // TODO Implement back the page refresh and delete functionality for the Objectives list.
-  delete(hero: Objective): void {
-    this.objectives = this.objectives.filter(h => h !== hero);
-    this.objectiveService.deleteObjective(hero.id).subscribe();
-
-    this.getObjectives();
+  delete(objective: Objective): void {
+    console.log('Objective Id is ' + objective.id);
+    console.log('Objective array length is  ' + this.dataSource.data.length);
+    this.dataSource.data = this.dataSource.data.filter(h => h !== objective);
+    this.objectiveService.deleteObjective(objective.id).subscribe();
   }
 
 }
