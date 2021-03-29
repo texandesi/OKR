@@ -4,7 +4,7 @@ import { MatSort } from '@angular/material/sort';
 import { map } from 'rxjs/operators';
 import { Observable, of as observableOf, merge } from 'rxjs';
 import {ObjectivesDataService} from '../services/objectives-data-service.service';
-import {Objective as OriginalObjective} from '../modules/objectives/objective';
+import {Objective, Objective as OriginalObjective} from '../modules/objectives/objective';
 
 /**
  * Data source for the ObjectiveList view. This class should
@@ -24,6 +24,36 @@ export class ObjectiveListDataSource extends DataSource<OriginalObjective> {
     this.objectiveService.getObjectives()
       .subscribe(objectives => this.data = objectives);
   }
+
+  addObjective(name: string): void {
+    name = name.trim();
+    if (!name) { return; }
+    this.objectiveService.addObjective({ name } as Objective)
+      .subscribe(objective => {
+        this.data.push(objective);
+      });
+
+    this.getObjectives();
+
+  }
+
+  deleteObjective(idValue: number): void {
+    // TODO Remove console log messages from all the code
+    // console.log("Id value in data source is " + idValue);
+    // console.log("Length of data in data source before is " + this.data.length);
+
+    this.objectiveService.deleteObjective( idValue  )
+      .subscribe(objective => { objective &&
+        this.data.filter(h => h.id !== objective.id);
+      });
+
+    this.getObjectives();
+
+    // console.log("Length of data in data source after is " + this.data.length);
+
+
+  }
+
 
 
 

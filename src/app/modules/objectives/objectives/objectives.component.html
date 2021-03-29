@@ -34,7 +34,7 @@
     <ng-container matColumnDef="delete">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>Delete</th>
       <td mat-cell *matCellDef="let row">
-        <button (click)="delete(row)"
+        <button (click)="delete(row.id)"
                 class="delete"
                 title="delete objective">
                     <i class="bi bi-trash"></i>

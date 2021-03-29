@@ -16,44 +16,37 @@ export class ObjectivesComponent implements OnInit,  AfterViewInit  {
   @ViewChild(MatSort) sort!: MatSort;
   @ViewChild(MatTable) table!: MatTable<Objective>;
   dataSource : ObjectiveListDataSource;
-  objectiveService : ObjectivesDataService;
 
   /** Columns displayed in the table. Columns IDs can be added, removed, or reordered. */
   displayedColumns = ['id', 'name', 'details', 'delete' ];
 
   constructor(private dataService : ObjectivesDataService) {
     this.dataSource = new ObjectiveListDataSource(dataService);
-    this.objectiveService = dataService;
   }
 
 
   ngOnInit() {
-    this.dataSource.getObjectives();
   }
 
   ngAfterViewInit(): void {
+    this.dataSource.getObjectives();
     this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;
     this.table.dataSource = this.dataSource;
   }
 
   add(name: string): void {
-    name = name.trim();
-    if (!name) { return; }
-    this.objectiveService.addObjective({ name } as Objective)
-      .subscribe(objective => {
-        this.dataSource.data.push(objective);
-      });
-
-    this.dataSource.getObjectives();
+    this.dataSource.addObjective(name);
+    this.table.dataSource = this.dataSource;
   }
 
   // TODO Implement back the page refresh and delete functionality for the Objectives list.
-  delete(objective: Objective): void {
-    console.log('Objective Id is ' + objective.id);
-    console.log('Objective array length is  ' + this.dataSource.data.length);
-    this.dataSource.data = this.dataSource.data.filter(h => h !== objective);
-    this.objectiveService.deleteObjective(objective.id).subscribe();
+  delete(id: number): void {
+    // console.log('Objective Id before is ' + id.valueOf());
+    // console.log('Objective array length is  ' + this.dataSource.data.length);
+    this.dataSource.deleteObjective(id);
+    this.table.dataSource = this.dataSource;
+    // console.log('Objective array length after is  ' + this.dataSource.data.length);
   }
 
 }
