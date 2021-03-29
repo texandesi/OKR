@@ -47,7 +47,7 @@ export class ObjectiveListDataSource extends DataSource<OriginalObjective> {
         this.data.filter(h => h.id !== objective.id);
       });
 
-    this.getObjectives();
+//    this.getObjectives();
 
     // console.log("Length of data in data source after is " + this.data.length);
 
