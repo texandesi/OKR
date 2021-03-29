@@ -11,22 +11,19 @@ import {ObjectiveListDataSource} from '../../../data-sources/objective-list-data
   templateUrl: './objectives.component.html',
   styleUrls: ['./objectives.component.scss']
 })
-export class ObjectivesComponent implements OnInit,  AfterViewInit  {
+export class ObjectivesComponent implements AfterViewInit  {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
   @ViewChild(MatTable) table!: MatTable<Objective>;
   dataSource : ObjectiveListDataSource;
 
   /** Columns displayed in the table. Columns IDs can be added, removed, or reordered. */
-  displayedColumns = ['id', 'name', 'details', 'delete' ];
+  displayedColumns = ['id', 'name'];
 
   constructor(private dataService : ObjectivesDataService) {
     this.dataSource = new ObjectiveListDataSource(dataService);
   }
 
-
-  ngOnInit() {
-  }
 
   ngAfterViewInit(): void {
     this.dataSource.getObjectives();
