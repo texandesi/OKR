@@ -16,16 +16,13 @@ export class ObjectivesComponent implements AfterViewInit  {
   @ViewChild(MatSort) sort!: MatSort;
   @ViewChild(MatTable) table!: MatTable<Objective>;
   dataSource : ObjectiveListDataSource;
-  objectiveService : ObjectivesDataService;
 
   /** Columns displayed in the table. Columns IDs can be added, removed, or reordered. */
   displayedColumns = ['id', 'name', 'details', 'delete'];
 
-  constructor(private dataService : ObjectivesDataService) {
-    this.dataSource = new ObjectiveListDataSource(dataService);
-    this.objectiveService = dataService;
+  constructor(private myDataSource : ObjectiveListDataSource) {
+    this.dataSource = myDataSource;
   }
-
   ngAfterViewInit(): void {
     this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;
@@ -39,19 +36,17 @@ export class ObjectivesComponent implements AfterViewInit  {
 
   add(name: string): void {
     name = name.trim();
-    if (!name) { return; }
-    this.objectiveService.addObjective({ name } as Objective)
-      .subscribe(hero => {
-        this.dataSource.data.push(hero);
-      });
+    if (!name) {
+      return;
+    }
+    this.dataSource.addObjective(name);
 
-    this.getObjectives();
   }
 
   // TODO Implement back the page refresh and delete functionality for the Objectives list.
-  delete(hero: Objective): void {
-    this.dataSource.data = this.dataSource.data.filter(h => h !== hero);
-    this.objectiveService.deleteObjective(hero.id).subscribe();
+  delete(objective: Objective): void {
+    this.dataSource.data = this.dataSource.data.filter(h => h !== objective);
+    this.dataSource.deleteObjective(objective.id);
 
     this.getObjectives();
   }
