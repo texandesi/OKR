@@ -11,7 +11,7 @@ import {ObjectiveListDataSource} from '../../../data-sources/objective-list-data
   templateUrl: './objectives.component.html',
   styleUrls: ['./objectives.component.scss']
 })
-export class ObjectivesComponent implements OnInit,  AfterViewInit  {
+export class ObjectivesComponent implements AfterViewInit  {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
   @ViewChild(MatTable) table!: MatTable<Objective>;
@@ -20,21 +20,16 @@ export class ObjectivesComponent implements OnInit,  AfterViewInit  {
 
   /** Columns displayed in the table. Columns IDs can be added, removed, or reordered. */
   displayedColumns = ['id', 'name'];
-  objectives!: Objective[];
 
   constructor(private dataService : ObjectivesDataService) {
     this.dataSource = new ObjectiveListDataSource(dataService);
     this.objectiveService = dataService;
   }
 
-
-  ngOnInit() {
-    this.dataSource.getObjectives();
-  }
-
   ngAfterViewInit(): void {
     this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;
+    this.getObjectives();
     this.table.dataSource = this.dataSource;
   }
 
@@ -47,7 +42,7 @@ export class ObjectivesComponent implements OnInit,  AfterViewInit  {
     if (!name) { return; }
     this.objectiveService.addObjective({ name } as Objective)
       .subscribe(hero => {
-        this.objectives.push(hero);
+        this.dataSource.data.push(hero);
       });
 
     this.getObjectives();
@@ -55,7 +50,7 @@ export class ObjectivesComponent implements OnInit,  AfterViewInit  {
 
   // TODO Implement back the page refresh and delete functionality for the Objectives list.
   delete(hero: Objective): void {
-    this.objectives = this.objectives.filter(h => h !== hero);
+    this.dataSource.data = this.dataSource.data.filter(h => h !== hero);
     this.objectiveService.deleteObjective(hero.id).subscribe();
 
     this.getObjectives();

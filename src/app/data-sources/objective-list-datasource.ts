@@ -4,7 +4,7 @@ import { MatSort } from '@angular/material/sort';
 import { map } from 'rxjs/operators';
 import { Observable, of as observableOf, merge } from 'rxjs';
 import {ObjectivesDataService} from '../services/objectives-data-service.service';
-import {Objective as OriginalObjective} from '../modules/objectives/objective';
+import {Objective, Objective as OriginalObjective} from '../modules/objectives/objective';
 
 /**
  * Data source for the ObjectiveList view. This class should
@@ -12,7 +12,13 @@ import {Objective as OriginalObjective} from '../modules/objectives/objective';
  * (including sorting, pagination, and filtering).
  */
 export class ObjectiveListDataSource extends DataSource<OriginalObjective> {
-  data: OriginalObjective[] = [];
+  data : OriginalObjective[] = [
+    {id:100, name:'Some name 0'},
+    {id:101, name:'Some name 1'},
+
+  ];
+
+
   paginator: MatPaginator | undefined;
   sort: MatSort | undefined;
 
