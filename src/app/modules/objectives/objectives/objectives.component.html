@@ -24,22 +24,16 @@
       <td mat-cell *matCellDef="let row">{{row.name}}</td>
     </ng-container>
 
-    <!-- Details Column -->
+    <!-- Name Column -->
     <ng-container matColumnDef="details">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>Details</th>
+      <th mat-header-cell *matHeaderCellDef >Details</th>
       <td mat-cell *matCellDef="let row"><textarea rows="1">{{row.details}}</textarea></td>
     </ng-container>
 
-    <!-- Delete Flag Column -->
+    <!-- Name Column -->
     <ng-container matColumnDef="delete">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>Delete</th>
-      <td mat-cell *matCellDef="let row">
-        <button (click)="delete(row.id)"
-                class="delete"
-                title="delete objective">
-                    <i class="bi bi-trash"></i>
-        </button>
-      </td>
+      <th mat-header-cell *matHeaderCellDef >Delete</th>
+      <td mat-cell *matCellDef="let row">Delete button placeholder</td>
     </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
