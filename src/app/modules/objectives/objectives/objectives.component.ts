@@ -18,32 +18,37 @@ export class ObjectivesComponent implements AfterViewInit  {
   dataSource : ObjectiveListDataSource;
 
   /** Columns displayed in the table. Columns IDs can be added, removed, or reordered. */
-  displayedColumns = ['id', 'name'];
+  displayedColumns = ['id', 'name', 'details', 'delete'];
 
-  constructor(private dataService : ObjectivesDataService) {
-    this.dataSource = new ObjectiveListDataSource(dataService);
+  constructor(private myDataSource : ObjectiveListDataSource) {
+    this.dataSource = myDataSource;
   }
-
-
   ngAfterViewInit(): void {
-    this.dataSource.getObjectives();
     this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;
+    this.getObjectives();
     this.table.dataSource = this.dataSource;
+  }
+
+  getObjectives(): void {
+    this.dataSource.getObjectives();
   }
 
   add(name: string): void {
+    name = name.trim();
+    if (!name) {
+      return;
+    }
     this.dataSource.addObjective(name);
-    this.table.dataSource = this.dataSource;
+
   }
 
   // TODO Implement back the page refresh and delete functionality for the Objectives list.
-  delete(id: number): void {
-    // console.log('Objective Id before is ' + id.valueOf());
-    // console.log('Objective array length is  ' + this.dataSource.data.length);
-    this.dataSource.deleteObjective(id);
-    this.table.dataSource = this.dataSource;
-    // console.log('Objective array length after is  ' + this.dataSource.data.length);
+  delete(objective: Objective): void {
+    this.dataSource.data = this.dataSource.data.filter(h => h !== objective);
+    this.dataSource.deleteObjective(objective.id);
+
+    this.getObjectives();
   }
 
 }
