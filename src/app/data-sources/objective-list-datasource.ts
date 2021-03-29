@@ -31,8 +31,13 @@ export class ObjectiveListDataSource extends DataSource<Objective> {
   }
 
   getObjectives(): void {
+    console.log('Before getting objectives in data source');
+
     this.objectiveService.getObjectives()
       .subscribe(objectives => this.data = objectives);
+
+    console.log('After getting objectives in data source');
+
   }
 
 

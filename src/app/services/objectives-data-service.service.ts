@@ -6,6 +6,7 @@ import { catchError, map, tap } from 'rxjs/operators';
 
 import { MessageService } from './message.service';
 import {Objective} from '../modules/objectives/objective';
+import {logging} from 'protractor';
 
 
 @Injectable({ providedIn: 'root' })
@@ -23,6 +24,8 @@ export class ObjectivesDataService {
 
   /** GET objectives from the server */
   getObjectives(): Observable<Objective[]> {
+    this.log('Before getting objectives in objectives data service');
+
     return this.http.get<Objective[]>(this.objectivesUrl)
       .pipe(
         tap(_ => this.log('fetched objectives')),
@@ -117,6 +120,6 @@ export class ObjectivesDataService {
 
   /** Log a ObjectiveService message with the MessageService */
   private log(message: string) {
-    this.messageService.add(`ObjectiveService: ${message}`);
+    console.log(`ObjectiveService: ${message}`);
   }
 }

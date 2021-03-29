@@ -1,6 +1,5 @@
 import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
 import {Objective} from '../objective';
-import {ObjectivesDataService} from '../../../services/objectives-data-service.service';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatSort} from '@angular/material/sort';
 import {MatTable} from '@angular/material/table';
@@ -11,10 +10,10 @@ import {ObjectiveListDataSource} from '../../../data-sources/objective-list-data
   templateUrl: './objectives.component.html',
   styleUrls: ['./objectives.component.scss']
 })
-export class ObjectivesComponent implements AfterViewInit  {
+export class ObjectivesComponent implements OnInit, AfterViewInit  {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
-  @ViewChild(MatTable) table!: MatTable<Objective>;
+  @ViewChild(MatTable) myMatTable!: MatTable<Objective>;
   dataSource : ObjectiveListDataSource;
 
   /** Columns displayed in the table. Columns IDs can be added, removed, or reordered. */
@@ -23,11 +22,15 @@ export class ObjectivesComponent implements AfterViewInit  {
   constructor(private myDataSource : ObjectiveListDataSource) {
     this.dataSource = myDataSource;
   }
+
+  ngOnInit() :void {
+    this.getObjectives();
+  }
+
   ngAfterViewInit(): void {
     this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;
-    this.getObjectives();
-    this.table.dataSource = this.dataSource;
+    this.myMatTable.dataSource = this.dataSource;
   }
 
   getObjectives(): void {
