@@ -12,9 +12,6 @@ import {Injectable} from '@angular/core';
  * encapsulate all logic for fetching and manipulating the displayed data
  * (including sorting, pagination, and filtering).
  */
-@Injectable({
-  providedIn: 'root',
-})
 export class ObjectiveListDataSource extends DataSource<Objective> {
   data : Objective[] = [
     {id:100, name:'Some name 0'},
