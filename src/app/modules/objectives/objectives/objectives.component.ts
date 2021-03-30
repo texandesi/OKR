@@ -55,6 +55,8 @@ export class ObjectivesComponent implements OnInit, AfterViewInit  {
         this.dataSource.data.push(objective);
       });
 
+    this.getObjectives();
+
     this.matTable.renderRows();
     // this.matTable.dataSource = this.dataSource;
     // this.matTable.renderRows();
@@ -64,11 +66,21 @@ export class ObjectivesComponent implements OnInit, AfterViewInit  {
   }
 
   // TODO Implement back the page refresh and delete functionality for the Objectives list.
-  delete(objective: Objective): void {
-    this.dataSource.data = this.dataSource.data.filter(h => h !== objective);
-    // this.dataSource.deleteObjective(objective.id);
+  delete(id: number): void {
+    // this.dataSource.data = this.dataSource.data.filter(h => h !== objective);
+    console.log('Before deleting objectives in data source');
+    this.objectiveService.deleteObjective(id)
+      .subscribe(objective => {
+        this.dataSource.data = this.dataSource.data.filter(h => h.id !== id);
+      });
 
-    // this.getObjectives();
+    this.matTable.renderRows();
+    // this.matTable.dataSource = this.dataSource;
+    // this.matTable.renderRows();
+
+    console.log('After deleting objectives in data source');
+
+
   }
 
 }
