@@ -12,9 +12,6 @@ import {Injectable} from '@angular/core';
  * encapsulate all logic for fetching and manipulating the displayed data
  * (including sorting, pagination, and filtering).
  */
-@Injectable({
-  providedIn: 'root',
-})
 export class ObjectiveListDataSource extends DataSource<Objective> {
   data : Objective[] = [
     {id:100, name:'Some name 0'},
@@ -31,8 +28,13 @@ export class ObjectiveListDataSource extends DataSource<Objective> {
   }
 
   getObjectives(): void {
+    console.log('Before getting objectives in data source');
+
     this.objectiveService.getObjectives()
       .subscribe(objectives => this.data = objectives);
+
+    console.log('After getting objectives in data source');
+
   }
 
   addObjective(name: string): void {
