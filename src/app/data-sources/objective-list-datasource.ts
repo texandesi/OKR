@@ -1,11 +1,13 @@
 import { DataSource } from '@angular/cdk/collections';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
-import { map } from 'rxjs/operators';
-import { Observable, of as observableOf, merge } from 'rxjs';
+import {catchError, map, tap} from 'rxjs/operators';
+import {Observable, of as observableOf, merge, of} from 'rxjs';
 import {ObjectivesDataService} from '../services/objectives-data-service.service';
 import {Objective} from '../modules/objectives/objective';
 import {Injectable} from '@angular/core';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {MessageService} from '../services/message.service';
 
 /**
  * Data source for the ObjectiveList view. This class should
@@ -13,28 +15,19 @@ import {Injectable} from '@angular/core';
  * (including sorting, pagination, and filtering).
  */
 export class ObjectiveListDataSource extends DataSource<Objective> {
-  data : Objective[] = [
-    {id:100, name:'Some name 0'},
-    {id:101, name:'Some name 1'},
 
-  ];
-
+  data !: Objective[];
 
   paginator: MatPaginator | undefined;
   sort: MatSort | undefined;
 
-  constructor(private objectiveService : ObjectivesDataService) {
+  constructor(private objectiveService : ObjectivesDataService,
+  ) {
     super();
   }
 
   getObjectives(): void {
-    console.log('Before getting objectives in data source');
-
-    this.objectiveService.getObjectives()
-      .subscribe(objectives => this.data = objectives);
-
-    console.log('After getting objectives in data source');
-
+    this.objectiveService.getObjectives();
   }
 
   addObjective(name: string): void {
@@ -69,33 +62,12 @@ export class ObjectiveListDataSource extends DataSource<Objective> {
 
 
   addObjective(name: string): void {
-    name = name.trim();
-    if (!name) { return; }
-    this.objectiveService.addObjective({ name } as Objective)
-      .subscribe(objective => {
-        this.data.push(objective);
-      });
-
-    this.getObjectives();
-
+    this.objectiveService.addObjective({name} as Objective);
   }
 
-  deleteObjective(idValue: number): void {
-    // TODO Remove console log messages from all the code
-    // console.log("Id value in data source is " + idValue);
-    // console.log("Length of data in data source before is " + this.data.length);
-
-    this.objectiveService.deleteObjective( idValue  )
-      .subscribe(objective => { objective &&
-      this.data.filter(h => h.id !== objective.id);
-      });
-
-    this.getObjectives();
-
-    // console.log("Length of data in data source after is " + this.data.length);
-
-
-  }
+  deleteObjective(id: number): void {
+    this.objectiveService.deleteObjective(id);
+ }
 
 
   /**
@@ -159,3 +131,4 @@ export class ObjectiveListDataSource extends DataSource<Objective> {
 function compare(a: string | number, b: string | number, isAsc: boolean): number {
   return (a < b ? -1 : 1) * (isAsc ? 1 : -1);
 }
+
