@@ -120,6 +120,6 @@ export class ObjectivesDataService {
 
   /** Log a ObjectiveService message with the MessageService */
   private log(message: string) {
-    console.log(`ObjectiveService: ${message}`);
+    this.messageService.add(`ObjectiveService: ${message}`);
   }
 }
