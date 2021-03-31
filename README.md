@@ -1,6 +1,6 @@
 # okr-app
 
-# Sample app to learn Angular to build a simple app to track OKRs
+# Sample application to learn Angular to build a simple app to track OKRs
 
 This repository is for my work to build a simple OKR app. I am learning Angular 2 and now seems as a good time as any to
 open my code to public scrutiny.
