@@ -11,6 +11,7 @@ import {ObjectiveDetailComponent} from './objective-detail/objective-detail.comp
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
+import {MatSliderModule} from '@angular/material/slider';
 
 
 @NgModule({
@@ -27,6 +28,8 @@ import { MatSortModule } from '@angular/material/sort';
     MatTableModule,
     MatPaginatorModule,
     MatSortModule,
+    MatSliderModule,
+
   ],
   exports: [
     ObjectiveSearchComponent,

@@ -1,6 +1,6 @@
 <h2>My Objectives</h2>
 
-<div>
+<div class="mat-elevation-z8">
   <label id="new-objective">Objective name: </label>
   <input #objectiveName for="new-objective"/>
 
@@ -10,8 +10,8 @@
   </button>
 </div>
 
-<div class="mat-elevation-z8">
-  <mat-table [dataSource]="dataSource" class="full-width-table" matSort aria-label="Elements">
+<div>
+  <mat-table  matSort [dataSource]="dataSource" class="mat-elevation-z8">
     <!-- Id Column -->
     <ng-container matColumnDef="id">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>Id</th>
@@ -27,16 +27,17 @@
     <!-- Name Column -->
     <ng-container matColumnDef="details">
       <th mat-header-cell *matHeaderCellDef >Details</th>
-      <td mat-cell *matCellDef="let row"><textarea rows="1">{{row.details}}</textarea></td>
+      <td mat-cell *matCellDef="let row"><input matInput type="text" [(ngModel)]="row.details"></td>
+
     </ng-container>
+
+
 
     <!-- Name Column -->
     <ng-container matColumnDef="delete">
       <th mat-header-cell *matHeaderCellDef >Delete</th>
       <td mat-cell *matCellDef="let row">
-        <button (click)="delete(row.id); objectiveName.value=''" class="delete-button">
-          Delete objective
-        </button>
+        <button (click)="delete(row.id); objectiveName.value=''" class="mat-raised-button" color="primary">Delete</button>
 
       </td>
     </ng-container>
@@ -53,81 +54,5 @@
   </mat-paginator>
 </div>
 
-
-<hr/>
-
-
-<table class="table table-hover">
-  <thead>
-  <tr>
-    <th scope="col">Type</th>
-    <th scope="col">Column heading</th>
-    <th scope="col">Column heading</th>
-    <th scope="col">Column heading</th>
-  </tr>
-  </thead>
-  <tbody>
-  <tr class="table-active">
-    <th scope="row">Active</th>
-    <td>Column content</td>
-    <td>Column content</td>
-    <td>Column content</td>
-  </tr>
-  <tr>
-    <th scope="row">Default</th>
-    <td>Column content</td>
-    <td>Column content</td>
-    <td>Column content</td>
-  </tr>
-  <tr class="table-primary">
-    <th scope="row">Primary</th>
-    <td>Column content</td>
-    <td>Column content</td>
-    <td>Column content</td>
-  </tr>
-  <tr class="table-secondary">
-    <th scope="row">Secondary</th>
-    <td>Column content</td>
-    <td>Column content</td>
-    <td>Column content</td>
-  </tr>
-  <tr class="table-success">
-    <th scope="row">Success</th>
-    <td>Column content</td>
-    <td>Column content</td>
-    <td>Column content</td>
-  </tr>
-  <tr class="table-danger">
-    <th scope="row">Danger</th>
-    <td>Column content</td>
-    <td>Column content</td>
-    <td>Column content</td>
-  </tr>
-  <tr class="table-warning">
-    <th scope="row">Warning</th>
-    <td>Column content</td>
-    <td>Column content</td>
-    <td>Column content</td>
-  </tr>
-  <tr class="table-info">
-    <th scope="row">Info</th>
-    <td>Column content</td>
-    <td>Column content</td>
-    <td>Column content</td>
-  </tr>
-  <tr class="table-light">
-    <th scope="row">Light</th>
-    <td>Column content</td>
-    <td>Column content</td>
-    <td>Column content</td>
-  </tr>
-  <tr class="table-dark">
-    <th scope="row">Dark</th>
-    <td>Column content</td>
-    <td>Column content</td>
-    <td>Column content</td>
-  </tr>
-  </tbody>
-</table>
-
+<mat-slider min="1" max="100" step="1" value="1"></mat-slider>
 
