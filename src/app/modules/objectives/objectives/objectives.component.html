@@ -1,16 +1,20 @@
-<h2>My Objectives</h2>
-
 <div class="mat-elevation-z8">
-  <label id="new-objective">Objective name: </label>
-  <input #objectiveName for="new-objective"/>
-
-  <!-- (click) passes input value to add() and then clears the input -->
-  <button (click)="add(objectiveName.value); objectiveName.value=''" class="add-button">
-    Add objective
-  </button>
+  <h2>My Objectives</h2>
 </div>
 
-<div>
+<div class="mat-elevation-z8">
+  <!-- (click) passes input value to add() and then clears the input -->
+  <button (click)="add(objectiveName.value); objectiveName.value=''" class="mat-raised-button" color="primary">
+    Add objective
+  </button>
+  <mat-form-field >
+    <mat-label>Objective name: </mat-label>
+    <input matInput  #objectiveName for="new-objective" value="Add objective here">
+  </mat-form-field>
+
+</div>
+
+<div class="mat-elevation-z8">
   <mat-table  matSort [dataSource]="dataSource" class="mat-elevation-z8">
     <!-- Id Column -->
     <ng-container matColumnDef="id">
