@@ -27,3 +27,15 @@ class Choice(models.Model):
 
     def __str__(self):
         return self.choice_text
+
+
+class Objectives(models.Model):
+    id = models.AutoField(primary_key=True)
+    name = models.CharField(max_length=50)
+    description = models.CharField(max_length=100)
+
+    class Meta:
+        db_table = "objectives"
+
+    def __str__(self):
+        return self
