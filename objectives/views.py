@@ -12,4 +12,4 @@ class ObjectiveViewSet(viewsets.ModelViewSet):
     """
     queryset = Objective.objects.all().order_by('id')
     serializer_class = ObjectiveSerializer
-    permission_classes = [permissions.IsAuthenticated]
+    # permission_classes = [permissions.IsAuthenticated]
