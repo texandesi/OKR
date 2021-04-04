@@ -5,9 +5,6 @@ import {catchError, map, tap} from 'rxjs/operators';
 import {Observable, of as observableOf, merge, of} from 'rxjs';
 import {ObjectivesDataService} from '../services/objectives-data-service.service';
 import {Objective} from '../modules/objectives/objective';
-import {Injectable} from '@angular/core';
-import {HttpClient, HttpHeaders} from '@angular/common/http';
-import {MessageService} from '../services/message.service';
 
 /**
  * Data source for the ObjectiveList view. This class should
@@ -28,35 +25,6 @@ export class ObjectiveListDataSource extends DataSource<Objective> {
 
   getObjectives(): void {
     this.objectiveService.getObjectives();
-  }
-
-  addObjective(name: string): void {
-    name = name.trim();
-    if (!name) { return; }
-    this.objectiveService.addObjective({ name } as Objective)
-      .subscribe(objective => {
-        this.data.push(objective);
-      });
-
-    this.getObjectives();
-
-  }
-
-  deleteObjective(idValue: number): void {
-    // TODO Remove console log messages from all the code
-    // console.log("Id value in data source is " + idValue);
-    // console.log("Length of data in data source before is " + this.data.length);
-
-    this.objectiveService.deleteObjective( idValue  )
-      .subscribe(objective => { objective &&
-        this.data.filter(h => h.id !== objective.id);
-      });
-
-//    this.getObjectives();
-
-    // console.log("Length of data in data source after is " + this.data.length);
-
-
   }
 
 

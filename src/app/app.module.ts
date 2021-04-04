@@ -17,7 +17,6 @@ import {PageNotFoundComponent} from './modules/page-not-found/page-not-found.com
 import {ComposeMessageComponent} from './modules/compose-message/compose-message.component';
 
 import {AuthModule} from './modules/auth/auth.module';
-import {HttpClientInMemoryWebApiModule} from 'angular-in-memory-web-api';
 import {InMemoryDataService} from './services/in-memory-data.service';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -47,13 +46,6 @@ import {MatSliderModule} from '@angular/material/slider';
     HttpClientModule,
     FormsModule,
 
-
-    // The HttpClientInMemoryWebApiModule module intercepts HTTP requests
-    // and returns simulated server responses.
-    // Remove it when a real server is ready to receive requests.
-    HttpClientInMemoryWebApiModule.forRoot(
-      InMemoryDataService, { dataEncapsulation: false }
-    ),
 
     BrowserAnimationsModule,
 

@@ -7,16 +7,20 @@ import { catchError, map, tap } from 'rxjs/operators';
 import { MessageService } from './message.service';
 import {Objective} from '../modules/objectives/objective';
 import {logging} from 'protractor';
+import {stringify} from 'querystring';
 
 
 @Injectable({ providedIn: 'root' })
 export class ObjectivesDataService {
 
-  private objectivesUrl = 'api/objectives';  // URL to web api
+  private objectivesUrl = 'http://127.0.0.1:8000/objectives/';  // URL to web api
 
   httpOptions = {
-    headers: new HttpHeaders({ 'Content-Type': 'application/json' })
-  };
+    headers: new HttpHeaders({
+      'Content-Type': 'application/json',
+    })
+};
+
 
   constructor(
     private http: HttpClient,
@@ -24,18 +28,16 @@ export class ObjectivesDataService {
 
   /** GET objectives from the server */
   getObjectives(): Observable<Objective[]> {
-    this.log('Before getting objectives in objectives data service');
-
-    return this.http.get<Objective[]>(this.objectivesUrl)
+    return this.http.get<any>(this.objectivesUrl)
       .pipe(
-        tap(_ => this.log('fetched objectives')),
-        catchError(this.handleError<Objective[]>('getObjectives', []))
+        tap((response) => this.log('fetched objectives ' + response.toString())),
+        catchError(this.handleError<Objective[]>('failed to getObjectives', []))
       );
   }
 
   /** GET objective by id. Return `undefined` when id not found */
   getObjectiveNo404<Data>(id: number): Observable<Objective> {
-    const url = `${this.objectivesUrl}/?id=${id}`;
+    const url = `${this.objectivesUrl}/${id}/`;
     return this.http.get<Objective[]>(url)
       .pipe(
         map(objectives => objectives[0]), // returns a {0|1} element array
@@ -49,7 +51,7 @@ export class ObjectivesDataService {
 
   /** GET objective by id. Will 404 if id not found */
   getObjective(id: number): Observable<Objective> {
-    const url = `${this.objectivesUrl}/${id}`;
+    const url = `${this.objectivesUrl}/${id}/`;
     return this.http.get<Objective>(url).pipe(
       tap(_ => this.log(`fetched objective id=${id}`)),
       catchError(this.handleError<Objective>(`getObjective id=${id}`))
@@ -74,7 +76,13 @@ export class ObjectivesDataService {
 
   /** POST: add a new objective to the server */
   addObjective(objective: Objective): Observable<Objective> {
-    return this.http.post<Objective>(this.objectivesUrl, objective, this.httpOptions).pipe(
+    var addHttpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/x-www-form-urlencoded',
+      })
+    };
+
+    return this.http.post<Objective>(this.objectivesUrl, objective, addHttpOptions).pipe(
       tap((newObjective: Objective) => this.log(`added objective w/ id=${newObjective.id}`)),
       catchError(this.handleError<Objective>('addObjective'))
     );
@@ -82,7 +90,7 @@ export class ObjectivesDataService {
 
   /** DELETE: delete the objective from the server */
   deleteObjective(id: number): Observable<Objective> {
-    const url = `${this.objectivesUrl}/${id}`;
+    const url = `${this.objectivesUrl}/${id}/`;
 
     return this.http.delete<Objective>(url, this.httpOptions).pipe(
       tap(_ => this.log(`deleted objective id=${id}`)),
@@ -120,6 +128,7 @@ export class ObjectivesDataService {
 
   /** Log a ObjectiveService message with the MessageService */
   private log(message: string) {
+    console.log(`ObjectiveService: ${message}`);
     this.messageService.add(`ObjectiveService: ${message}`);
   }
 }
