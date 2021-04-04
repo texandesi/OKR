@@ -18,7 +18,7 @@ export class ObjectivesComponent implements OnInit, AfterViewInit  {
   dataSource : MatTableDataSource<Objective> = new MatTableDataSource<Objective>();
 
   /** Columns displayed in the table. Columns IDs can be added, removed, or reordered. */
-  displayedColumns = ['id', 'name', 'details', 'delete'];
+  displayedColumns = ['id', 'name', 'description', 'delete'];
 
   constructor(private objectiveService : ObjectivesDataService) {
     // this.dataSource = myDataSource;

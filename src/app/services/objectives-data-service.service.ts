@@ -13,7 +13,7 @@ import {stringify} from 'querystring';
 @Injectable({ providedIn: 'root' })
 export class ObjectivesDataService {
 
-  private objectivesUrl = 'http://127.0.0.1:8000/objectives/';  // URL to web api
+  private objectivesUrl = 'http://127.0.0.1:8000/objectives';  // URL to web api
 
   httpOptions = {
     headers: new HttpHeaders({
@@ -76,13 +76,28 @@ export class ObjectivesDataService {
 
   /** POST: add a new objective to the server */
   addObjective(objective: Objective): Observable<Objective> {
-    var addHttpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/x-www-form-urlencoded',
-      })
-    };
+    // var addHttpOptions = {
+    //   headers: new HttpHeaders({
+    //     'Content-Type': 'application/x-www-form-urlencoded',
+    //   })
+    // };
+    //
+    // objective.description='Some description here';
+    //  console.log('Adding objective with name ' + objective.name);
+    // console.log('Adding objective with description ' + objective.description);
 
-    return this.http.post<Objective>(this.objectivesUrl, objective, addHttpOptions).pipe(
+     // console.log("Stringified Objective object is " + JSON.parse(JSON.stringify(objective)));
+
+
+    // const body = { name: 'NAME', description: 'DESCRIPTION' };
+    // const body = JSON.parse(JSON.stringify(objective)) ;
+
+    // const body = { name: objective.name, description: 'DESCRIPTION' };
+    //TODO - Add error handling for name and description
+    const body = { name: objective.name, description: objective.description };
+
+
+    return this.http.post<Objective>(this.objectivesUrl, body, this.httpOptions).pipe(
       tap((newObjective: Objective) => this.log(`added objective w/ id=${newObjective.id}`)),
       catchError(this.handleError<Objective>('addObjective'))
     );
