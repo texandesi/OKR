@@ -11,9 +11,10 @@ import {ObjectiveDetailComponent} from './objective-detail/objective-detail.comp
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
-import {MatSliderModule} from '@angular/material/slider';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
+import {MatButtonModule} from '@angular/material/button';
+
 
 
 @NgModule({
@@ -30,9 +31,9 @@ import {MatInputModule} from '@angular/material/input';
     MatTableModule,
     MatPaginatorModule,
     MatSortModule,
-    MatSliderModule,
     MatFormFieldModule,
     MatInputModule,
+    MatButtonModule,
 
   ],
   exports: [

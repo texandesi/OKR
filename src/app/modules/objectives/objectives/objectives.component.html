@@ -4,8 +4,8 @@
 
 <div class="mat-elevation-z8">
   <!-- (click) passes input value to add() and then clears the input -->
-  <button (click)="add(objectiveName.value, objectiveDescription.value); objectiveName.value=''"
-          class="mat-raised-button" color="primary">
+  <button mat-raised-button (click)="add(objectiveName.value, objectiveDescription.value); objectiveName.value=''"
+          color="primary">
     Add objective
   </button>
   <mat-form-field>
@@ -21,7 +21,7 @@
 </div>
 
 <div class="mat-elevation-z8">
-  <mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort>
+  <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort>
     <!-- Id Column -->
     <ng-container matColumnDef="id">
       <th *matHeaderCellDef mat-header-cell mat-sort-header>Id</th>
@@ -46,8 +46,8 @@
     <ng-container matColumnDef="delete">
       <th *matHeaderCellDef mat-header-cell>Delete</th>
       <td *matCellDef="let row" mat-cell>
-        <button (click)="delete(row.id); objectiveName.value=''; objectiveDescription.value=''"
-                class="mat-raised-button" color="primary">Delete
+        <button mat-raised-button (click)="delete(row.id); objectiveName.value=''; objectiveDescription.value=''"
+                color="primary">Delete
         </button>
 
       </td>
@@ -55,7 +55,7 @@
 
     <tr *matHeaderRowDef="displayedColumns" mat-header-row></tr>
     <tr *matRowDef="let row; columns: displayedColumns;" mat-row></tr>
-  </mat-table>
+  </table>
 
   <mat-paginator #paginator
                  [length]="dataSource?.data?.length"
@@ -64,6 +64,4 @@
                  [pageSize]="20">
   </mat-paginator>
 </div>
-
-<mat-slider max="100" min="1" step="1" value="1"></mat-slider>
 
