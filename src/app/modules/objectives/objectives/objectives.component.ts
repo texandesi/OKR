@@ -46,23 +46,22 @@ export class ObjectivesComponent implements OnInit, AfterViewInit  {
     // console.log('After getting objectives in data source');
   }
 
-  add(name: string): void {
+  add(
+    name: string,
+    description: string
+  ): void
+  {
     // console.log('Before Adding objectives in data source');
     name = name.trim();
     if (!name) { return; }
-    this.objectiveService.addObjective({ name } as Objective)
+    description = description.trim();
+    if (!description) { return; }
+    this.objectiveService.addObjective({ name: name, description:description } as Objective)
       .subscribe(objective => {
         this.dataSource.data.push(objective);
       });
 
     this.getObjectives();
-
-    this.matTable.renderRows();
-    // this.matTable.dataSource = this.dataSource;
-    // this.matTable.renderRows();
-
-    // console.log('After Adding objectives in data source');
-
   }
 
   // TODO Implement back the page refresh and delete functionality for the Objectives list.
@@ -73,14 +72,6 @@ export class ObjectivesComponent implements OnInit, AfterViewInit  {
       .subscribe(objective => {
         this.dataSource.data = this.dataSource.data.filter(h => h.id !== id);
       });
-
-    this.matTable.renderRows();
-    // this.matTable.dataSource = this.dataSource;
-    // this.matTable.renderRows();
-
-    // console.log('After deleting objectives in data source');
-
-
   }
 
 }
