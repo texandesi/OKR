@@ -7,14 +7,16 @@ import {KeyResultsComponent} from './modules/key-results/key-results.component';
 import {DashboardComponent} from './modules/dashboard/dashboard.component';
 import {KpisComponent} from './modules/kpis/kpis.component';
 import {AdminComponent} from './modules/admin/admin/admin.component';
+import {ObjectivesComponent} from './modules/objectives/objectives/objectives.component';
 
 const appRoutes: Routes = [
   { path: 'key-results', component: KeyResultsComponent },
   { path: 'kpis', component: KpisComponent },
   { path: 'admin', component: AdminComponent },
   { path: 'dashboard', component: DashboardComponent },
+  { path: 'objectives', component: ObjectivesComponent },
   { path: '', redirectTo: '/objectives', pathMatch: 'full'},
-  { path: '**', component: PageNotFoundComponent}
+  { path: '**', component: PageNotFoundComponent},
 ];
 
 @NgModule({

@@ -8,6 +8,7 @@ import {ObjectiveDetailComponent} from './objective-detail/objective-detail.comp
 const routes: Routes = [
   {
     path: 'objectives',
+    component: ObjectivesComponent,
     children: [
       {
         path: 'form',
@@ -23,7 +24,7 @@ const routes: Routes = [
       },
       {
         path: '',
-        component: ObjectivesComponent
+        component: ObjectiveSearchComponent
       },
     ]
   },

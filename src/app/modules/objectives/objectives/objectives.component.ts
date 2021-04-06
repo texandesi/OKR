@@ -4,6 +4,8 @@ import {MatPaginator} from '@angular/material/paginator';
 import {MatSort} from '@angular/material/sort';
 import {MatTable, MatTableDataSource} from '@angular/material/table';
 import {ObjectivesDataService} from '../../../services/objectives-data-service.service';
+import {MatDialog, MatDialogConfig} from '@angular/material/dialog';
+import {AddObjectiveComponent} from '../add-objective/add-objective.component';
 
 @Component({
   selector: 'app-objectives',
@@ -20,7 +22,10 @@ export class ObjectivesComponent implements OnInit, AfterViewInit  {
   /** Columns displayed in the table. Columns IDs can be added, removed, or reordered. */
   displayedColumns = ['id', 'name', 'description', 'delete'];
 
-  constructor(private objectiveService : ObjectivesDataService) {
+  constructor(
+    private objectiveService : ObjectivesDataService,
+    private dialog: MatDialog,
+  ) {
     // this.dataSource = myDataSource;
   }
 
@@ -44,6 +49,36 @@ export class ObjectivesComponent implements OnInit, AfterViewInit  {
       .subscribe(objectives => this.dataSource.data = objectives);
 
     // console.log('After getting objectives in data source');
+
+    this.matTable.renderRows();
+  }
+
+  openDialog() {
+
+    const dialogConfig = new MatDialogConfig();
+    var name = '';
+    var description = '';
+
+    dialogConfig.disableClose = true;
+    dialogConfig.autoFocus = true;
+
+    dialogConfig.data = {
+      name: 'Enter name here',
+      description: 'Enter description here',
+    };
+
+    this.dialog.open(AddObjectiveComponent, dialogConfig);
+
+    const dialogRef = this.dialog.open(AddObjectiveComponent, dialogConfig);
+
+    dialogRef.afterClosed().subscribe(
+      data => {
+        console.log('Dialog output:', data);
+        this.add(data.name, data.description);
+      }
+    );
+
+
   }
 
   add(

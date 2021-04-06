@@ -11,19 +11,19 @@ import {KeyResultsModule} from './modules/key-results/key-results.module';
 import {KpisModule} from './modules/kpis/kpis.module';
 import {ObjectivesModule} from './modules/objectives/objectives.module';
 
-import {FormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 
 import {PageNotFoundComponent} from './modules/page-not-found/page-not-found.component';
 import {ComposeMessageComponent} from './modules/compose-message/compose-message.component';
 
 import {AuthModule} from './modules/auth/auth.module';
-import {InMemoryDataService} from './services/in-memory-data.service';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
-import {MatSliderModule} from '@angular/material/slider';
+import { AddObjectiveComponent } from './modules/objectives/add-objective/add-objective.component';
+import {MatDialogModule} from '@angular/material/dialog';
 
 @NgModule({
   declarations: [
@@ -33,32 +33,30 @@ import {MatSliderModule} from '@angular/material/slider';
     DashboardComponent,
     ComposeMessageComponent,
     PageNotFoundComponent,
+    AddObjectiveComponent,
   ],
   imports: [
-    BrowserModule,
-    FormsModule,
+    AppRoutingModule,
     AuthModule,
+    BrowserAnimationsModule,
+    BrowserModule,
     DashboardModule,
+    FormsModule,
+    FormsModule,
+    HttpClientModule,
     KeyResultsModule,
     KpisModule,
-    ObjectivesModule,
-    AppRoutingModule,
-    HttpClientModule,
-    FormsModule,
-
-
-    BrowserAnimationsModule,
-
-    MatTableModule,
-
+    MatDialogModule,
     MatPaginatorModule,
-
-    MatSortModule
-
+    MatSortModule,
+    MatTableModule,
+    ObjectivesModule,
+    ReactiveFormsModule,
 
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [AddObjectiveComponent]
 })
 export class AppModule { }
 

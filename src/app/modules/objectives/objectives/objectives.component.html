@@ -4,20 +4,10 @@
 
 <div class="mat-elevation-z8">
   <!-- (click) passes input value to add() and then clears the input -->
-  <button mat-raised-button (click)="add(objectiveName.value, objectiveDescription.value); objectiveName.value=''"
+  <button mat-raised-button (click)="openDialog();"
           color="primary">
     Add objective
   </button>
-  <mat-form-field>
-    <mat-label>Objective name:</mat-label>
-    <input #objectiveName for="new-objective" matInput value="Add objective here">
-  </mat-form-field>
-
-  <mat-form-field>
-    <mat-label>Objective description:</mat-label>
-    <input #objectiveDescription for="new-objective" matInput value="Add objective description here">
-  </mat-form-field>
-
 </div>
 
 <div class="mat-elevation-z8">
@@ -46,7 +36,7 @@
     <ng-container matColumnDef="delete">
       <th *matHeaderCellDef mat-header-cell>Delete</th>
       <td *matCellDef="let row" mat-cell>
-        <button mat-raised-button (click)="delete(row.id); objectiveName.value=''; objectiveDescription.value=''"
+        <button mat-raised-button (click)="delete(row.id);"
                 color="primary">Delete
         </button>
 
