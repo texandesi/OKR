@@ -48,8 +48,6 @@ export class ObjectivesComponent implements OnInit, AfterViewInit  {
     this.objectiveService.getObjectives()
       .subscribe(objectives => this.dataSource.data = objectives);
 
-    // console.log('After getting objectives in data source');
-
     this.matTable.renderRows();
   }
 
