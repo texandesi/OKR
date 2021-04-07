@@ -13,17 +13,16 @@ import {ObjectivesModule} from './modules/objectives/objectives.module';
 
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 
-import {PageNotFoundComponent} from './modules/page-not-found/page-not-found.component';
-import {ComposeMessageComponent} from './modules/compose-message/compose-message.component';
-
 import {AuthModule} from './modules/auth/auth.module';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
-import { ObjectiveEditComponent } from './modules/objectives/objective-edit/objective-edit.component';
 import {MatDialogModule} from '@angular/material/dialog';
+import {PageNotFoundComponent} from './modules/page-not-found/page-not-found.component';
+import {ComposeMessageComponent} from './modules/compose-message/compose-message.component';
+import { ObjectiveEditComponent } from './modules/objectives/objective-edit/objective-edit.component';
 
 @NgModule({
   declarations: [

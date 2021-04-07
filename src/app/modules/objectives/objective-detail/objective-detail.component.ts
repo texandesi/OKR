@@ -25,7 +25,7 @@ export class ObjectiveDetailComponent implements OnInit {
   }
 
   getObjective(): void {
-    // Added a Typescript ignore because the code was failing. Need to remove the ignore and put proper notation
+    // TODO Added a Typescript ignore because the code was failing. Need to remove the ignore and put proper notation
     // @ts-ignore
     const id = +this.route.snapshot.paramMap.get('id');
     this.objectiveService.getObjective(id)

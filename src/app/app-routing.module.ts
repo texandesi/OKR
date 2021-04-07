@@ -8,13 +8,13 @@ import {DashboardComponent} from './modules/dashboard/dashboard.component';
 import {KpisComponent} from './modules/kpis/kpi-list/kpis.component';
 import {AdminComponent} from './modules/admin/admin/admin.component';
 import {ObjectiveListComponent} from './modules/objectives/objective-list/objective-list.component';
+import {ObjectivesRoutingModule} from "./modules/objectives/objectives-routing.module";
 
 const appRoutes: Routes = [
   { path: 'key-results', component: KeyResultsComponent },
   { path: 'kpi-list', component: KpisComponent },
   { path: 'admin', component: AdminComponent },
   { path: 'dashboard', component: DashboardComponent },
-  { path: 'objectives', component: ObjectiveListComponent },
   { path: '', redirectTo: '/objectives', pathMatch: 'full'},
   { path: '**', component: PageNotFoundComponent},
 ];
@@ -29,7 +29,8 @@ const appRoutes: Routes = [
     )
   ],
   exports: [
-    RouterModule
+    RouterModule,
+    ObjectivesRoutingModule
   ]
 })
 export class AppRoutingModule {

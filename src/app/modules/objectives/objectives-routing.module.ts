@@ -9,20 +9,16 @@ const routes: Routes = [
     path: 'objectives',
     children: [
       {
-        path: 'detail/:id',
-        component: ObjectiveDetailComponent
-      },
-      {
         path: 'search',
         component: ObjectiveSearchComponent
       },
       {
-        path: 'objective-list',
-        component: ObjectiveListComponent
+        path: 'detail/:id',
+        component: ObjectiveDetailComponent
       },
       {
         path: '',
-        component: ObjectiveSearchComponent
+        component: ObjectiveListComponent
       },
     ]
   },
