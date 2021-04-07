@@ -3,11 +3,10 @@ from rest_framework import routers
 
 from . import views
 
-# app_name = 'objectives'
+# app_name = 'keyresults'
 
 router = routers.DefaultRouter()
-router.register(r'', views.ObjectiveViewSet)
-# router.register(r'objectives/<pk>', views.ObjectiveViewSet)
+router.register(r'', views.KeyResultsViewSet)
 
 urlpatterns = [
     path('', include(router.urls)),
@@ -18,4 +17,3 @@ urlpatterns = [
     # path('<int:question_id>/vote/', views.vote, name='vote'),
 
 ]
-
