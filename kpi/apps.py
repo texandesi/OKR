@@ -1,5 +1,5 @@
 from django.apps import AppConfig
 
 
-class KpiConfig(AppConfig):
+class KpisConfig(AppConfig):
     name = 'kpi'

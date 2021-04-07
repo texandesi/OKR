@@ -38,8 +38,12 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'keyresults.apps.KeyResultsConfig',
     'objectives.apps.ObjectivesConfig',
+    'keyresults.apps.KeyResultsConfig',
+    'kpi.apps.KpisConfig',
+    'user.apps.UsersConfig',
+    'group.apps.GroupsConfig',
+    'role.apps.RolesConfig',
     'polls.apps.PollsConfig',
     'rest_framework',
     # CORS

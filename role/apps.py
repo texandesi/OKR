@@ -1,5 +1,5 @@
 from django.apps import AppConfig
 
 
-class RoleConfig(AppConfig):
+class RolesConfig(AppConfig):
     name = 'role'

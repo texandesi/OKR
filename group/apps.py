@@ -1,5 +1,5 @@
 from django.apps import AppConfig
 
 
-class GroupConfig(AppConfig):
+class GroupsConfig(AppConfig):
     name = 'group'
