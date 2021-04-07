@@ -20,6 +20,7 @@ urlpatterns = [
     path('users/', include('user.urls')),
     path('roles/', include('role.urls')),
     path('groups/', include('group.urls')),
+    path('kpis/', include('kpi.urls')),
     path('keyresults/', include('keyresults.urls')),
     path('objectives/', include('objectives.urls')),
     path('polls/', include('polls.urls')),
