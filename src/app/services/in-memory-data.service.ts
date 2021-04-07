@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { InMemoryDbService } from 'angular-in-memory-web-api';
-import {Objective} from '../modules/objectives/objective';
+import {Objective} from '../data-objects/objective';
 
 
 @Injectable({
@@ -22,9 +22,9 @@ export class InMemoryDataService implements InMemoryDbService {
   }
 
   // Overrides the genId method to ensure that a objective always has an id.
-  // If the objectives array is empty,
+  // If the objective-list array is empty,
   // the method below returns the initial number (11).
-  // if the objectives array is not empty, the method below returns the highest
+  // if the objective-list array is not empty, the method below returns the highest
   // objective id + 1.
   genId(objectives: Objective[]): number {
     return objectives.length > 0 ? Math.max(...objectives.map(objective => objective.id)) + 1 : 11;

@@ -1,19 +1,13 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import {ObjectivesComponent} from './objectives/objectives.component';
+import {ObjectiveListComponent} from './objective-list/objective-list.component';
 import {ObjectiveSearchComponent} from './objective-search/objective-search.component';
-import {ObjectiveFormComponent} from './objective-form/objective-form.component';
 import {ObjectiveDetailComponent} from './objective-detail/objective-detail.component';
 
 const routes: Routes = [
   {
     path: 'objectives',
-    component: ObjectivesComponent,
     children: [
-      {
-        path: 'form',
-        component: ObjectiveFormComponent
-      },
       {
         path: 'detail/:id',
         component: ObjectiveDetailComponent
@@ -21,6 +15,10 @@ const routes: Routes = [
       {
         path: 'search',
         component: ObjectiveSearchComponent
+      },
+      {
+        path: 'objective-list',
+        component: ObjectiveListComponent
       },
       {
         path: '',

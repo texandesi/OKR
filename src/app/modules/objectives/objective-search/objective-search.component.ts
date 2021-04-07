@@ -6,7 +6,7 @@ import {
   debounceTime, distinctUntilChanged, switchMap
 } from 'rxjs/operators';
 
-import { Objective } from '../objective';
+import { Objective } from '../../../data-objects/objective';
 import {ObjectivesDataService} from '../../../services/objectives-data-service.service';
 
 @Component({

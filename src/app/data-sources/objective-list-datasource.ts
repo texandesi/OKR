@@ -4,7 +4,7 @@ import { MatSort } from '@angular/material/sort';
 import {catchError, map, tap} from 'rxjs/operators';
 import {Observable, of as observableOf, merge, of} from 'rxjs';
 import {ObjectivesDataService} from '../services/objectives-data-service.service';
-import {Objective} from '../modules/objectives/objective';
+import {Objective} from '../data-objects/objective';
 
 /**
  * Data source for the ObjectiveList view. This class should

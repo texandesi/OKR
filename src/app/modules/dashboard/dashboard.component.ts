@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {Objective} from '../objectives/objective';
+import {Objective} from '../../data-objects/objective';
 import {ObjectivesDataService} from '../../services/objectives-data-service.service';
 
 @Component({

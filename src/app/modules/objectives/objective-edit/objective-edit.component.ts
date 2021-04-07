@@ -4,17 +4,17 @@ import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 
 @Component({
   selector: 'app-add-objective-component',
-  templateUrl: './add-objective.component.html',
-  styleUrls: ['./add-objective.component.scss']
+  templateUrl: './objective-edit.component.html',
+  styleUrls: ['./objective-edit.component.scss']
 })
-export class AddObjectiveComponent implements OnInit {
+export class ObjectiveEditComponent implements OnInit {
   form!: FormGroup;
   name!: string;
   description!: string;
 
   constructor(
     private fb: FormBuilder,
-    private dialogRef: MatDialogRef<AddObjectiveComponent>,
+    private dialogRef: MatDialogRef<ObjectiveEditComponent>,
 
     // @ts-ignore
     @Inject(MAT_DIALOG_DATA) data) {

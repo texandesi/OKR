@@ -5,16 +5,16 @@ import {PageNotFoundComponent} from './modules/page-not-found/page-not-found.com
 
 import {KeyResultsComponent} from './modules/key-results/key-results.component';
 import {DashboardComponent} from './modules/dashboard/dashboard.component';
-import {KpisComponent} from './modules/kpis/kpis.component';
+import {KpisComponent} from './modules/kpis/kpi-list/kpis.component';
 import {AdminComponent} from './modules/admin/admin/admin.component';
-import {ObjectivesComponent} from './modules/objectives/objectives/objectives.component';
+import {ObjectiveListComponent} from './modules/objectives/objective-list/objective-list.component';
 
 const appRoutes: Routes = [
   { path: 'key-results', component: KeyResultsComponent },
-  { path: 'kpis', component: KpisComponent },
+  { path: 'kpi-list', component: KpisComponent },
   { path: 'admin', component: AdminComponent },
   { path: 'dashboard', component: DashboardComponent },
-  { path: 'objectives', component: ObjectivesComponent },
+  { path: 'objectives', component: ObjectiveListComponent },
   { path: '', redirectTo: '/objectives', pathMatch: 'full'},
   { path: '**', component: PageNotFoundComponent},
 ];

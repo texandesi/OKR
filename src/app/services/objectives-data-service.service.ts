@@ -5,15 +5,12 @@ import { Observable, of } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 
 import { MessageService } from './message.service';
-import {Objective} from '../modules/objectives/objective';
-import {logging} from 'protractor';
-import {stringify} from 'querystring';
-
+import {Objective} from '../data-objects/objective';
 
 @Injectable({ providedIn: 'root' })
 export class ObjectivesDataService {
 
-  private objectivesUrl = 'http://127.0.0.1:8000/objectives';  // URL to web api
+  private objectivesUrl = 'http://127.0.0.1:8000/objectives/';  // URL to web api
 
   httpOptions = {
     headers: new HttpHeaders({
@@ -26,11 +23,11 @@ export class ObjectivesDataService {
     private http: HttpClient,
     private messageService: MessageService) { }
 
-  /** GET objectives from the server */
+  /** GET objective-list from the server */
   getObjectives(): Observable<Objective[]> {
     return this.http.get<any>(this.objectivesUrl)
       .pipe(
-        tap((response) => this.log('fetched objectives ' + response.toString())),
+        tap((response) => this.log('fetched objective-list ' + response.toString())),
         catchError(this.handleError<Objective[]>('failed to getObjectives', []))
       );
   }
@@ -58,7 +55,7 @@ export class ObjectivesDataService {
     );
   }
 
-  /* GET objectives whose name contains search term */
+  /* GET objective-list whose name contains search term */
   searchObjectives(term: string): Observable<Objective[]> {
     if (!term.trim()) {
       // if not search term, return empty objective array.

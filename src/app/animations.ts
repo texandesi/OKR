@@ -4,7 +4,7 @@ import {animate, animateChild, group, query, style, transition, trigger} from '@
 // Routable animations
 export const slideInAnimation =
   trigger('routeAnimation', [
-    transition('objectives <=> objective', [
+    transition('objective-list <=> objective', [
       style({position: 'relative'}),
       query(':enter, :leave', [
         style({

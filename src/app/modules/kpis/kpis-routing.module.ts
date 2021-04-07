@@ -1,10 +1,10 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import {KpisComponent} from "./kpis.component";
+import {KpisComponent} from "./kpi-list/kpis.component";
 
 const routes: Routes = [
   {
-    path: 'kpis',
+    path: 'kpi-list',
     component: KpisComponent,
     children: [
       {

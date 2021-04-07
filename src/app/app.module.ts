@@ -4,7 +4,7 @@ import {BrowserModule} from '@angular/platform-browser';
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
 import {KeyResultsComponent} from './modules/key-results/key-results.component';
-import {KpisComponent} from './modules/kpis/kpis.component';
+import {KpisComponent} from './modules/kpis/kpi-list/kpis.component';
 import {DashboardComponent} from './modules/dashboard/dashboard.component';
 import {DashboardModule} from './modules/dashboard/dashboard.module';
 import {KeyResultsModule} from './modules/key-results/key-results.module';
@@ -22,7 +22,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
-import { AddObjectiveComponent } from './modules/objectives/add-objective/add-objective.component';
+import { ObjectiveEditComponent } from './modules/objectives/objective-edit/objective-edit.component';
 import {MatDialogModule} from '@angular/material/dialog';
 
 @NgModule({
@@ -33,7 +33,7 @@ import {MatDialogModule} from '@angular/material/dialog';
     DashboardComponent,
     ComposeMessageComponent,
     PageNotFoundComponent,
-    AddObjectiveComponent,
+    ObjectiveEditComponent,
   ],
   imports: [
     AppRoutingModule,
@@ -56,7 +56,7 @@ import {MatDialogModule} from '@angular/material/dialog';
   ],
   providers: [],
   bootstrap: [AppComponent],
-  entryComponents: [AddObjectiveComponent]
+  entryComponents: [ObjectiveEditComponent]
 })
 export class AppModule { }
 
