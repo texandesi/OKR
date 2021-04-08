@@ -38,16 +38,21 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    'rest_framework',
+    # CORS
+    'corsheaders',
+    'rest_framework.authtoken',
+
     'objectives.apps.ObjectivesConfig',
     'keyresults.apps.KeyResultsConfig',
     'kpi.apps.KpisConfig',
     'user.apps.UsersConfig',
+    'organization.apps.OrganizationsConfig',
     'group.apps.GroupsConfig',
     'role.apps.RolesConfig',
     'polls.apps.PollsConfig',
-    'rest_framework',
-    # CORS
-    'corsheaders',
+
 ]
 
 MIDDLEWARE = [
@@ -64,6 +69,7 @@ MIDDLEWARE = [
 ]
 
 CORS_ORIGIN_ALLOW_ALL = True
+DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
 
 
 ROOT_URLCONF = 'techniti_okr.urls'
@@ -89,7 +95,10 @@ WSGI_APPLICATION = 'techniti_okr.wsgi.application'
 
 REST_FRAMEWORK = {
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
-    'PAGE_SIZE': 10
+    'PAGE_SIZE': 10,
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.TokenAuthentication',
+    ],
 }
 
 
