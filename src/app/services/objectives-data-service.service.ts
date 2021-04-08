@@ -17,8 +17,7 @@ export class ObjectivesDataService {
     headers: new HttpHeaders({
       'Content-Type': 'application/json',
     })
-};
-
+  };
 
   constructor(
     private http: HttpClient,
@@ -26,9 +25,9 @@ export class ObjectivesDataService {
 
   /** GET key-results-list from the server */
   getObjectives(): Observable<Objective[]> {
-    return this.http.get<any>(this.objectivesUrl)
+    return this.http.get<Objective[]>(this.objectivesUrl)
       .pipe(
-        tap((response) => this.log('fetched objectives ' + response.toString())),
+        tap((response) => this.messageService.log('fetched objectives ' + JSON.stringify(response))),
         catchError(this.handleError<Objective[]>('failed to getObjectives', []))
       );
   }
@@ -123,6 +122,6 @@ export class ObjectivesDataService {
   /** Log a ObjectiveService message with the MessageService */
   private log(message: string) {
     console.log(`ObjectiveService: ${message}`);
-    this.messageService.add(`ObjectiveService: ${message}`);
+    this.messageService.log(`ObjectiveService: ${message}`);
   }
 }

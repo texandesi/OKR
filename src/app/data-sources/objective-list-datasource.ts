@@ -32,7 +32,12 @@ export class ObjectiveListDataSource implements DataSource<Objective> {
 
     // console.log("getObjectives invoked in Data Source");
     this.objectiveService.getObjectives()
-      .subscribe(objectives => {this.data.next(objectives); this.length=this.data.value.length; console.log("Data returned from service to data source")});
+      .subscribe(
+        objectives => {
+                this.data.next(objectives);
+                this.length=this.data.value.length;
+                // console.log("Data returned from service to data source")
+              });
     // console.log("End of getObjectives invoked in Data Source.");
   }
 
@@ -55,12 +60,12 @@ export class ObjectiveListDataSource implements DataSource<Objective> {
   connect(): Observable<Objective[]> {
     this.getObjectives();
 
-    if(this.paginator && this.sort) {
-      console.log ("Data source got paginator and sort");
-    } else {
-      console.log ("Paginator : " + this.paginator);
-      console.log ("Data source : " + this.sort);
-    }
+    // if (this.paginator && this.sort) {
+    //   console.log("Data source got paginator and sort");
+    // } else {
+    //   console.log("Paginator : " + this.paginator);
+    //   console.log("Data source : " + this.sort);
+    // }
 
     return this.data;
     // if (this.paginator && this.sort) {
@@ -79,7 +84,7 @@ export class ObjectiveListDataSource implements DataSource<Objective> {
     //       return [ ...this.data ];
     //     }));
 
-    }
+  }
 
   /**
    *  Called when the table is being destroyed. Use this function, to clean up
@@ -92,6 +97,7 @@ export class ObjectiveListDataSource implements DataSource<Objective> {
 
 /** Simple sort comparator for example ID/Name columns (for client-side sorting). */
 function compare(a: string | number, b: string | number, isAsc: boolean): number {
+  // TODO Write a better compare function
   return (a < b ? -1 : 1) * (isAsc ? 1 : -1);
 }
 

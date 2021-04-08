@@ -6,8 +6,15 @@ import {Injectable} from '@angular/core';
 export class MessageService {
   messages: string[] = [];
 
-  add(message: string) {
+  private add(message: string) {
     this.messages.push(message);
+  }
+
+  log(message: string) {
+    this.messages.push(message);
+
+    // TODO Add logging levels or find an Angular logging service
+    console.log(message);
   }
 
   clear() {

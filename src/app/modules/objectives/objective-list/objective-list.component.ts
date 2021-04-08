@@ -36,24 +36,9 @@ export class ObjectiveListComponent implements OnInit, AfterViewInit  {
     // this.dataSource = new ObjectiveListDataSource(this.objectiveService);
     this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;
-    // this.matTable.dataSource = this.dataSource;
-    // this.dataSource.getObjectives();
-    // console.log("Length of data in data source as seen in component ngOnInit before getObjectives is " + this.dataSource.data.length);
-    // this.dataSource.getObjectives();
-    // console.log("Length of data in data source as seen in component ngOnInit after getObjectives is " + this.dataSource.data.length);
-
-    // this.matTable.renderRows();
   }
 
   ngAfterViewInit(): void {
-    // this.matTable.dataSource = this.dataSource;
-    // this.getObjectives();
-    // console.log("Length of data in data source as seen in component in ngAfterViewInit before getObjectives is " + this.dataSource.data.length);
-    // this.dataSource.getObjectives();
-    // console.log("Length of data in data source as seen in component after getObjectives is " + this.dataSource.data.length);
-
-    // this.matTable.renderRows();
-
     // reset the paginator after sorting
     this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
 
@@ -62,7 +47,6 @@ export class ObjectiveListComponent implements OnInit, AfterViewInit  {
         tap(() => this.dataSource.getObjectives())
       )
       .subscribe();
-
   }
 
   openDialog() {
@@ -85,12 +69,9 @@ export class ObjectiveListComponent implements OnInit, AfterViewInit  {
 
     dialogRef.afterClosed().subscribe(
       data => {
-        // console.log('Dialog output:', data);
         this.add(data.name, data.description);
       }
     );
-
-
   }
 
   add(

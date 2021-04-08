@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {KeyResultsDetailComponent} from "./key-results-detail.component";
 
-import { KeyResultDetailComponent } from './keyresult-detail.component';
 
 describe('KeyResultDetailComponent', () => {
-  let component: KeyResultDetailComponent;
-  let fixture: ComponentFixture<KeyResultDetailComponent>;
+  let component: KeyResultsDetailComponent;
+  let fixture: ComponentFixture<KeyResultsDetailComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ KeyResultDetailComponent ]
+      declarations: [ KeyResultsDetailComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(KeyResultDetailComponent);
+    fixture = TestBed.createComponent(KeyResultsDetailComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

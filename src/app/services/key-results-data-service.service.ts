@@ -122,6 +122,6 @@ export class KeyResultDataService {
   /** Log a KeyResultService message with the MessageService */
   private log(message: string) {
     console.log(`KeyResultService: ${message}`);
-    this.messageService.add(`KeyResultService: ${message}`);
+    this.messageService.log(`KeyResultService: ${message}`);
   }
 }
