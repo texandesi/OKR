@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import {Objective} from '../../data-objects/objective';
 import {ObjectivesDataService} from '../../services/objectives-data-service.service';
+import {Objective} from "../../data-objects/objective";
 
 @Component({
   selector: 'app-dashboard',

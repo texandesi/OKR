@@ -1,0 +1,12 @@
+<div *ngIf="keyresult">
+  <h2>{{keyresult.name | uppercase}} Details</h2>
+  <div><span>id: </span>{{keyresult.id}}</div>
+  <div>
+    <label for="keyresult-name">KeyResult name: </label>
+    <input id="keyresult-name" [(ngModel)]="keyresult.name" placeholder="KeyResult name"/>
+  </div>
+  <button (click)="goBack()">go back</button>
+  <button (click)="save()">save</button>
+</div><p>keyresult-detail works!</p>
+
+<router-outlet></router-outlet>

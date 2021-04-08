@@ -3,7 +3,6 @@ import {BrowserModule} from '@angular/platform-browser';
 
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
-import {KeyResultsComponent} from './modules/key-results/key-results.component';
 import {KpisComponent} from './modules/kpis/kpi-list/kpis.component';
 import {DashboardComponent} from './modules/dashboard/dashboard.component';
 import {DashboardModule} from './modules/dashboard/dashboard.module';
@@ -22,17 +21,14 @@ import { MatSortModule } from '@angular/material/sort';
 import {MatDialogModule} from '@angular/material/dialog';
 import {PageNotFoundComponent} from './modules/page-not-found/page-not-found.component';
 import {ComposeMessageComponent} from './modules/compose-message/compose-message.component';
-import { ObjectiveEditComponent } from './modules/objectives/objective-edit/objective-edit.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    KeyResultsComponent,
     KpisComponent,
     DashboardComponent,
     ComposeMessageComponent,
     PageNotFoundComponent,
-    ObjectiveEditComponent,
   ],
   imports: [
     AppRoutingModule,
@@ -41,21 +37,23 @@ import { ObjectiveEditComponent } from './modules/objectives/objective-edit/obje
     BrowserModule,
     DashboardModule,
     FormsModule,
-    FormsModule,
     HttpClientModule,
-    KeyResultsModule,
-    KpisModule,
     MatDialogModule,
     MatPaginatorModule,
     MatSortModule,
     MatTableModule,
-    ObjectivesModule,
     ReactiveFormsModule,
+
+    // OKR Modules
+    KpisModule,
+    KeyResultsModule,
+    ObjectivesModule,
+    KeyResultsModule,
 
   ],
   providers: [],
   bootstrap: [AppComponent],
-  entryComponents: [ObjectiveEditComponent]
+  entryComponents: []
 })
 export class AppModule { }
 

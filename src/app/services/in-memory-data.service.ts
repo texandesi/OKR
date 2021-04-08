@@ -22,9 +22,9 @@ export class InMemoryDataService implements InMemoryDbService {
   }
 
   // Overrides the genId method to ensure that a objective always has an id.
-  // If the objective-list array is empty,
+  // If the key-results-list array is empty,
   // the method below returns the initial number (11).
-  // if the objective-list array is not empty, the method below returns the highest
+  // if the key-results-list array is not empty, the method below returns the highest
   // objective id + 1.
   genId(objectives: Objective[]): number {
     return objectives.length > 0 ? Math.max(...objectives.map(objective => objective.id)) + 1 : 11;

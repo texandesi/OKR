@@ -1,0 +1,57 @@
+<div class="mat-elevation-z8">
+  <h2>My KeyResults</h2>
+</div>
+
+<div class="mat-elevation-z8">
+  <!-- (click) passes input value to add() and then clears the input -->
+  <button mat-raised-button (click)="openDialog();"
+          color="primary">
+    Add keyresult
+  </button>
+</div>
+
+<div class="mat-elevation-z8">
+  <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort>
+    <!-- Id Column -->
+    <ng-container matColumnDef="id">
+      <th *matHeaderCellDef mat-header-cell mat-sort-header>Id</th>
+      <td *matCellDef="let row" mat-cell>{{row.id}}</td>
+    </ng-container>
+
+    <!-- Name Column -->
+    <ng-container matColumnDef="name">
+      <th *matHeaderCellDef mat-header-cell mat-sort-header>Name</th>
+      <td *matCellDef="let row" mat-cell>{{row.name}}</td>
+    </ng-container>
+
+    <!-- Name Column -->
+    <ng-container matColumnDef="description">
+      <th *matHeaderCellDef mat-header-cell>Description</th>
+      <td *matCellDef="let row" mat-cell><input [(ngModel)]="row.description" matInput type="text"></td>
+
+    </ng-container>
+
+
+    <!-- Delete Column -->
+    <ng-container matColumnDef="delete">
+      <th *matHeaderCellDef mat-header-cell>Delete</th>
+      <td *matCellDef="let row" mat-cell>
+        <button mat-raised-button (click)="delete(row.id);"
+                color="primary">Delete
+        </button>
+
+      </td>
+    </ng-container>
+
+    <tr *matHeaderRowDef="displayedColumns" mat-header-row></tr>
+    <tr *matRowDef="let row; columns: displayedColumns;" mat-row></tr>
+  </table>
+
+  <mat-paginator #paginator
+                 [length]="dataSource?.data?.length"
+                 [pageIndex]="0"
+                 [pageSizeOptions]="[5, 10, 20]"
+                 [pageSize]="20">
+  </mat-paginator>
+</div>
+

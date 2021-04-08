@@ -23,11 +23,11 @@ export class ObjectivesDataService {
     private http: HttpClient,
     private messageService: MessageService) { }
 
-  /** GET objective-list from the server */
+  /** GET key-results-list from the server */
   getObjectives(): Observable<Objective[]> {
     return this.http.get<any>(this.objectivesUrl)
       .pipe(
-        tap((response) => this.log('fetched objective-list ' + response.toString())),
+        tap((response) => this.log('fetched key-results-list ' + response.toString())),
         catchError(this.handleError<Objective[]>('failed to getObjectives', []))
       );
   }
@@ -55,7 +55,7 @@ export class ObjectivesDataService {
     );
   }
 
-  /* GET objective-list whose name contains search term */
+  /* GET key-results-list whose name contains search term */
   searchObjectives(term: string): Observable<Objective[]> {
     if (!term.trim()) {
       // if not search term, return empty objective array.

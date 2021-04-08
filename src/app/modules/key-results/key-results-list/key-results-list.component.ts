@@ -1,29 +1,29 @@
 import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
-import {Objective} from '../../../data-objects/objective';
+import {KeyResult} from '../../../data-objects/key-result';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatSort} from '@angular/material/sort';
 import {MatTable, MatTableDataSource} from '@angular/material/table';
-import {ObjectivesDataService} from '../../../services/objectives-data-service.service';
 import {MatDialog, MatDialogConfig} from '@angular/material/dialog';
-import {ObjectiveEditComponent} from '../objective-edit/objective-edit.component';
+import {KeyResultDataService} from "../../../services/key-results-data-service.service";
+import {KeyResultsEditComponent} from "../key-results-edit/key-results-edit.component";
 
 @Component({
-  selector: 'app-objectives',
-  templateUrl: './objective-list.component.html',
-  styleUrls: ['./objective-list.component.scss']
+  selector: 'app-key-results',
+  templateUrl: './key-results-list.component.html',
+  styleUrls: ['./key-results-list.component.scss']
 })
-export class ObjectiveListComponent implements OnInit, AfterViewInit  {
+export class KeyResultsListComponent implements OnInit, AfterViewInit  {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
-  @ViewChild(MatTable) matTable!: MatTable<Objective>;
+  @ViewChild(MatTable) matTable!: MatTable<KeyResult>;
 
-  dataSource : MatTableDataSource<Objective> = new MatTableDataSource<Objective>();
+  dataSource : MatTableDataSource<KeyResult> = new MatTableDataSource<KeyResult>();
 
   /** Columns displayed in the table. Columns IDs can be added, removed, or reordered. */
   displayedColumns = ['id', 'name', 'description', 'delete'];
 
   constructor(
-    private objectiveService : ObjectivesDataService,
+    private keyresultService : KeyResultDataService,
     private dialog: MatDialog,
   ) {
     // this.dataSource = myDataSource;
@@ -39,14 +39,14 @@ export class ObjectiveListComponent implements OnInit, AfterViewInit  {
     this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;
     this.matTable.dataSource = this.dataSource;
-    this.getObjectives();
+    this.getKeyResults();
   }
 
-  getObjectives(): void {
-    // console.log('Before getting key-results-list in data source');
+  getKeyResults(): void {
+    // console.log('Before getting keyresult-list in data source');
 
-    this.objectiveService.getObjectives()
-      .subscribe(objectives => this.dataSource.data = objectives);
+    this.keyresultService.getKeyResults()
+      .subscribe(keyresults => this.dataSource.data = keyresults);
 
     this.matTable.renderRows();
   }
@@ -65,9 +65,9 @@ export class ObjectiveListComponent implements OnInit, AfterViewInit  {
       description: 'Enter description here',
     };
 
-    this.dialog.open(ObjectiveEditComponent, dialogConfig);
+    this.dialog.open(KeyResultsEditComponent, dialogConfig);
 
-    const dialogRef = this.dialog.open(ObjectiveEditComponent, dialogConfig);
+    const dialogRef = this.dialog.open(KeyResultsEditComponent, dialogConfig);
 
     dialogRef.afterClosed().subscribe(
       data => {
@@ -84,25 +84,25 @@ export class ObjectiveListComponent implements OnInit, AfterViewInit  {
     description: string
   ): void
   {
-    // console.log('Before Adding key-results-list in data source');
+    // console.log('Before Adding keyresult-list in data source');
     name = name.trim();
     if (!name) { return; }
     description = description.trim();
     if (!description) { return; }
-    this.objectiveService.addObjective({ name: name, description:description } as Objective)
-      .subscribe(objective => {
-        this.dataSource.data.push(objective);
+    this.keyresultService.addKeyResult({ name: name, description:description } as KeyResult)
+      .subscribe(keyresult => {
+        this.dataSource.data.push(keyresult);
       });
 
-    this.getObjectives();
+    this.getKeyResults();
   }
 
-  // TODO Implement back the page refresh and delete functionality for the Objectives list.
+  // TODO Implement back the page refresh and delete functionality for the KeyResults list.
   delete(id: number): void {
-    // this.dataSource.data = this.dataSource.data.filter(h => h !== objective);
-    // console.log('Before deleting key-results-list in data source');
-    this.objectiveService.deleteObjective(id)
-      .subscribe(objective => {
+    // this.dataSource.data = this.dataSource.data.filter(h => h !== keyresult);
+    // console.log('Before deleting keyresult-list in data source');
+    this.keyresultService.deleteKeyResult(id)
+      .subscribe(keyresult => {
         this.dataSource.data = this.dataSource.data.filter(h => h.id !== id);
       });
   }

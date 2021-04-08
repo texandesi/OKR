@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { DashboardRoutingModule } from './dashboard-routing.module';
 import {MatInputModule} from '@angular/material/input';
 import {MatButtonModule} from '@angular/material/button';
+import {ObjectivesModule} from "../objectives/objectives.module";
 
 @NgModule({
   declarations: [],
@@ -12,6 +13,7 @@ import {MatButtonModule} from '@angular/material/button';
     DashboardRoutingModule,
     MatInputModule,
     MatButtonModule,
+    ObjectivesModule,
 
   ],
   exports: [
