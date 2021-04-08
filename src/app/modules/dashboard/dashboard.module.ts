@@ -5,21 +5,29 @@ import { DashboardRoutingModule } from './dashboard-routing.module';
 import {MatInputModule} from '@angular/material/input';
 import {MatButtonModule} from '@angular/material/button';
 import {ObjectivesModule} from "../objectives/objectives.module";
+import {KeyResultsModule} from "../key-results/key-results.module";
+import {KpisModule} from "../kpis/kpis.module";
+import {MatFormFieldModule} from "@angular/material/form-field";
+import {DashboardComponent} from "./dashboard.component";
 
 @NgModule({
-  declarations: [],
+  declarations: [
+    DashboardComponent,
+
+  ],
   imports: [
     CommonModule,
     DashboardRoutingModule,
     MatInputModule,
     MatButtonModule,
     ObjectivesModule,
+    KeyResultsModule,
+    KpisModule,
 
   ],
   exports: [
-    MatInputModule,
-    MatButtonModule,
-
+    DashboardRoutingModule,
+    MatFormFieldModule,
   ]
 
 })

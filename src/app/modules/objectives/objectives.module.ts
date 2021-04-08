@@ -43,7 +43,10 @@ import {ObjectiveListComponent} from "./objective-list/objective-list.component"
     ObjectiveDetailComponent,
     ObjectiveSearchComponent,
     ObjectiveEditComponent,
-  ]
+  ],
+  providers: [],
+  bootstrap: [],
+  entryComponents: [],
 })
 export class ObjectivesModule {
 

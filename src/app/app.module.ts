@@ -25,8 +25,6 @@ import {ComposeMessageComponent} from './modules/compose-message/compose-message
 @NgModule({
   declarations: [
     AppComponent,
-    KpisComponent,
-    DashboardComponent,
     ComposeMessageComponent,
     PageNotFoundComponent,
   ],
