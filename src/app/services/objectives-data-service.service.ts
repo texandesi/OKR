@@ -27,7 +27,7 @@ export class ObjectivesDataService {
   getObjectives(): Observable<Objective[]> {
     return this.http.get<any>(this.objectivesUrl)
       .pipe(
-        tap((response) => this.log('fetched key-results-list ' + response.toString())),
+        tap((response) => this.log('fetched objectives ' + response.toString())),
         catchError(this.handleError<Objective[]>('failed to getObjectives', []))
       );
   }

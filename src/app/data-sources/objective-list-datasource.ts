@@ -2,7 +2,7 @@ import { DataSource } from '@angular/cdk/collections';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import {catchError, map, tap} from 'rxjs/operators';
-import {Observable, of as observableOf, merge, of} from 'rxjs';
+import {Observable, of as observableOf, merge, of, BehaviorSubject} from 'rxjs';
 import {ObjectivesDataService} from '../services/objectives-data-service.service';
 import {Objective} from '../data-objects/objective';
 
@@ -11,26 +11,37 @@ import {Objective} from '../data-objects/objective';
  * encapsulate all logic for fetching and manipulating the displayed data
  * (including sorting, pagination, and filtering).
  */
-export class ObjectiveListDataSource extends DataSource<Objective> {
+export class ObjectiveListDataSource implements DataSource<Objective> {
 
-  data !: Objective[];
+  private data  = new BehaviorSubject<Objective[]>([]);
 
-  paginator: MatPaginator | undefined;
-  sort: MatSort | undefined;
+  paginator!: MatPaginator;
+  sort!: MatSort;
+  length = 10;
 
-  constructor(private objectiveService : ObjectivesDataService,
+  constructor(
+    private objectiveService : ObjectivesDataService,
   ) {
-    super();
+    // super();
+    console.log("getObjectives invoked in Data Source");
+    this.getObjectives();
   }
 
   getObjectives(): void {
-    this.objectiveService.getObjectives();
+
+
+    console.log("getObjectives invoked in Data Source");
+    this.objectiveService.getObjectives()
+      .subscribe(objectives => {this.data.next(objectives); console.log("Data returned from service to data source")});
+
+    length=this.data.value.length;
+    console.log("End of getObjectives invoked in Data Source.");
   }
 
 
+  addObjective(objective: Objective): void {
 
-  addObjective(name: string): void {
-    this.objectiveService.addObjective({name} as Objective);
+    this.objectiveService.addObjective(objective);
   }
 
   deleteObjective(id: number): void {
@@ -44,54 +55,32 @@ export class ObjectiveListDataSource extends DataSource<Objective> {
    * @returns A stream of the items to be rendered.
    */
   connect(): Observable<Objective[]> {
-    if (this.paginator && this.sort) {
-      // Combine everything that affects the rendered data into one update
-      // stream for the data-table to consume.
-      return merge(observableOf(this.data), this.paginator.page, this.sort.sortChange)
-        .pipe(map(() => {
-          return this.getPagedData(this.getSortedData([...this.data ]));
-        }));
-    } else {
-      throw Error('Please set the paginator and sort on the data source before connecting.');
+    this.getObjectives();
+
+    return this.data;
+    // if (this.paginator && this.sort) {
+    //   // Combine everything that affects the rendered data into one update
+    //   // stream for the data-table to consume.
+    //   return merge(this.data, this.paginator.page, this.sort.sortChange)
+    //     .pipe(map(() => {
+    //       return this.getPagedData(this.getSortedData(this.data ));
+    //     }));
+    // } else {
+    //   // throw Error('Please set the paginator and sort on the data source before connecting.');
+    //   console.error('data is ' + this.data) ;
+    //
+    //   return observableOf(this.data)
+    //     .pipe(map(() => {
+    //       return [ ...this.data ];
+    //     }));
+
     }
-  }
 
   /**
    *  Called when the table is being destroyed. Use this function, to clean up
    * any open connections or free any held resources that were set up during connect.
    */
-  disconnect(): void {}
-
-  /**
-   * Paginate the data (client-side). If you're using server-side pagination,
-   * this would be replaced by requesting the appropriate data from the server.
-   */
-  private getPagedData(data: Objective[]): Objective[] {
-    if (this.paginator) {
-      const startIndex = this.paginator.pageIndex * this.paginator.pageSize;
-      return data.splice(startIndex, this.paginator.pageSize);
-    } else {
-      return data;
-    }
-  }
-
-  /**
-   * Sort the data (client-side). If you're using server-side sorting,
-   * this would be replaced by requesting the appropriate data from the server.
-   */
-  private getSortedData(data: Objective[]): Objective[] {
-    if (!this.sort || !this.sort.active || this.sort.direction === '') {
-      return data;
-    }
-
-    return data.sort((a, b) => {
-      const isAsc = this.sort?.direction === 'asc';
-      switch (this.sort?.active) {
-        case 'name': return compare(a.name, b.name, isAsc);
-        case 'id': return compare(+a.id, +b.id, isAsc);
-        default: return 0;
-      }
-    });
+  disconnect(): void {
   }
 }
 
