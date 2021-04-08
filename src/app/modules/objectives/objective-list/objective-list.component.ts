@@ -7,6 +7,8 @@ import {ObjectivesDataService} from '../../../services/objectives-data-service.s
 import {MatDialog, MatDialogConfig} from '@angular/material/dialog';
 import {ObjectiveEditComponent} from '../objective-edit/objective-edit.component';
 import {ObjectiveListDataSource} from "../../../data-sources/objective-list-datasource";
+import {tap} from "rxjs/operators";
+import {merge} from "rxjs";
 
 @Component({
   selector: 'app-objectives',
@@ -14,9 +16,9 @@ import {ObjectiveListDataSource} from "../../../data-sources/objective-list-data
   styleUrls: ['./objective-list.component.scss']
 })
 export class ObjectiveListComponent implements OnInit, AfterViewInit  {
-  @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
-  @ViewChild(MatTable) matTable!: MatTable<Objective>;
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  // @ViewChild(MatTable) matTable!: MatTable<Objective>;
 
   dataSource !: ObjectiveListDataSource;
 
@@ -50,7 +52,16 @@ export class ObjectiveListComponent implements OnInit, AfterViewInit  {
     // this.dataSource.getObjectives();
     // console.log("Length of data in data source as seen in component after getObjectives is " + this.dataSource.data.length);
 
-    this.matTable.renderRows();
+    // this.matTable.renderRows();
+
+    // reset the paginator after sorting
+    this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
+
+    merge(this.sort.sortChange, this.paginator.page)
+      .pipe(
+        tap(() => this.dataSource.getObjectives())
+      )
+      .subscribe();
 
   }
 
@@ -74,7 +85,7 @@ export class ObjectiveListComponent implements OnInit, AfterViewInit  {
 
     dialogRef.afterClosed().subscribe(
       data => {
-        console.log('Dialog output:', data);
+        // console.log('Dialog output:', data);
         this.add(data.name, data.description);
       }
     );

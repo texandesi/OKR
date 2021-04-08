@@ -23,19 +23,17 @@ export class ObjectiveListDataSource implements DataSource<Objective> {
     private objectiveService : ObjectivesDataService,
   ) {
     // super();
-    console.log("getObjectives invoked in Data Source");
-    this.getObjectives();
+    // console.log("getObjectives invoked in Data Source");
+    // this.getObjectives();
   }
 
   getObjectives(): void {
 
 
-    console.log("getObjectives invoked in Data Source");
+    // console.log("getObjectives invoked in Data Source");
     this.objectiveService.getObjectives()
-      .subscribe(objectives => {this.data.next(objectives); console.log("Data returned from service to data source")});
-
-    length=this.data.value.length;
-    console.log("End of getObjectives invoked in Data Source.");
+      .subscribe(objectives => {this.data.next(objectives); this.length=this.data.value.length; console.log("Data returned from service to data source")});
+    // console.log("End of getObjectives invoked in Data Source.");
   }
 
 
@@ -56,6 +54,13 @@ export class ObjectiveListDataSource implements DataSource<Objective> {
    */
   connect(): Observable<Objective[]> {
     this.getObjectives();
+
+    if(this.paginator && this.sort) {
+      console.log ("Data source got paginator and sort");
+    } else {
+      console.log ("Paginator : " + this.paginator);
+      console.log ("Data source : " + this.sort);
+    }
 
     return this.data;
     // if (this.paginator && this.sort) {
@@ -81,6 +86,7 @@ export class ObjectiveListDataSource implements DataSource<Objective> {
    * any open connections or free any held resources that were set up during connect.
    */
   disconnect(): void {
+    this.data.complete();
   }
 }
 

@@ -10,6 +10,7 @@ import {Objective} from '../data-objects/objective';
 @Injectable({ providedIn: 'root' })
 export class ObjectivesDataService {
 
+  // TODO remove hard-coded url and pick it up from config
   private objectivesUrl = 'http://127.0.0.1:8000/objectives/';  // URL to web api
 
   httpOptions = {
