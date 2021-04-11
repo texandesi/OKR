@@ -1,7 +1,25 @@
 # Create your views here.
+import django_filters
 from rest_framework import viewsets
+from django_filters import rest_framework as filters
+
+from rest_framework.pagination import PageNumberPagination
+
 from objectives.serializers import ObjectiveSerializer
 from objectives.models import Objective
+
+class ObjectiveFilter(filters.FilterSet):
+    name = filters.CharFilter(field_name="name", lookup_expr='icontains')
+    description = filters.CharFilter(field_name="description", lookup_expr='icontains')
+
+    class Meta:
+        model = Objective
+        fields = ['name', 'description']
+
+class StandardResultsSetPagination(PageNumberPagination):
+    page_size = 2
+    page_size_query_param = 'page_size'
+    max_page_size = 1000
 
 class ObjectiveViewSet(viewsets.ModelViewSet):
     """
@@ -9,6 +27,11 @@ class ObjectiveViewSet(viewsets.ModelViewSet):
     """
     queryset = Objective.objects.all().order_by('id')
     serializer_class = ObjectiveSerializer
+    pagination_class = StandardResultsSetPagination
+    filter_backends = (
+        django_filters.rest_framework.DjangoFilterBackend,
+    )
+    filterset_class = ObjectiveFilter
 
     # permission_classes = [permissions.IsAuthenticated]
 

@@ -40,9 +40,10 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'rest_framework',
+    'django_filters',
+    'rest_framework.authtoken',
     # CORS
     'corsheaders',
-    'rest_framework.authtoken',
 
     'objectives.apps.ObjectivesConfig',
     'keyresults.apps.KeyResultsConfig',
@@ -96,11 +97,11 @@ WSGI_APPLICATION = 'techniti_okr.wsgi.application'
 REST_FRAMEWORK = {
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
     'PAGE_SIZE': 10,
+    'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend'],
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework.authentication.TokenAuthentication',
     ],
 }
-
 
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
