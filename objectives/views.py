@@ -4,28 +4,35 @@ from rest_framework import viewsets
 from django_filters import rest_framework as filters
 
 from rest_framework.pagination import PageNumberPagination
+from rest_framework.response import Response
 
 from objectives.serializers import ObjectiveSerializer
 from objectives.models import Objective
 
+
 class ObjectiveFilter(filters.FilterSet):
     name = filters.CharFilter(field_name="name", lookup_expr='icontains')
     description = filters.CharFilter(field_name="description", lookup_expr='icontains')
+    # name_sort = filters.OrderingFilter;
 
     class Meta:
         model = Objective
         fields = ['name', 'description']
 
+
 class StandardResultsSetPagination(PageNumberPagination):
-    page_size = 2
+    page_size = 5
     page_size_query_param = 'page_size'
     max_page_size = 1000
+
 
 class ObjectiveViewSet(viewsets.ModelViewSet):
     """
     API endpoint that allows users to be viewed/created/edited/deleted.
     """
-    queryset = Objective.objects.all().order_by('id')
+    queryset = Objective.objects.all()
+    ordering_fields = ['name', 'description']
+
     serializer_class = ObjectiveSerializer
     pagination_class = StandardResultsSetPagination
     filter_backends = (
@@ -65,3 +72,20 @@ class ObjectiveViewSet(viewsets.ModelViewSet):
     #     print(self.pretty_request(request));
     #     return super().create(request, *args, **kwargs)
 
+    def list(self, request, *args, **kwargs):
+        queryset = self.filter_queryset(self.get_queryset())
+
+        queryset = queryset.order_by(self.request.query_params.get('ordering'))
+
+        page_size = self.request.query_params.get('page_size')
+
+        if page_size is not None:
+            self.pagination_class.page_size = int(page_size)
+
+        page = self.paginate_queryset(queryset)
+        if page is not None:
+            serializer = self.get_serializer(page, many=True)
+            return self.get_paginated_response(serializer.data)
+
+        serializer = self.get_serializer(queryset, many=True)
+        return Response(serializer.data)
