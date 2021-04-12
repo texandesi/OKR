@@ -73,13 +73,13 @@ class ObjectiveViewSet(viewsets.ModelViewSet):
     #     return super().create(request, *args, **kwargs)
 
     def list(self, request, *args, **kwargs):
-        queryset = self.filter_queryset(self.get_queryset())
+        queryset = self.filter_queryset(self.get_queryset()).order_by(self.request.query_params.get('ordering'))
 
-        queryset = queryset.order_by(self.request.query_params.get('ordering'))
+        # queryset = queryset.order_by(self.request.query_params.get('ordering'))
 
         page_size = self.request.query_params.get('page_size')
 
-        if page_size is not None:
+        if (page_size is not None) and (int(page_size) > 0):
             self.pagination_class.page_size = int(page_size)
 
         page = self.paginate_queryset(queryset)
