@@ -40,11 +40,11 @@ export class ObjectiveListDataSource implements DataSource<Objective> {
   }
 
   addObjective(objective: Objective): void {
-    this.objectiveService.addObjective(objective);
+    this.objectiveService.addObjective(objective).subscribe();
   }
 
   deleteObjective(id: number): void {
-    this.objectiveService.deleteObjective(id);
+    this.objectiveService.deleteObjective(id).subscribe();
  }
 
   /**

@@ -73,7 +73,7 @@ export class ObjectivesDataService {
     url = url_with_param.toString();
 
 
-    this.messageService.log('The url with ordering param is ' + url); // => 'hello'
+    // this.messageService.log('The url with ordering param is ' + url); // => 'hello'
     // console.log('The missing param is ' + url_with_param.searchParams.get('missing')); // => null
 
 
@@ -84,7 +84,7 @@ export class ObjectivesDataService {
       }
     ).pipe(
         tap((response) => {
-          this.messageService.log('fetched objectives ' + JSON.stringify(response)),
+          this.messageService.log('Objective data service - fetched objectives ' + JSON.stringify(response)),
             this.record_count = response['count'],
             this.previous_url = response['previous'];
             this.next_url = response['next'];
@@ -137,9 +137,11 @@ export class ObjectivesDataService {
 
   /** POST: add a new objective to the server */
   addObjective(objective: Objective): Observable<Objective> {
+
+
     //TODO - Add error handling for name and description
 
-    return this.http.post<Objective>(this.objectivesUrl, objective, this.httpOptions).pipe(
+    return this.http.post<Objective>(this.objectivesUrl, objective).pipe(
       tap((newObjective: Objective) => this.log(`added objective w/ id=${newObjective.id}`)),
       catchError(this.handleError<Objective>('addObjective'))
     );
@@ -148,6 +150,9 @@ export class ObjectivesDataService {
   /** DELETE: delete the objective from the server */
   deleteObjective(id: number): Observable<Objective> {
     const url = `${this.objectivesUrl}/${id}/`;
+
+    this.messageService.log('Objective data service The url with delete param is ' + url); // => 'hello'
+
 
     return this.http.delete<Objective>(url, this.httpOptions).pipe(
       tap(_ => this.log(`deleted objective id=${id}`)),
