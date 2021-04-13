@@ -7,6 +7,7 @@ import { catchError, map, tap } from 'rxjs/operators';
 import { MessageService } from './message.service';
 import {Objective} from '../data-objects/objective';
 
+
 @Injectable({ providedIn: 'root' })
 export class ObjectivesDataService {
 
@@ -39,8 +40,8 @@ export class ObjectivesDataService {
   ): Observable<Objective[]> {
     let url : string = this.objectivesUrl;
 
-    console.log('Previous url is : ' + this.previous_url);
-    console.log('Next url is : ' + this.next_url);
+    // console.log('Previous url is : ' + this.previous_url);
+    // console.log('Next url is : ' + this.next_url);
 
     if (prev_page_index > curr_page_index) {
       if(this.previous_url) {
@@ -53,10 +54,33 @@ export class ObjectivesDataService {
       }
     }
 
+    let url_with_param : URL = new URL( url );
+
+    if (sort_column !== null && sort_direction !== null) {
+      let ordering_param : string = sort_column;
+
+      if(sort_direction !== 'asc') {
+        ordering_param = '-' + ordering_param;
+      }
+
+      url_with_param.searchParams.set('ordering', ordering_param);
+      url_with_param.searchParams.delete('page');
+    }
+
+    url_with_param.searchParams.delete('page_size');
+    url_with_param.searchParams.set('page_size', String(page_size));
+
+    url = url_with_param.toString();
+
+
+    this.messageService.log('The url with ordering param is ' + url); // => 'hello'
+    // console.log('The missing param is ' + url_with_param.searchParams.get('missing')); // => null
+
+
     return this.http.get<any>(url, {
 
       params: new HttpParams()
-        .set('page_size', String(page_size))
+        // .set('page_size', String(page_size))
       }
     ).pipe(
         tap((response) => {

@@ -36,9 +36,6 @@ export class ObjectiveListDataSource implements DataSource<Objective> {
                 this.data.next(objectives);
                 this.page_length=this.data.value.length;
                 this.record_count = this.objectiveService.record_count;
-
-                // this.next_page_number=
-                console.log("Data returned from service to data source has length " + this.data.value.length);
               });
   }
 
@@ -50,7 +47,6 @@ export class ObjectiveListDataSource implements DataSource<Objective> {
     this.objectiveService.deleteObjective(id);
  }
 
-
   /**
    * Connect this data source to the table. The table will only update when
    * the returned stream emits new items.
@@ -58,31 +54,6 @@ export class ObjectiveListDataSource implements DataSource<Objective> {
    */
   connect(): Observable<Objective[]> {
     return this.data.asObservable();
-
-    // if (this.paginator && this.sort) {
-    //   this.messages.log("Data source got paginator and sort");
-    // } else {
-    //   this.messages.log("Paginator : " + this.paginator);
-    //   this.messages.log("Data source : " + this.sort);
-    // }
-    //
-    // return this.data;
-    // if (this.paginator && this.sort) {
-    //   // Combine everything that affects the rendered data into one update
-    //   // stream for the data-table to consume.
-    //   return merge(this.data, this.paginator.page, this.sort.sortChange)
-    //     .pipe(map(() => {
-    //       return this.getPagedData(this.getSortedData(this.data ));
-    //     }));
-    // } else {
-    //   // throw Error('Please set the paginator and sort on the data source before connecting.');
-    //   console.error('data is ' + this.data) ;
-    //
-    //   return observableOf(this.data)
-    //     .pipe(map(() => {
-    //       return [ ...this.data ];
-    //     }));
-
   }
 
   /**
@@ -93,10 +64,4 @@ export class ObjectiveListDataSource implements DataSource<Objective> {
     this.data.complete();
   }
 }
-
-// /** Simple sort comparator for example ID/Name columns (for client-side sorting). */
-// function compare(a: string | number, b: string | number, isAsc: boolean): number {
-//   // TODO Write a better compare function
-//   return (a < b ? -1 : 1) * (isAsc ? 1 : -1);
-// }
 
