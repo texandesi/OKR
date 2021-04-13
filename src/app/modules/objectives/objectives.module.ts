@@ -35,6 +35,7 @@ import { ObjectiveListComponent } from "./objective-list/objective-list.componen
     MatInputModule,
     MatButtonModule,
     MatDialogModule,
+    MatInputModule,
     ReactiveFormsModule,
 
   ],

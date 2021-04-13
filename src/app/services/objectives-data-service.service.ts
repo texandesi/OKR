@@ -32,6 +32,7 @@ export class ObjectivesDataService {
 
   /** GET key-results-list from the server */
   getObjectives(
+    name_filter : string = '',
     page_size: number = 10,
     prev_page_index : number = -1,
     curr_page_index = 0,
@@ -69,6 +70,12 @@ export class ObjectivesDataService {
 
     url_with_param.searchParams.delete('page_size');
     url_with_param.searchParams.set('page_size', String(page_size));
+
+    name_filter = name_filter.trim();
+    if(name_filter) {
+      url_with_param.searchParams.delete('name');
+      url_with_param.searchParams.set('name', name_filter);
+    }
 
     url = url_with_param.toString();
 
@@ -125,12 +132,7 @@ export class ObjectivesDataService {
       // if not search term, return empty objective array.
       return of([]);
     }
-    return this.http.get<Objective[]>(`${this.objectivesUrl}/?name=${term}`).pipe(
-      tap(x => x.length ?
-        this.log(`found objectives matching "${term}"`) :
-        this.log(`no objectives matching "${term}"`)),
-      catchError(this.handleError<Objective[]>('searchObjectives', []))
-    );
+    return this.getObjectives(term);
   }
 
   //////// Save methods //////////

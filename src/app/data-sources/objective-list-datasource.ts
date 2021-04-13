@@ -30,7 +30,7 @@ export class ObjectiveListDataSource implements DataSource<Objective> {
     sort_column : string = 'name',
     sort_direction : string = 'asc'
   ): void {
-    this.objectiveService.getObjectives(pageSize, prev_page_index, curr_page_index, sort_column, sort_direction)
+    this.objectiveService.getObjectives('', pageSize, prev_page_index, curr_page_index, sort_column, sort_direction)
       .subscribe(
         objectives => {
                 this.data.next(objectives);
@@ -46,6 +46,12 @@ export class ObjectiveListDataSource implements DataSource<Objective> {
   deleteObjective(id: number): void {
     this.objectiveService.deleteObjective(id).subscribe();
  }
+
+  searchObjective(name: string): void {
+    this.objectiveService.searchObjectives(name).subscribe();
+  }
+
+
 
   /**
    * Connect this data source to the table. The table will only update when

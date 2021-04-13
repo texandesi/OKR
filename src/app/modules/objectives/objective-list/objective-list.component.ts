@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {Objective} from '../../../data-objects/objective';
 import {MatPaginator} from '@angular/material/paginator';
 import {PageEvent} from '@angular/material/paginator';
@@ -7,9 +7,10 @@ import {ObjectivesDataService} from '../../../services/objectives-data-service.s
 import {MatDialog, MatDialogConfig} from '@angular/material/dialog';
 import {ObjectiveEditComponent} from '../objective-edit/objective-edit.component';
 import {ObjectiveListDataSource} from "../../../data-sources/objective-list-datasource";
-import {tap} from "rxjs/operators";
+import {debounceTime, distinctUntilChanged, tap} from "rxjs/operators";
 import {merge} from "rxjs";
 import {MessageService} from "../../../services/message.service";
+import { fromEvent } from 'rxjs';
 
 @Component({
   selector: 'app-objectives',
@@ -19,6 +20,7 @@ import {MessageService} from "../../../services/message.service";
 export class ObjectiveListComponent implements OnInit, AfterViewInit  {
   @ViewChild(MatSort) sort!: MatSort;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
+  @ViewChild('input') input!: ElementRef;
 
   dataSource !: ObjectiveListDataSource;
 
@@ -46,6 +48,17 @@ export class ObjectiveListComponent implements OnInit, AfterViewInit  {
   ngAfterViewInit(): void {
     // reset the paginator after sorting
     this.messages.log('In the ngAfterViewInit method');
+
+    fromEvent(this.input.nativeElement,'keyup')
+      .pipe(
+        debounceTime(150),
+        distinctUntilChanged(),
+        tap(() => {
+          this.paginator.pageIndex = 0;
+          this.search(this.input.nativeElement.value);
+        })
+      )
+      .subscribe();
 
     this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
 
@@ -100,6 +113,13 @@ export class ObjectiveListComponent implements OnInit, AfterViewInit  {
     // console.log('Before deleting key-results-list in data source');
     this.dataSource.deleteObjective(id);
     this.dataSource.getObjectives();
+  }
+
+  search(name : string) : void {
+    name = name.trim();
+    if (!name) { return; }
+    this.dataSource.searchObjective( name );
+
   }
 
 }

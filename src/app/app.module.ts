@@ -21,6 +21,7 @@ import { MatSortModule } from '@angular/material/sort';
 import {MatDialogModule} from '@angular/material/dialog';
 import {PageNotFoundComponent} from './modules/page-not-found/page-not-found.component';
 import {ComposeMessageComponent} from './modules/compose-message/compose-message.component';
+import {MatInputModule} from "@angular/material/input";
 
 @NgModule({
   declarations: [
@@ -40,6 +41,7 @@ import {ComposeMessageComponent} from './modules/compose-message/compose-message
     MatPaginatorModule,
     MatSortModule,
     MatTableModule,
+    MatInputModule,
     ReactiveFormsModule,
 
     // OKR Modules
