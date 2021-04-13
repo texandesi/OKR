@@ -51,10 +51,11 @@
 
 
   <mat-paginator #paginator
-                 [length]="dataSource.length"
+                 [length]="dataSource.record_count"
                  [pageIndex]="0"
                  [pageSizeOptions]="[5, 10, 20]"
-                 [pageSize]="20">
+                 [pageSize]="20"
+                 (page)="pageEvent = $event">
   </mat-paginator>
 </div>
 

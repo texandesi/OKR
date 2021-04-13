@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 
 import { Observable, of } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
@@ -12,6 +12,11 @@ export class ObjectivesDataService {
 
   // TODO remove hard-coded url and pick it up from config
   private objectivesUrl = 'http://127.0.0.1:8000/objectives/';  // URL to web api
+  record_count : number = 10;
+  curr_page_index : number = 0;
+  previous_url !: string;
+  next_url !: string;
+
 
   httpOptions = {
     headers: new HttpHeaders({
@@ -21,14 +26,49 @@ export class ObjectivesDataService {
 
   constructor(
     private http: HttpClient,
-    private messageService: MessageService) { }
+    private messageService: MessageService,
+    ) { }
 
   /** GET key-results-list from the server */
-  getObjectives(): Observable<Objective[]> {
-    return this.http.get<Objective[]>(this.objectivesUrl)
-      .pipe(
-        tap((response) => this.messageService.log('fetched objectives ' + JSON.stringify(response))),
-        catchError(this.handleError<Objective[]>('failed to getObjectives', []))
+  getObjectives(
+    page_size: number = 10,
+    prev_page_index : number = -1,
+    curr_page_index = 0,
+    sort_column : string = 'name',
+    sort_direction : string = 'asc',
+  ): Observable<Objective[]> {
+    let url : string = this.objectivesUrl;
+
+    console.log('Previous url is : ' + this.previous_url);
+    console.log('Next url is : ' + this.next_url);
+
+    if (prev_page_index > curr_page_index) {
+      if(this.previous_url) {
+        url = this.previous_url;
+      }
+    }
+    else {
+      if(this.next_url) {
+        url = this.next_url;
+      }
+    }
+
+    return this.http.get<any>(url, {
+
+      params: new HttpParams()
+        .set('page_size', String(page_size))
+      }
+    ).pipe(
+        tap((response) => {
+          this.messageService.log('fetched objectives ' + JSON.stringify(response)),
+            this.record_count = response['count'],
+            this.previous_url = response['previous'];
+            this.next_url = response['next'];
+
+        }),
+        catchError(this.handleError<Objective[]>('failed to getObjectives', [])),
+      map(response => response["results"]),
+
       );
   }
 

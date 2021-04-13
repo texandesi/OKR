@@ -1,14 +1,15 @@
 import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
 import {Objective} from '../../../data-objects/objective';
 import {MatPaginator} from '@angular/material/paginator';
+import {PageEvent} from '@angular/material/paginator';
 import {MatSort} from '@angular/material/sort';
-import {MatTable} from '@angular/material/table';
 import {ObjectivesDataService} from '../../../services/objectives-data-service.service';
 import {MatDialog, MatDialogConfig} from '@angular/material/dialog';
 import {ObjectiveEditComponent} from '../objective-edit/objective-edit.component';
 import {ObjectiveListDataSource} from "../../../data-sources/objective-list-datasource";
 import {tap} from "rxjs/operators";
 import {merge} from "rxjs";
+import {MessageService} from "../../../services/message.service";
 
 @Component({
   selector: 'app-objectives',
@@ -18,33 +19,39 @@ import {merge} from "rxjs";
 export class ObjectiveListComponent implements OnInit, AfterViewInit  {
   @ViewChild(MatSort) sort!: MatSort;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
-  // @ViewChild(MatTable) matTable!: MatTable<Objective>;
 
   dataSource !: ObjectiveListDataSource;
 
   /** Columns displayed in the table. Columns IDs can be added, removed, or reordered. */
   displayedColumns = ['id', 'name', 'description', 'delete'];
 
+  messages : MessageService = new MessageService();
+  total_data_length : number = 10;
+  pageEvent : PageEvent = new PageEvent();
+
   constructor(
     private objectiveService : ObjectivesDataService,
     private dialog: MatDialog,
   ) {
     this.dataSource = new ObjectiveListDataSource(this.objectiveService);
+    this.pageEvent.previousPageIndex = -1;
+    this.pageEvent.pageIndex = 0;
   }
 
   ngOnInit() :void {
-    // this.dataSource = new ObjectiveListDataSource(this.objectiveService);
-    this.dataSource.sort = this.sort;
-    this.dataSource.paginator = this.paginator;
+    this.dataSource = new ObjectiveListDataSource(this.objectiveService);
+    this.dataSource.getObjectives();
   }
 
   ngAfterViewInit(): void {
     // reset the paginator after sorting
+    this.messages.log('In the ngAfterViewInit method');
+
     this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
 
     merge(this.sort.sortChange, this.paginator.page)
       .pipe(
-        tap(() => this.dataSource.getObjectives())
+        tap(() => this.dataSource.getObjectives(this.paginator.pageSize, this.pageEvent.previousPageIndex, this.paginator.pageIndex, this.sort.active, this.sort.direction))
       )
       .subscribe();
   }
@@ -52,8 +59,6 @@ export class ObjectiveListComponent implements OnInit, AfterViewInit  {
   openDialog() {
 
     const dialogConfig = new MatDialogConfig();
-    var name = '';
-    var description = '';
 
     dialogConfig.disableClose = true;
     dialogConfig.autoFocus = true;

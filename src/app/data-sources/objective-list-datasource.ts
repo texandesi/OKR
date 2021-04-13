@@ -1,10 +1,8 @@
 import { DataSource } from '@angular/cdk/collections';
-import { MatPaginator } from '@angular/material/paginator';
-import { MatSort } from '@angular/material/sort';
-import {catchError, map, tap} from 'rxjs/operators';
-import {Observable, of as observableOf, merge, of, BehaviorSubject} from 'rxjs';
+import {Observable, BehaviorSubject} from 'rxjs';
 import {ObjectivesDataService} from '../services/objectives-data-service.service';
 import {Objective} from '../data-objects/objective';
+import {MessageService} from "../services/message.service";
 
 /**
  * Data source for the ObjectiveList view. This class should
@@ -15,35 +13,36 @@ export class ObjectiveListDataSource implements DataSource<Objective> {
 
   private data  = new BehaviorSubject<Objective[]>([]);
 
-  paginator!: MatPaginator;
-  sort!: MatSort;
-  length = 10;
+  page_length = 10;
+  record_count = 10;
+  // next_page_number = 2;
+  messages : MessageService = new MessageService();
 
   constructor(
     private objectiveService : ObjectivesDataService,
   ) {
-    // super();
-    // console.log("getObjectives invoked in Data Source");
-    // this.getObjectives();
   }
 
-  getObjectives(): void {
-
-
-    // console.log("getObjectives invoked in Data Source");
-    this.objectiveService.getObjectives()
+  getObjectives(
+    pageSize : number = 10,
+    prev_page_index : number = -1,
+    curr_page_index : number = 0,
+    sort_column : string = 'name',
+    sort_direction : string = 'asc'
+  ): void {
+    this.objectiveService.getObjectives(pageSize, prev_page_index, curr_page_index, sort_column, sort_direction)
       .subscribe(
         objectives => {
                 this.data.next(objectives);
-                this.length=this.data.value.length;
-                // console.log("Data returned from service to data source")
+                this.page_length=this.data.value.length;
+                this.record_count = this.objectiveService.record_count;
+
+                // this.next_page_number=
+                console.log("Data returned from service to data source has length " + this.data.value.length);
               });
-    // console.log("End of getObjectives invoked in Data Source.");
   }
 
-
   addObjective(objective: Objective): void {
-
     this.objectiveService.addObjective(objective);
   }
 
@@ -58,16 +57,16 @@ export class ObjectiveListDataSource implements DataSource<Objective> {
    * @returns A stream of the items to be rendered.
    */
   connect(): Observable<Objective[]> {
-    this.getObjectives();
+    return this.data.asObservable();
 
     // if (this.paginator && this.sort) {
-    //   console.log("Data source got paginator and sort");
+    //   this.messages.log("Data source got paginator and sort");
     // } else {
-    //   console.log("Paginator : " + this.paginator);
-    //   console.log("Data source : " + this.sort);
+    //   this.messages.log("Paginator : " + this.paginator);
+    //   this.messages.log("Data source : " + this.sort);
     // }
-
-    return this.data;
+    //
+    // return this.data;
     // if (this.paginator && this.sort) {
     //   // Combine everything that affects the rendered data into one update
     //   // stream for the data-table to consume.
@@ -95,9 +94,9 @@ export class ObjectiveListDataSource implements DataSource<Objective> {
   }
 }
 
-/** Simple sort comparator for example ID/Name columns (for client-side sorting). */
-function compare(a: string | number, b: string | number, isAsc: boolean): number {
-  // TODO Write a better compare function
-  return (a < b ? -1 : 1) * (isAsc ? 1 : -1);
-}
+// /** Simple sort comparator for example ID/Name columns (for client-side sorting). */
+// function compare(a: string | number, b: string | number, isAsc: boolean): number {
+//   // TODO Write a better compare function
+//   return (a < b ? -1 : 1) * (isAsc ? 1 : -1);
+// }
 

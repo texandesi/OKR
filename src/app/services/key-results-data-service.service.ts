@@ -11,6 +11,8 @@ import {KeyResult} from '../data-objects/key-result';
 export class KeyResultDataService {
 
   private keyresultsUrl = 'http://127.0.0.1:8000/keyresults/';  // URL to web api
+  previous_url !: string;
+  next_url !: string;
 
   httpOptions = {
     headers: new HttpHeaders({
