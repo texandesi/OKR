@@ -1,3 +1,4 @@
+<!--suppress AngularMissingEventHandler -->
 <div class="mat-elevation-z8">
   <h2>My Objectives</h2>
 </div>
@@ -18,7 +19,7 @@
 </div>
 
 <div class="mat-elevation-z8">
-  <table mat-table matSort [dataSource]="dataSource" class="mat-elevation-z8" >
+  <table mat-table matSort [dataSource]="dataSource" >
     <!-- Id Column -->
     <ng-container matColumnDef="id">
       <th *matHeaderCellDef mat-header-cell mat-sort-header>Id</th>
@@ -51,7 +52,7 @@
     </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="displayedColumns" ></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns;" ></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;" (dblclick)="openDialog(row.id);"></tr>
 
 
   </table>
@@ -61,7 +62,7 @@
                  [length]="dataSource.record_count"
                  [pageIndex]="0"
                  [pageSizeOptions]="[5, 10, 20]"
-                 [pageSize]="20"
+                 [pageSize]="dataSource.page_length"
                  (page)="pageEvent = $event">
   </mat-paginator>
 </div>

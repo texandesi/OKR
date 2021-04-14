@@ -1,8 +1,8 @@
 export class Objective {
 
   constructor(
-    public id: number,
     public name: string,
+    public id ?: number,
     public description?: string,
     public date?: Date,
   ) {

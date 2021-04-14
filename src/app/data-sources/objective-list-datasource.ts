@@ -12,6 +12,7 @@ import {MessageService} from "../services/message.service";
 export class ObjectiveListDataSource implements DataSource<Objective> {
 
   private data  = new BehaviorSubject<Objective[]>([]);
+  private get_objective  = new BehaviorSubject<Objective>({name : '', description :''});
 
   page_length = 10;
   record_count = 10;
@@ -43,9 +44,23 @@ export class ObjectiveListDataSource implements DataSource<Objective> {
     this.objectiveService.addObjective(objective).subscribe();
   }
 
+  updateObjective(objective: Objective): void {
+    this.objectiveService.addObjective(objective).subscribe();
+  }
+
   deleteObjective(id: number): void {
     this.objectiveService.deleteObjective(id).subscribe();
  }
+
+  getObjective(id: number): BehaviorSubject<Objective> {
+    this.objectiveService.getObjective(id).subscribe(
+      objective => {
+        return this.get_objective.next(objective);
+      }
+    );
+
+    return this.get_objective;
+  }
 
   searchObjective(name: string): void {
     this.objectiveService.searchObjectives(name).subscribe();
