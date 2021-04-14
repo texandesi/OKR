@@ -164,7 +164,8 @@ export class ObjectivesDataService {
 
   /** PUT: update the objective on the server */
   updateObjective(objective: Objective): Observable<any> {
-    return this.http.put(this.objectivesUrl, objective, this.httpOptions).pipe(
+    const url = `${this.objectivesUrl}/${objective.id}/`;
+    return this.http.put(url, objective, this.httpOptions).pipe(
       tap(_ => this.log(`updated objective id=${objective.id}`)),
       catchError(this.handleError<any>('updateObjective'))
     );

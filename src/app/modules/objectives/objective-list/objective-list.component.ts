@@ -4,7 +4,7 @@ import {MatPaginator} from '@angular/material/paginator';
 import {PageEvent} from '@angular/material/paginator';
 import {MatSort} from '@angular/material/sort';
 import {ObjectivesDataService} from '../../../services/objectives-data-service.service';
-import {MatDialog, MatDialogConfig} from '@angular/material/dialog';
+import {MatDialog, MatDialogConfig, MatDialogRef} from '@angular/material/dialog';
 import {ObjectiveEditComponent} from '../objective-edit/objective-edit.component';
 import {ObjectiveListDataSource} from "../../../data-sources/objective-list-datasource";
 import {debounceTime, distinctUntilChanged, tap} from "rxjs/operators";
@@ -68,9 +68,9 @@ export class ObjectiveListComponent implements OnInit, AfterViewInit  {
       .subscribe();
   }
 
-  openDialog(row_id ?: number) {
+  openDialog(record_id ?: number) {
 
-    this.messages.log('Objective list component row id is ' + row_id);
+    this.messages.log('Objective list component row id is ' + record_id);
 
     const dialogConfig = new MatDialogConfig();
 
@@ -79,29 +79,60 @@ export class ObjectiveListComponent implements OnInit, AfterViewInit  {
 
     let o : Objective = {name: 'Enter name here', description : 'Enter description here'} ;
 
-    if(row_id) {
-      this.dataSource.getObjective(row_id).next(o);
+    let dialogRef !: MatDialogRef<Objective>;
+
+    if(record_id) {
+      this.dataSource.getObjective(record_id).subscribe(
+        o => {
+          dialogConfig.data = {
+            name: o.name,
+            description: o.description,
+          };
+        dialogRef = this.dialog.open(ObjectiveEditComponent, dialogConfig)
+
+          dialogRef.afterClosed().subscribe(
+            data => {
+
+              if(!data ) {return;}
+
+              this.messages.log('Objective list component row id after close is ' + record_id);
+              this.messages.log('Objective list component data after close is ' + data);
+              if (record_id) {
+                this.messages.log('Objective list component entered update with row id after close is ' + record_id);
+                this.update({id: record_id, name: data.name, description : data.description});
+              } else {
+                this.messages.log('Objective list component entered add with row id after close is ' + record_id);
+                this.add(data.name, data.description);
+              }
+
+            }
+          );
+
+        }
+    )
+    } else {
+      dialogRef = this.dialog.open(ObjectiveEditComponent, dialogConfig);
+
+      dialogRef.afterClosed().subscribe(
+        data => {
+          if(!data ) {return;}
+
+          this.messages.log('Objective list component row id after close is ' + record_id);
+          this.messages.log('Objective list component data after close is ' + data);
+          if (record_id) {
+            this.messages.log('Objective list component entered update with row id after close is ' + record_id);
+            this.update({id : record_id, name : data.name, description : data.description});
+          } else {
+            this.messages.log('Objective list component entered add with row id after close is ' + record_id);
+            this.add(data.name, data.description);
+          }
+
+        }
+      );
     }
 
-    dialogConfig.data = {
-      name: o.name,
-      description: o.description,
-    };
 
-    const dialogRef = this.dialog.open(ObjectiveEditComponent, dialogConfig)
 
-    dialogRef.afterClosed().subscribe(
-      data => {
-        this.messages.log('Objective list component row id after close is ' + row_id);
-        this.messages.log('Objective list component data after close is ' + data);
-        if (row_id !== undefined) {
-          this.update(data.name, data.description);
-        } else {
-          this.add(data.name, data.description);
-        }
-
-      }
-    );
   }
 
   add(
@@ -120,17 +151,21 @@ export class ObjectiveListComponent implements OnInit, AfterViewInit  {
   }
 
   update(
-    name: string,
-    description: string
+    objective : Objective
   ): void
   {
     // console.log('Before Adding key-results-list in data source');
-    name = name.trim();
-    if (!name) { return; }
-    description = description.trim();
-    if (!description) { return; }
+    objective.name = objective.name.trim();
+    if (!objective.name) { return; }
 
-    this.dataSource.updateObjective({ name: name, description:description } as Objective);
+    if(objective.description) {
+      objective.description = objective.description.trim();
+      if (!objective.description) { return; }
+    }
+
+
+
+    this.dataSource.updateObjective(objective);
 
     this.dataSource.getObjectives();
   }

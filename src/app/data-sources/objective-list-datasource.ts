@@ -45,21 +45,15 @@ export class ObjectiveListDataSource implements DataSource<Objective> {
   }
 
   updateObjective(objective: Objective): void {
-    this.objectiveService.addObjective(objective).subscribe();
+    this.objectiveService.updateObjective(objective).subscribe();
   }
 
   deleteObjective(id: number): void {
     this.objectiveService.deleteObjective(id).subscribe();
  }
 
-  getObjective(id: number): BehaviorSubject<Objective> {
-    this.objectiveService.getObjective(id).subscribe(
-      objective => {
-        return this.get_objective.next(objective);
-      }
-    );
-
-    return this.get_objective;
+  getObjective(id: number): Observable<Objective> {
+    return this.objectiveService.getObjective(id);
   }
 
   searchObjective(name: string): void {
