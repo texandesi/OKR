@@ -79,27 +79,20 @@ export class ObjectivesDataService {
 
     url = url_with_param.toString();
 
-
-    // this.messageService.log('The url with ordering param is ' + url); // => 'hello'
-    // console.log('The missing param is ' + url_with_param.searchParams.get('missing')); // => null
-
-
     return this.http.get<any>(url, {
-
       params: new HttpParams()
         // .set('page_size', String(page_size))
       }
     ).pipe(
         tap((response) => {
-          this.messageService.log('Objective data service - fetched objectives ' + JSON.stringify(response)),
+          // this.messageService.log('Objective data service - fetched objectives ' + JSON.stringify(response)),
             this.record_count = response['count'],
             this.previous_url = response['previous'];
             this.next_url = response['next'];
 
         }),
         catchError(this.handleError<Objective[]>('failed to getObjectives', [])),
-      map(response => response["results"]),
-
+        map(response => response["results"]),
       );
   }
 

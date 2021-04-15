@@ -35,7 +35,7 @@ export class ObjectiveListDataSource implements DataSource<Objective> {
       .subscribe(
         objectives => {
                 this.data.next(objectives);
-                this.page_length=this.data.value.length;
+                // this.page_length=this.data.value.length;
                 this.record_count = this.objectiveService.record_count;
               });
   }
@@ -60,14 +60,13 @@ export class ObjectiveListDataSource implements DataSource<Objective> {
     this.objectiveService.searchObjectives(name).subscribe();
   }
 
-
-
   /**
    * Connect this data source to the table. The table will only update when
    * the returned stream emits new items.
    * @returns A stream of the items to be rendered.
    */
   connect(): Observable<Objective[]> {
+    // this.getObjectives();
     return this.data.asObservable();
   }
 
