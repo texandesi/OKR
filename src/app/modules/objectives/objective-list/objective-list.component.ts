@@ -78,6 +78,7 @@ export class ObjectiveListComponent implements OnInit, AfterViewInit  {
     dialogConfig.autoFocus = true;
 
     let o : Objective = {name: 'Enter name here', description : 'Enter description here'} ;
+    dialogConfig.data = o;
 
     let dialogRef !: MatDialogRef<Objective>;
 
@@ -97,20 +98,16 @@ export class ObjectiveListComponent implements OnInit, AfterViewInit  {
 
               this.messages.log('Objective list component row id after close is ' + record_id);
               this.messages.log('Objective list component data after close is ' + data);
-              if (record_id) {
                 this.messages.log('Objective list component entered update with row id after close is ' + record_id);
                 this.update({id: record_id, name: data.name, description : data.description});
-              } else {
-                this.messages.log('Objective list component entered add with row id after close is ' + record_id);
-                this.add(data.name, data.description);
-              }
-
             }
           );
 
         }
     )
     } else {
+      // Add branch
+      this.messages.log('Objective list component dialog data is ' + JSON.stringify(dialogConfig.data));
       dialogRef = this.dialog.open(ObjectiveEditComponent, dialogConfig);
 
       dialogRef.afterClosed().subscribe(
@@ -119,14 +116,8 @@ export class ObjectiveListComponent implements OnInit, AfterViewInit  {
 
           this.messages.log('Objective list component row id after close is ' + record_id);
           this.messages.log('Objective list component data after close is ' + data);
-          if (record_id) {
-            this.messages.log('Objective list component entered update with row id after close is ' + record_id);
-            this.update({id : record_id, name : data.name, description : data.description});
-          } else {
             this.messages.log('Objective list component entered add with row id after close is ' + record_id);
             this.add(data.name, data.description);
-          }
-
         }
       );
     }
