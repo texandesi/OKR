@@ -9,6 +9,11 @@ import { MatFormFieldModule} from '@angular/material/form-field';
 import { MatInputModule} from '@angular/material/input';
 import { MatButtonModule} from '@angular/material/button';
 import { MatDialogModule} from "@angular/material/dialog";
+import { LayoutModule } from '@angular/cdk/layout';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatIconModule } from '@angular/material/icon';
+import { MatListModule } from '@angular/material/list';
 
 // Objectives
 import { ObjectivesRoutingModule } from './objectives-routing.module';
@@ -16,6 +21,7 @@ import { ObjectiveSearchComponent } from './objective-search/objective-search.co
 import { ObjectiveEditComponent } from "./objective-edit/objective-edit.component";
 import { ObjectiveDetailComponent } from './objective-detail/objective-detail.component';
 import { ObjectiveListComponent } from "./objective-list/objective-list.component";
+import { ObjectiveNavComponent } from './objective-nav/objective-nav.component';
 
 @NgModule({
   declarations: [
@@ -23,6 +29,7 @@ import { ObjectiveListComponent } from "./objective-list/objective-list.componen
     ObjectiveDetailComponent,
     ObjectiveSearchComponent,
     ObjectiveEditComponent,
+    ObjectiveNavComponent,
   ],
   imports: [
     CommonModule,
@@ -37,6 +44,11 @@ import { ObjectiveListComponent } from "./objective-list/objective-list.componen
     MatDialogModule,
     MatInputModule,
     ReactiveFormsModule,
+    LayoutModule,
+    MatToolbarModule,
+    MatSidenavModule,
+    MatIconModule,
+    MatListModule,
 
   ],
   exports: [

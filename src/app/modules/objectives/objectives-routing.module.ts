@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import {ObjectiveListComponent} from './objective-list/objective-list.component';
 import {ObjectiveSearchComponent} from './objective-search/objective-search.component';
 import {ObjectiveDetailComponent} from './objective-detail/objective-detail.component';
+import {ObjectiveNavComponent} from "./objective-nav/objective-nav.component";
 
 const routes: Routes = [
   {
@@ -11,6 +12,10 @@ const routes: Routes = [
       {
         path: 'search',
         component: ObjectiveSearchComponent
+      },
+      {
+        path: 'nav',
+        component: ObjectiveNavComponent
       },
       {
         path: 'detail/:id',
