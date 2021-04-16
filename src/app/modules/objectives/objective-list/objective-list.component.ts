@@ -2,7 +2,7 @@ import {AfterViewInit, Component, ElementRef, OnInit, ViewChild} from '@angular/
 import {Objective} from '../../../data-objects/objective';
 import {MatPaginator} from '@angular/material/paginator';
 import {PageEvent} from '@angular/material/paginator';
-import {MatSort} from '@angular/material/sort';
+import {MatSort, Sort} from '@angular/material/sort';
 import {ObjectivesDataService} from '../../../services/objectives-data-service.service';
 import {MatDialog, MatDialogConfig, MatDialogRef} from '@angular/material/dialog';
 import {ObjectiveEditComponent} from '../objective-edit/objective-edit.component';
@@ -71,7 +71,14 @@ export class ObjectiveListComponent implements OnInit, AfterViewInit {
           this.sort.direction
         ))
       )
-      .subscribe();
+      .subscribe(
+        event => {
+          this.messages.log('Verifying that event is of Page Event type is  ' + this.isPageEvent(event));
+          let myPageEvent : PageEvent = this.getPageEvent();
+
+
+        }
+      );
   }
 
   openDialog(record_id ?: number) {
@@ -134,6 +141,7 @@ export class ObjectiveListComponent implements OnInit, AfterViewInit {
       return;
     }
     this.dataSource.addObjective({name: name, description: description} as Objective);
+
   }
 
   update(
@@ -171,6 +179,20 @@ export class ObjectiveListComponent implements OnInit, AfterViewInit {
     }
     this.dataSource.searchObjective(name);
 
+  }
+
+  isPageEvent(event: Sort | PageEvent): event is PageEvent {
+    return (event as PageEvent).length !== undefined;
+  }
+
+  isSortEvent(event: Sort | PageEvent): event is Sort {
+    return (event as Sort).direction !== undefined;
+  }
+
+  getPageEvent () : PageEvent {
+    let pageEvent = new PageEvent();
+
+    return pageEvent;
   }
 
 }

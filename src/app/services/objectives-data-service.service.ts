@@ -41,8 +41,15 @@ export class ObjectivesDataService {
   ): Observable<Objective[]> {
     let url : string = this.objectivesUrl;
 
-    // console.log('Previous url is : ' + this.previous_url);
-    // console.log('Next url is : ' + this.next_url);
+    this.messageService.log('current url is : ' + url);
+    this.messageService.log('name_filter is : ' + name_filter);
+    this.messageService.log('Page Size is : ' + page_size);
+    this.messageService.log('Previous page index is is : ' + prev_page_index);
+    this.messageService.log('Current page index is is : ' + curr_page_index);
+    this.messageService.log('Sort column is : ' + sort_column);
+    this.messageService.log('Sort direction is : ' + sort_direction);
+    this.messageService.log('Previous url is : ' + this.previous_url);
+    this.messageService.log('Next url is : ' + this.next_url);
 
     if (prev_page_index > curr_page_index) {
       if(this.previous_url) {
@@ -65,7 +72,7 @@ export class ObjectivesDataService {
       }
 
       url_with_param.searchParams.set('ordering', ordering_param);
-      url_with_param.searchParams.delete('page');
+      // url_with_param.searchParams.delete('page');
     }
 
     url_with_param.searchParams.delete('page_size');
@@ -78,6 +85,9 @@ export class ObjectivesDataService {
     }
 
     url = url_with_param.toString();
+
+    this.messageService.log('url in service to get objectives is : ' + url);
+
 
     return this.http.get<any>(url, {
       params: new HttpParams()
