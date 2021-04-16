@@ -1,16 +1,16 @@
-<mat-sidenav-container class="sidenav-container">
-  <mat-sidenav #drawer class="sidenav" fixedInViewport
+<mat-drawer-container class="sidenav-container">
+  <mat-drawer #drawer class="sidenav" fixedInViewport
       [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
       [mode]="(isHandset$ | async) ? 'over' : 'side'"
       [opened]="(isHandset$ | async) === false">
     <mat-toolbar>Menu</mat-toolbar>
     <mat-nav-list>
-      <a mat-list-item href="#">Link 1</a>
+      <a mat-list-item href="/objectives">Objectives</a>
       <a mat-list-item href="#">Link 2</a>
       <a mat-list-item href="#">Link 3</a>
     </mat-nav-list>
-  </mat-sidenav>
-  <mat-sidenav-content>
+  </mat-drawer>
+  <mat-drawer-content>
     <mat-toolbar color="primary">
       <button
         type="button"
@@ -22,6 +22,8 @@
       </button>
       <span>techniti-okr-app</span>
     </mat-toolbar>
+
+    <app-objectives></app-objectives>
     <!-- Add Content Here -->
-  </mat-sidenav-content>
-</mat-sidenav-container>
+  </mat-drawer-content>
+</mat-drawer-container>

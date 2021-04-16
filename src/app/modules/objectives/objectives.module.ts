@@ -56,6 +56,7 @@ import { ObjectiveNavComponent } from './objective-nav/objective-nav.component';
     ObjectiveDetailComponent,
     ObjectiveSearchComponent,
     ObjectiveEditComponent,
+    ObjectiveNavComponent,
   ],
   providers: [],
   bootstrap: [],

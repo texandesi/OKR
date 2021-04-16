@@ -9,11 +9,14 @@ import {AdminComponent} from './modules/admin/admin/admin.component';
 import {ObjectivesRoutingModule} from "./modules/objectives/objectives-routing.module";
 import {KeyResultsRoutingModule} from "./modules/key-results/key-results-routing.module";
 import {DashboardRoutingModule} from "./modules/dashboard/dashboard-routing.module";
+import { ObjectiveListComponent } from './modules/objectives/objective-list/objective-list.component';
+// import {ObjectivesModule} from "./modules/objectives/objectives.module";
 
 const appRoutes: Routes = [
-  { path: 'kpi-list', component: KpisComponent },
-  { path: 'admin', component: AdminComponent },
-  { path: '', redirectTo: '/objectives', pathMatch: 'full'},
+  { path: '', redirectTo: '/', pathMatch: 'full'},
+//  { path: 'kpi-list', component: KpisComponent },
+//  { path: 'admin', component: AdminComponent },
+  { path: 'objectives', component: ObjectiveListComponent },
   { path: '**', component: PageNotFoundComponent},
 ];
 

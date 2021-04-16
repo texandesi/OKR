@@ -10,6 +10,11 @@ const routes: Routes = [
     path: 'objectives',
     children: [
       {
+        path: '',
+        component: ObjectiveListComponent,
+        pathMatch: 'full'
+      },
+      {
         path: 'search',
         component: ObjectiveSearchComponent
       },
@@ -20,10 +25,6 @@ const routes: Routes = [
       {
         path: 'detail/:id',
         component: ObjectiveDetailComponent
-      },
-      {
-        path: '',
-        component: ObjectiveListComponent
       },
     ]
   },

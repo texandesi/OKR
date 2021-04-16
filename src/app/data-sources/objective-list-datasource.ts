@@ -41,15 +41,40 @@ export class ObjectiveListDataSource implements DataSource<Objective> {
   }
 
   addObjective(objective: Objective): void {
-    this.objectiveService.addObjective(objective).subscribe();
+    this.objectiveService.addObjective(objective).subscribe(
+      o => {
+            this.data.value.push(o);
+            this.data.next(this.data.value)
+      }
+    );
   }
 
   updateObjective(objective: Objective): void {
-    this.objectiveService.updateObjective(objective).subscribe();
+    this.objectiveService.updateObjective(objective).subscribe(
+      o => {
+        // this.getObjectives();
+        // let arr : Objective [] = this.data.value;
+        let arr = this.data.value.filter(item => item.id !== o.id );
+        arr.push(o);
+        this.data.next( arr );
+        // this.data.next(this.data.value)
+      }
+    );
   }
 
   deleteObjective(id: number): void {
-    this.objectiveService.deleteObjective(id).subscribe();
+    this.objectiveService.deleteObjective(id).subscribe(
+
+      o => {
+        // this.getObjectives();
+        // let arr : Objective [] = this.data.value;
+        let arr = this.data.value.filter(item => item.id !== id );
+        // console.log('O in datasource delete objective before next is ' + JSON.stringify(o));
+        this.data.next( arr );
+        // this.data.next(this.data.value)
+      }
+
+    );
  }
 
   getObjective(id: number): Observable<Objective> {
@@ -57,7 +82,10 @@ export class ObjectiveListDataSource implements DataSource<Objective> {
   }
 
   searchObjective(name: string): void {
-    this.objectiveService.searchObjectives(name).subscribe();
+    this.objectiveService.searchObjectives(name).subscribe(
+      o => this.data.next(o)
+
+    );
   }
 
   /**

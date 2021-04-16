@@ -146,8 +146,7 @@ export class ObjectivesDataService {
   deleteObjective(id: number): Observable<Objective> {
     const url = `${this.objectivesUrl}/${id}/`;
 
-    this.messageService.log('Objective data service The url with delete param is ' + url); // => 'hello'
-
+    // this.messageService.log('Objective data service The url with delete param is ' + url); // => 'hello'
 
     return this.http.delete<Objective>(url, this.httpOptions).pipe(
       tap(_ => this.log(`deleted objective id=${id}`)),
