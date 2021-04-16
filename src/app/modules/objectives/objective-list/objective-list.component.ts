@@ -134,9 +134,6 @@ export class ObjectiveListComponent implements OnInit, AfterViewInit {
       return;
     }
     this.dataSource.addObjective({name: name, description: description} as Objective);
-    this.table.renderRows();
-
-    // this.dataSource.getObjectives();
   }
 
   update(
@@ -154,10 +151,8 @@ export class ObjectiveListComponent implements OnInit, AfterViewInit {
         return;
       }
     }
-
-
     this.dataSource.updateObjective(objective);
-    this.table.renderRows();
+    // this.table.renderRows();
   }
 
   // TODO Implement back the page refresh and delete functionality for the Objectives list.
@@ -165,7 +160,7 @@ export class ObjectiveListComponent implements OnInit, AfterViewInit {
     // this.dataSource.data = this.dataSource.data.filter(h => h !== objective);
     // console.log('Before deleting key-results-list in data source');
     this.dataSource.deleteObjective(id);
-    this.table.renderRows();
+    // this.table.renderRows();
   }
 
   search(name: string): void {
