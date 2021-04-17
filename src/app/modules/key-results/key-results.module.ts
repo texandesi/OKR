@@ -10,20 +10,17 @@ import { MatSortModule } from '@angular/material/sort';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
 import {MatButtonModule} from '@angular/material/button';
-import {KeyResultsListComponent} from "./key-results-list/key-results-list.component";
-import {KeyResultsDetailComponent} from "./key-results-detail/key-results-detail.component";
+import {KeyResultListComponent} from "./key-results-list/key-result-list.component";
 import {KeyResultsSearchComponent} from "./key-results-search/key-results-search.component";
 import {MatDialogModule} from "@angular/material/dialog";
-import {KeyResultsEditComponent} from "./key-results-edit/key-results-edit.component";
-
+import {KeyResultEditComponent} from "./keyresults-edit/keyresult-edit.component";
 
 
 @NgModule({
   declarations: [
-    KeyResultsListComponent,
-    KeyResultsDetailComponent,
+    KeyResultListComponent,
     KeyResultsSearchComponent,
-    KeyResultsEditComponent,
+    KeyResultEditComponent,
   ],
   imports: [
     CommonModule,
@@ -43,9 +40,8 @@ import {KeyResultsEditComponent} from "./key-results-edit/key-results-edit.compo
   ],
   exports: [
     KeyResultsSearchComponent,
-    KeyResultsDetailComponent,
-    KeyResultsListComponent,
-    KeyResultsEditComponent,
+    KeyResultListComponent,
+    KeyResultEditComponent,
   ]
 })
 export class KeyResultsModule {

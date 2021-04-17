@@ -5,9 +5,9 @@ import { Observable, Subject } from 'rxjs';
 import {
   debounceTime, distinctUntilChanged, switchMap
 } from 'rxjs/operators';
+import {KeyResult} from "../../../data-objects/keyresult";
+import {KeyResultsDataService} from "../../../services/key-results-data-service.service";
 
-import { KeyResult } from '../../../data-objects/key-result';
-import {KeyResultDataService} from "../../../services/key-results-data-service.service";
 
 @Component({
   selector: 'app-key-results-search',
@@ -15,10 +15,10 @@ import {KeyResultDataService} from "../../../services/key-results-data-service.s
   styleUrls: [ './key-results-search.component.scss' ]
 })
 export class KeyResultsSearchComponent implements OnInit {
-  keyresults$!: Observable<KeyResult[]>;
+  keyresult$!: Observable<KeyResult[]>;
   private searchTerms = new Subject<string>();
 
-  constructor(private keyresultService: KeyResultDataService) {}
+  constructor(private keyresultService: KeyResultsDataService) {}
 
   // Push a search term into the observable stream.
   search(term: string): void {
@@ -26,7 +26,7 @@ export class KeyResultsSearchComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.keyresults$ = this.searchTerms.pipe(
+    this.keyresult$ = this.searchTerms.pipe(
       // wait 300ms after each keystroke before considering the term
       debounceTime(300),
 
@@ -34,7 +34,7 @@ export class KeyResultsSearchComponent implements OnInit {
       distinctUntilChanged(),
 
       // switch to new search observable each time the term changes
-      switchMap((term: string) => this.keyresultService.searchKeyResults(term)),
+      switchMap((term: string) => this.keyresultService.searchKeyResult(term)),
     );
   }
 }

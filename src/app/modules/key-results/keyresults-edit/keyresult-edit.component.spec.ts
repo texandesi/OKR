@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import {KeyResultsDetailComponent} from "./key-results-detail.component";
 
+import { KeyResultEditComponent } from './keyresult-edit.component';
 
-describe('KeyResultDetailComponent', () => {
-  let component: KeyResultsDetailComponent;
-  let fixture: ComponentFixture<KeyResultsDetailComponent>;
+describe('AddObjectiveComponentComponent', () => {
+  let component: KeyResultEditComponent;
+  let fixture: ComponentFixture<KeyResultEditComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ KeyResultsDetailComponent ]
+      declarations: [ KeyResultEditComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(KeyResultsDetailComponent);
+    fixture = TestBed.createComponent(KeyResultEditComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -1,17 +1,22 @@
+<!--suppress AngularMissingEventHandler -->
 <div class="mat-elevation-z8">
-  <h2>My KeyResults</h2>
+  <h2>My Key Results</h2>
 </div>
 
-<div class="mat-elevation-z8">
+<div class="mat-elevation-z8 objective-container" >
   <!-- (click) passes input value to add() and then clears the input -->
   <button mat-raised-button (click)="openDialog();"
           color="primary">
-    Add keyresult
+    Add key result
   </button>
+  <mat-form-field class="example-form-field">
+    <mat-label>Search for Key Results</mat-label>
+    <input matInput placeholder="Enter key result name" #input>
+  </mat-form-field>
 </div>
 
-<div class="mat-elevation-z8">
-  <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort>
+<div class="mat-elevation-z8 key-result" >
+  <table mat-table matSort [dataSource]="dataSource.data" >
     <!-- Id Column -->
     <ng-container matColumnDef="id">
       <th *matHeaderCellDef mat-header-cell mat-sort-header>Id</th>
@@ -43,15 +48,19 @@
       </td>
     </ng-container>
 
-    <tr *matHeaderRowDef="displayedColumns" mat-header-row></tr>
-    <tr *matRowDef="let row; columns: displayedColumns;" mat-row></tr>
+    <tr mat-header-row *matHeaderRowDef="displayedColumns" ></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;" (dblclick)="openDialog(row.id);"></tr>
+
+
   </table>
 
+
   <mat-paginator #paginator
-                 [length]="dataSource?.data?.length"
+                 [length]="dataSource.record_count"
                  [pageIndex]="0"
                  [pageSizeOptions]="[5, 10, 20]"
-                 [pageSize]="20">
+                 [pageSize]="dataSource.page_length"
+                 (page)="pageEvent = $event">
   </mat-paginator>
 </div>
 

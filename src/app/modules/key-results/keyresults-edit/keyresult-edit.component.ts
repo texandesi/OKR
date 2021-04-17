@@ -3,18 +3,18 @@ import {FormBuilder, FormGroup} from '@angular/forms';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 
 @Component({
-  selector: 'app-add-key-results-component',
-  templateUrl: './key-results-edit.component.html',
-  styleUrls: ['./key-results-edit.component.scss']
+  selector: 'app-add-keyresult-edit-component',
+  templateUrl: './keyresult-edit.component.html',
+  styleUrls: ['./keyresult-edit.component.scss']
 })
-export class KeyResultsEditComponent implements OnInit {
+export class KeyResultEditComponent implements OnInit {
   form!: FormGroup;
   name!: string;
   description!: string;
 
   constructor(
     private fb: FormBuilder,
-    private dialogRef: MatDialogRef<KeyResultsEditComponent>,
+    private dialogRef: MatDialogRef<KeyResultEditComponent>,
 
     // @ts-ignore
     @Inject(MAT_DIALOG_DATA) data) {

@@ -3,8 +3,6 @@ import {BrowserModule} from '@angular/platform-browser';
 
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
-import {KpisComponent} from './modules/kpis/kpi-list/kpis.component';
-import {DashboardComponent} from './modules/dashboard/dashboard.component';
 import {DashboardModule} from './modules/dashboard/dashboard.module';
 import {KeyResultsModule} from './modules/key-results/key-results.module';
 import {KpisModule} from './modules/kpis/kpis.module';

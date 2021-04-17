@@ -1,20 +1,19 @@
 import {ComponentFixture, TestBed} from '@angular/core/testing';
-import {KeyResultsListComponent} from "./key-results-list.component";
-
+import {KeyResultListComponent} from "./key-result-list.component";
 
 describe('KeyResultsComponent', () => {
-  let component: KeyResultsListComponent;
-  let fixture: ComponentFixture<KeyResultsListComponent>;
+  let component: KeyResultListComponent;
+  let fixture: ComponentFixture<KeyResultListComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [KeyResultsListComponent]
+      declarations: [KeyResultListComponent]
     })
       .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(KeyResultsListComponent);
+    fixture = TestBed.createComponent(KeyResultListComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
