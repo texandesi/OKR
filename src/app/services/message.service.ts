@@ -10,11 +10,12 @@ export class MessageService {
     this.messages.push(message);
   }
 
-  log(message: string) {
-    this.messages.push(message);
+  log(context: string, message: string) {
+    const log_string = context + ' : ' + message;
+    this.add(log_string);
 
     // TODO Add logging levels or find an Angular logging service
-    console.log(message);
+    console.log(log_string);
   }
 
   clear() {

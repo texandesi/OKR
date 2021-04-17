@@ -65,7 +65,7 @@ export class ObjectiveListComponent implements OnInit, AfterViewInit {
       .subscribe(
         event => {
           // this.messages.log('Verifying that event is of Page Event type is  ' + this.isPageEvent(event));
-          this.messages.log('Page event data is ' + JSON.stringify(event));
+          this.messages.log('Objective-List-Component', 'Page event data is ' + JSON.stringify(event));
 
           let previousPageIndex = this.pageEvent.previousPageIndex;
           if(this.isPageEvent(event)) {

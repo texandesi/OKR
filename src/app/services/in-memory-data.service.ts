@@ -27,6 +27,7 @@ export class InMemoryDataService implements InMemoryDbService {
   // if the key-results-list array is not empty, the method below returns the highest
   // objective id + 1.
   genId(objectives: Objective[]): number {
+    // @ts-ignore
     return objectives.length > 0 ? Math.max(...objectives.map(objective => objective.id)) + 1 : 11;
   }
 }

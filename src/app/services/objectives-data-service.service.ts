@@ -41,15 +41,15 @@ export class ObjectivesDataService {
   ): Observable<Objective[]> {
     let url : string = this.objectivesUrl;
 
-    this.messageService.log('current url is : ' + url);
-    this.messageService.log('name_filter is : ' + name_filter);
-    this.messageService.log('Page Size is : ' + page_size);
-    this.messageService.log('Previous page index is is : ' + prev_page_index);
-    this.messageService.log('Current page index is is : ' + curr_page_index);
-    this.messageService.log('Sort column is : ' + sort_column);
-    this.messageService.log('Sort direction is : ' + sort_direction);
-    this.messageService.log('Previous url is : ' + this.previous_url);
-    this.messageService.log('Next url is : ' + this.next_url);
+    this.log('current url is : ' + url);
+    this.log('name_filter is : ' + name_filter);
+    this.log('Page Size is : ' + page_size);
+    this.log('Previous page index is is : ' + prev_page_index);
+    this.log('Current page index is is : ' + curr_page_index);
+    this.log('Sort column is : ' + sort_column);
+    this.log('Sort direction is : ' + sort_direction);
+    this.log('Previous url is : ' + this.previous_url);
+    this.log('Next url is : ' + this.next_url);
 
     if (prev_page_index > curr_page_index) {
       if(this.previous_url) {
@@ -86,7 +86,7 @@ export class ObjectivesDataService {
 
     url = url_with_param.toString();
 
-    this.messageService.log('url in service to get objectives is : ' + url);
+    this.log('url in service to get objectives is : ' + url);
 
 
     return this.http.get<any>(url, {
@@ -95,7 +95,7 @@ export class ObjectivesDataService {
       }
     ).pipe(
         tap((response) => {
-          this.messageService.log('Objective data service - fetched objectives ' + JSON.stringify(response)),
+          this.log('Objective data service - fetched objectives ' + JSON.stringify(response)),
             this.record_count = response['count'],
             this.previous_url = response['previous'];
             this.next_url = response['next'];
@@ -196,6 +196,6 @@ export class ObjectivesDataService {
   /** Log a ObjectiveService message with the MessageService */
   private log(message: string) {
     console.log(`ObjectiveService: ${message}`);
-    this.messageService.log(`ObjectiveService: ${message}`);
+    this.messageService.log('Objective-Data-Service',`ObjectiveService: ${message}`);
   }
 }
