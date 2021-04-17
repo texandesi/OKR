@@ -11,7 +11,7 @@ const routes: Routes = [
     children: [
       {
         path: '',
-        component: ObjectiveListComponent,
+        redirectTo: 'nav',
         pathMatch: 'full'
       },
       {
