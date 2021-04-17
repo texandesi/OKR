@@ -1,12 +1,13 @@
 <component name="ProjectRunConfigurationManager">
   <configuration default="false" name="techniti_okr" type="Python.DjangoServer" factoryName="Django server">
-    <module name="techniti_okr" />
+    <module name="techniti-okr-backend" />
     <option name="INTERPRETER_OPTIONS" value="" />
     <option name="PARENT_ENVS" value="true" />
     <envs>
       <env name="PYTHONUNBUFFERED" value="1" />
+      <env name="DJANGO_SETTINGS_MODULE" value="techniti_okr.settings" />
     </envs>
-    <option name="SDK_HOME" value="$USER_HOME$/.pyenv/versions/3.7.4/bin/python" />
+    <option name="SDK_HOME" value="$USER_HOME$/.virtualenvs/djangoEnv/bin/python" />
     <option name="WORKING_DIRECTORY" value="" />
     <option name="IS_MODULE_SDK" value="false" />
     <option name="ADD_CONTENT_ROOTS" value="true" />

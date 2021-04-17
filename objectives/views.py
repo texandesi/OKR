@@ -67,15 +67,23 @@ class ObjectiveViewSet(viewsets.ModelViewSet):
     #         headers=headers,
     #         body=request.body,
     #     )
-    #
     # def create(self, request, *args, **kwargs):
     #     print(self.pretty_request(request));
     #     return super().create(request, *args, **kwargs)
 
-    def list(self, request, *args, **kwargs):
-        queryset = self.filter_queryset(self.get_queryset()).order_by(self.request.query_params.get('ordering'))
 
-        # queryset = queryset.order_by(self.request.query_params.get('ordering'))
+    def list(self, request, *args, **kwargs):
+        # count = Objective.objects.count()
+
+        sort_param = self.request.query_params.get('ordering')
+        queryset = self.filter_queryset(self.get_queryset())
+
+        if sort_param:
+            queryset = queryset.order_by(sort_param)
+        else:
+            queryset = queryset.order_by('name')
+
+        # prev_request_url = self.request.query_params.get('previous')
 
         page_size = self.request.query_params.get('page_size')
 
@@ -85,7 +93,12 @@ class ObjectiveViewSet(viewsets.ModelViewSet):
         page = self.paginate_queryset(queryset)
         if page is not None:
             serializer = self.get_serializer(page, many=True)
+
             return self.get_paginated_response(serializer.data)
 
         serializer = self.get_serializer(queryset, many=True)
-        return Response(serializer.data)
+
+        r = Response(serializer.data)
+        # r.data['max_records'] = Objective.objects.count()
+
+        return r

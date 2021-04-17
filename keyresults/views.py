@@ -1,14 +1,43 @@
 # Create your views here.
+import django_filters
 from rest_framework import viewsets
+from django_filters import rest_framework as filters
+
+from rest_framework.pagination import PageNumberPagination
+from rest_framework.response import Response
+
 from keyresults.serializers import KeyResultsSerializer
 from keyresults.models import KeyResults
+
+class KeyResultsFilter(filters.FilterSet):
+    name = filters.CharFilter(field_name="name", lookup_expr='icontains')
+    description = filters.CharFilter(field_name="description", lookup_expr='icontains')
+    # name_sort = filters.OrderingFilter;
+
+    class Meta:
+        model = KeyResults
+        fields = ['name', 'description']
+
+
+class StandardResultsSetPagination(PageNumberPagination):
+    page_size = 5
+    page_size_query_param = 'page_size'
+    max_page_size = 1000
+
 
 class KeyResultsViewSet(viewsets.ModelViewSet):
     """
     API endpoint that allows users to be viewed/created/edited/deleted.
     """
-    queryset = KeyResults.objects.all().order_by('id')
+    queryset = KeyResults.objects.all()
+    ordering_fields = ['name', 'description']
+
     serializer_class = KeyResultsSerializer
+    pagination_class = StandardResultsSetPagination
+    filter_backends = (
+        django_filters.rest_framework.DjangoFilterBackend,
+    )
+    filterset_class = KeyResultsSerializer
 
     # permission_classes = [permissions.IsAuthenticated]
 
@@ -37,8 +66,38 @@ class KeyResultsViewSet(viewsets.ModelViewSet):
     #         headers=headers,
     #         body=request.body,
     #     )
-    #
     # def create(self, request, *args, **kwargs):
     #     print(self.pretty_request(request));
     #     return super().create(request, *args, **kwargs)
 
+
+    def list(self, request, *args, **kwargs):
+        count = KeyResults.objects.count()
+
+        sort_param = self.request.query_params.get('ordering')
+        queryset = self.filter_queryset(self.get_queryset())
+
+        if sort_param:
+            queryset = queryset.order_by(sort_param)
+        else:
+            queryset = queryset.order_by('name')
+
+        prev_request_url = self.request.query_params.get('previous')
+
+        page_size = self.request.query_params.get('page_size')
+
+        if (page_size is not None) and (int(page_size) > 0):
+            self.pagination_class.page_size = int(page_size)
+
+        page = self.paginate_queryset(queryset)
+        if page is not None:
+            serializer = self.get_serializer(page, many=True)
+
+            return self.get_paginated_response(serializer.data)
+
+        serializer = self.get_serializer(queryset, many=True)
+
+        r = Response(serializer.data)
+        # r.data['max_records'] = Objective.objects.count()
+
+        return r

@@ -120,7 +120,7 @@ DATABASES = {
         'NAME': 'techniti_okr_dev_schema',
         'USER': 'sanjeev',
         'PASSWORD': 'sanjeev1',
-        'HOST': '127.0.0.1',
+        'HOST': 'localhost',
         'PORT': '3306',
     }
 }
