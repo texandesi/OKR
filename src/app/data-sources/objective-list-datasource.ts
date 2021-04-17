@@ -11,7 +11,7 @@ import {MessageService} from "../services/message.service";
  */
 export class ObjectiveListDataSource implements DataSource<Objective> {
 
-  private data  = new BehaviorSubject<Objective[]>([]);
+  data  = new BehaviorSubject<Objective[]>([]);
   private get_objective  = new BehaviorSubject<Objective>({name : '', description :''});
 
   page_length = 10;
@@ -43,7 +43,8 @@ export class ObjectiveListDataSource implements DataSource<Objective> {
   addObjective(objective: Objective): void {
     this.objectiveService.addObjective(objective).subscribe(
       o => {
-            this.data.value.push(o);
+            this.data.value.splice(0,0,o).splice(this.page_length, this.data.value.length);
+            // this.data.value.slice(0, this.page_length);
             this.data.next(this.data.value)
       }
     );

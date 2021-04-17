@@ -62,20 +62,26 @@ export class ObjectiveListComponent implements OnInit, AfterViewInit {
     this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
 
     merge(this.sort.sortChange, this.paginator.page)
-      .pipe(
-        tap(() => this.dataSource.getObjectives(
-          this.paginator.pageSize,
-          this.pageEvent.previousPageIndex,
-          this.paginator.pageIndex,
-          this.sort.active,
-          this.sort.direction
-        ))
-      )
       .subscribe(
         event => {
-          this.messages.log('Verifying that event is of Page Event type is  ' + this.isPageEvent(event));
-          let myPageEvent : PageEvent = this.getPageEvent();
+          // this.messages.log('Verifying that event is of Page Event type is  ' + this.isPageEvent(event));
+          this.messages.log('Page event data is ' + JSON.stringify(event));
 
+          let previousPageIndex = this.pageEvent.previousPageIndex;
+          if(this.isPageEvent(event)) {
+            event.previousPageIndex=this.pageEvent.previousPageIndex;
+          }
+
+
+          // let myPageEvent : PageEvent = this.getPageEvent();
+
+          this.dataSource.getObjectives(
+            this.paginator.pageSize,
+            previousPageIndex,
+            this.paginator.pageIndex,
+            this.sort.active,
+            this.sort.direction
+          )
 
         }
       );
@@ -142,6 +148,12 @@ export class ObjectiveListComponent implements OnInit, AfterViewInit {
     }
     this.dataSource.addObjective({name: name, description: description} as Objective);
 
+    // this.pageEvent.pageIndex;
+    // this.pageEvent.length=this.pageEvent.length;
+    // this.pageEvent.pageSize=this.pageEvent.pageSize;
+
+    this.paginator.page.emit(this.pageEvent);
+
   }
 
   update(
@@ -169,6 +181,12 @@ export class ObjectiveListComponent implements OnInit, AfterViewInit {
     // console.log('Before deleting key-results-list in data source');
     this.dataSource.deleteObjective(id);
     // this.table.renderRows();
+
+    // this.pageEvent.length=this.pageEvent.length;
+    // this.pageEvent.pageSize=this.pageEvent.pageSize;
+
+    this.paginator.page.emit(this.pageEvent);
+
   }
 
   search(name: string): void {

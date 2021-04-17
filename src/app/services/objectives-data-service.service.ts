@@ -95,7 +95,7 @@ export class ObjectivesDataService {
       }
     ).pipe(
         tap((response) => {
-          // this.messageService.log('Objective data service - fetched objectives ' + JSON.stringify(response)),
+          this.messageService.log('Objective data service - fetched objectives ' + JSON.stringify(response)),
             this.record_count = response['count'],
             this.previous_url = response['previous'];
             this.next_url = response['next'];
