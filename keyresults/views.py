@@ -37,7 +37,7 @@ class KeyResultsViewSet(viewsets.ModelViewSet):
     filter_backends = (
         django_filters.rest_framework.DjangoFilterBackend,
     )
-    filterset_class = KeyResultsSerializer
+    filterset_class = KeyResultsFilter
 
     # permission_classes = [permissions.IsAuthenticated]
 
