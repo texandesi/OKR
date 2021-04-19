@@ -17,8 +17,6 @@ import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import {MatDialogModule} from '@angular/material/dialog';
-import {PageNotFoundComponent} from './modules/page-not-found/page-not-found.component';
-import {ComposeMessageComponent} from './modules/compose-message/compose-message.component';
 import {MatInputModule} from "@angular/material/input";
 import {CommonModule} from "@angular/common";
 import {MatButtonModule} from "@angular/material/button";
@@ -28,6 +26,9 @@ import {MatIconModule} from "@angular/material/icon";
 import {MatListModule} from "@angular/material/list";
 import {MatSidenavModule} from "@angular/material/sidenav";
 import {MatToolbarModule} from "@angular/material/toolbar";
+
+import {PageNotFoundComponent} from './modules/page-not-found/page-not-found.component';
+import {ComposeMessageComponent} from './modules/compose-message/compose-message.component';
 import {AppNavComponent} from "./app-nav/app-nav.component";
 // import {ObjectivesRoutingModule} from "./modules/objectives/objectives-routing.module";
 
@@ -44,28 +45,20 @@ import {AppNavComponent} from "./app-nav/app-nav.component";
     BrowserAnimationsModule,
     BrowserModule,
     CommonModule,
-    DashboardModule,
     FormsModule,
     HttpClientModule,
     LayoutModule,
 
-    MatButtonModule,
-    MatDialogModule,
-    MatFormFieldModule,
     MatIconModule,
-    MatInputModule,
     MatListModule,
-    MatPaginatorModule,
     MatSidenavModule,
-    MatSortModule,
-    MatTableModule,
     MatToolbarModule,
 
+    DashboardModule,
     ObjectivesModule,
     ReactiveFormsModule,
     KeyResultsModule,
     KpisModule,
-
   ],
   exports: [
 

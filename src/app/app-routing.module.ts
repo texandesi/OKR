@@ -14,11 +14,6 @@ import { KpisRoutingModule } from './modules/kpis/kpis-routing.module';
 
 const appRoutes: Routes = [
   { path: '', component: AppComponent },
-
-//  { path: '', redirectTo: '/dashboard', pathMatch: 'full'},
- // { path: 'kpi-list', component: KpisComponent },
- // { path: 'admin', component: AdminComponent },
- //  { path: 'objectives', component: ObjectiveListComponent },
   { path: '**', component: PageNotFoundComponent},
 ];
 
@@ -37,7 +32,6 @@ const appRoutes: Routes = [
     KeyResultsRoutingModule,
     KpisRoutingModule,
     DashboardRoutingModule,
-    MatSidenavModule,
   ]
 })
 export class AppRoutingModule {
