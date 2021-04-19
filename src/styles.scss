@@ -1,5 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
-
+/* Importing SCSS file. */
+@import '../src/scss/variables';
 
 html, body { height: 100%; }
 body {
@@ -8,6 +9,15 @@ body {
   display : block;
 }
 
-/* Importing SCSS file. */
-@import '../src/scss/variables';
+.techniti-okr-data-table {
+  width : 100%
+  //padding : 30px
+}
+
+.techniti-okr-container {
+  display : flex;
+  //padding : 30px
+  justify-content: space-evenly;
+}
+
 

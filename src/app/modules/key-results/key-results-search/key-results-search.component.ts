@@ -5,8 +5,8 @@ import { Observable, Subject } from 'rxjs';
 import {
   debounceTime, distinctUntilChanged, switchMap
 } from 'rxjs/operators';
-import {KeyResult} from "../../../data-objects/keyresult";
 import {KeyResultsDataService} from "../../../services/key-results-data-service.service";
+import {KeyResult} from "../../../data-objects/keyresult";
 
 
 @Component({

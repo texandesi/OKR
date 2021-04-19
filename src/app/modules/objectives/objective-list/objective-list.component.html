@@ -3,7 +3,7 @@
   <h2>My Objectives</h2>
 </div>
 
-<div class="mat-elevation-z8 objective-container" >
+<div class="mat-elevation-z8 techniti-okr-container" >
   <!-- (click) passes input value to add() and then clears the input -->
   <button mat-raised-button (click)="openDialog();"
           color="primary">
@@ -15,8 +15,8 @@
   </mat-form-field>
 </div>
 
-<div class="mat-elevation-z8 objective" >
-  <table mat-table matSort [dataSource]="dataSource.data" >
+<div class="mat-elevation-z8" >
+  <table mat-table matSort [dataSource]="dataSource.data" class="techniti-okr-data-table" >
     <!-- Id Column -->
     <ng-container matColumnDef="id">
       <th *matHeaderCellDef mat-header-cell mat-sort-header>Id</th>
