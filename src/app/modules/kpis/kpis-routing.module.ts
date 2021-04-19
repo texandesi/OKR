@@ -4,8 +4,7 @@ import {KpisComponent} from "./kpi-list/kpis.component";
 
 const routes: Routes = [
   {
-    path: 'kpi-list',
-    component: KpisComponent,
+    path: 'kpis',
     children: [
       {
         path: '',

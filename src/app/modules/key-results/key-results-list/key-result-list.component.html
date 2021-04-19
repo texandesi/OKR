@@ -3,7 +3,7 @@
   <h2>My Key Results</h2>
 </div>
 
-<div class="mat-elevation-z8 objective-container" >
+<div class="mat-elevation-z8 keyresults-container" >
   <!-- (click) passes input value to add() and then clears the input -->
   <button mat-raised-button (click)="openDialog();"
           color="primary">
@@ -15,8 +15,8 @@
   </mat-form-field>
 </div>
 
-<div class="mat-elevation-z8 key-result" >
-  <table mat-table matSort [dataSource]="dataSource.data" >
+<div class="mat-elevation-z8 keyresults" >
+  <table mat-table matSort [dataSource]="dataSource" >
     <!-- Id Column -->
     <ng-container matColumnDef="id">
       <th *matHeaderCellDef mat-header-cell mat-sort-header>Id</th>

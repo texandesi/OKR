@@ -21,7 +21,6 @@ import { ObjectiveSearchComponent } from './objective-search/objective-search.co
 import { ObjectiveEditComponent } from "./objective-edit/objective-edit.component";
 import { ObjectiveDetailComponent } from './objective-detail/objective-detail.component';
 import { ObjectiveListComponent } from "./objective-list/objective-list.component";
-import { ObjectiveNavComponent } from './objective-nav/objective-nav.component';
 
 @NgModule({
   declarations: [
@@ -29,11 +28,9 @@ import { ObjectiveNavComponent } from './objective-nav/objective-nav.component';
     ObjectiveDetailComponent,
     ObjectiveSearchComponent,
     ObjectiveEditComponent,
-    ObjectiveNavComponent,
   ],
   imports: [
     CommonModule,
-    ObjectivesRoutingModule,
     FormsModule,
     MatTableModule,
     MatPaginatorModule,
@@ -50,13 +47,13 @@ import { ObjectiveNavComponent } from './objective-nav/objective-nav.component';
     MatIconModule,
     MatListModule,
 
+    ObjectivesRoutingModule,
   ],
   exports: [
     ObjectiveListComponent,
     ObjectiveDetailComponent,
     ObjectiveSearchComponent,
     ObjectiveEditComponent,
-    ObjectiveNavComponent,
   ],
   providers: [],
   bootstrap: [],

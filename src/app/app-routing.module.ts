@@ -2,21 +2,23 @@ import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 
 import {PageNotFoundComponent} from './modules/page-not-found/page-not-found.component';
+import {MatSidenavModule} from "@angular/material/sidenav";
+import {AppComponent} from "./app.component";
 
-import {DashboardComponent} from './modules/dashboard/dashboard.component';
-import {KpisComponent} from './modules/kpis/kpi-list/kpis.component';
-import {AdminComponent} from './modules/admin/admin/admin.component';
+// import {DashboardComponent} from './modules/dashboard/dashboard.component';
+// import {AdminComponent} from './modules/admin/admin/admin.component';
 import {ObjectivesRoutingModule} from "./modules/objectives/objectives-routing.module";
 import {KeyResultsRoutingModule} from "./modules/key-results/key-results-routing.module";
 import {DashboardRoutingModule} from "./modules/dashboard/dashboard-routing.module";
-import { ObjectiveListComponent } from './modules/objectives/objective-list/objective-list.component';
-// import {ObjectivesModule} from "./modules/objectives/objectives.module";
+import { KpisRoutingModule } from './modules/kpis/kpis-routing.module';
 
 const appRoutes: Routes = [
-  { path: '', redirectTo: '/', pathMatch: 'full'},
-//  { path: 'kpi-list', component: KpisComponent },
-//  { path: 'admin', component: AdminComponent },
-  { path: 'objectives', component: ObjectiveListComponent },
+  { path: '', component: AppComponent },
+
+//  { path: '', redirectTo: '/dashboard', pathMatch: 'full'},
+ // { path: 'kpi-list', component: KpisComponent },
+ // { path: 'admin', component: AdminComponent },
+ //  { path: 'objectives', component: ObjectiveListComponent },
   { path: '**', component: PageNotFoundComponent},
 ];
 
@@ -33,7 +35,9 @@ const appRoutes: Routes = [
     RouterModule,
     ObjectivesRoutingModule,
     KeyResultsRoutingModule,
+    KpisRoutingModule,
     DashboardRoutingModule,
+    MatSidenavModule,
   ]
 })
 export class AppRoutingModule {

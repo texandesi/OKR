@@ -3,7 +3,7 @@ import {FormBuilder, FormGroup} from '@angular/forms';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 
 @Component({
-  selector: 'app-add-keyresult-edit-component',
+  selector: 'app-keyresult-edit-component',
   templateUrl: './keyresult-edit.component.html',
   styleUrls: ['./keyresult-edit.component.scss']
 })

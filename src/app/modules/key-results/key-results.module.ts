@@ -14,6 +14,11 @@ import {KeyResultListComponent} from "./key-results-list/key-result-list.compone
 import {KeyResultsSearchComponent} from "./key-results-search/key-results-search.component";
 import {MatDialogModule} from "@angular/material/dialog";
 import {KeyResultEditComponent} from "./keyresults-edit/keyresult-edit.component";
+import {MatSidenavModule} from "@angular/material/sidenav";
+import {LayoutModule} from "@angular/cdk/layout";
+import {MatToolbarModule} from "@angular/material/toolbar";
+import {MatIconModule} from "@angular/material/icon";
+import {MatListModule} from "@angular/material/list";
 
 
 @NgModule({
@@ -24,7 +29,6 @@ import {KeyResultEditComponent} from "./keyresults-edit/keyresult-edit.component
   ],
   imports: [
     CommonModule,
-    KeyResultsRoutingModule,
     FormsModule,
     MatTableModule,
     MatPaginatorModule,
@@ -32,11 +36,16 @@ import {KeyResultEditComponent} from "./keyresults-edit/keyresult-edit.component
     MatFormFieldModule,
     MatInputModule,
     MatButtonModule,
-    MatFormFieldModule,
     MatDialogModule,
-    MatFormFieldModule,
+    MatInputModule,
     ReactiveFormsModule,
+    LayoutModule,
+    MatToolbarModule,
+    MatSidenavModule,
+    MatIconModule,
+    MatListModule,
 
+    KeyResultsRoutingModule,
   ],
   exports: [
     KeyResultsSearchComponent,
