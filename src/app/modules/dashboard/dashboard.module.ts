@@ -4,7 +4,7 @@ import { CommonModule } from '@angular/common';
 import { DashboardRoutingModule } from './dashboard-routing.module';
 import {MatInputModule} from '@angular/material/input';
 import {MatButtonModule} from '@angular/material/button';
-import {KpisModule} from "../kpis/kpis.module";
+import {KpiModule} from "../kpis/kpi.module";
 import {DashboardComponent} from "./dashboard.component";
 
 @NgModule({
@@ -17,7 +17,7 @@ import {DashboardComponent} from "./dashboard.component";
     DashboardRoutingModule,
     MatInputModule,
     MatButtonModule,
-    KpisModule,
+    KpiModule,
 
   ],
   exports: [

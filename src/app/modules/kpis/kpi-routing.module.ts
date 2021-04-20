@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import {KpisComponent} from "./kpi-list/kpis.component";
+import {KpiListComponent} from "./kpi-list/kpi-list.component";
 
 const routes: Routes = [
   {
@@ -8,7 +8,7 @@ const routes: Routes = [
     children: [
       {
         path: '',
-        component: KpisComponent,
+        component: KpiListComponent,
       }
     ]
   }
@@ -18,6 +18,6 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class KpisRoutingModule { }
+export class KpiRoutingModule { }
 
 

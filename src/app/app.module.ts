@@ -5,7 +5,7 @@ import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
 import {DashboardModule} from './modules/dashboard/dashboard.module';
 import {KeyResultsModule} from './modules/key-results/key-results.module';
-import {KpisModule} from './modules/kpis/kpis.module';
+import {KpiModule} from './modules/kpis/kpi.module';
 import {ObjectivesModule} from './modules/objectives/objectives.module';
 
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
@@ -58,7 +58,7 @@ import {AppNavComponent} from "./app-nav/app-nav.component";
     ObjectivesModule,
     ReactiveFormsModule,
     KeyResultsModule,
-    KpisModule,
+    KpiModule,
   ],
   exports: [
 

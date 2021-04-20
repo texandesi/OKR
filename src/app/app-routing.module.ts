@@ -10,7 +10,7 @@ import {AppComponent} from "./app.component";
 import {ObjectivesRoutingModule} from "./modules/objectives/objectives-routing.module";
 import {KeyResultsRoutingModule} from "./modules/key-results/key-results-routing.module";
 import {DashboardRoutingModule} from "./modules/dashboard/dashboard-routing.module";
-import { KpisRoutingModule } from './modules/kpis/kpis-routing.module';
+import { KpiRoutingModule } from './modules/kpis/kpi-routing.module';
 
 const appRoutes: Routes = [
   { path: '', component: AppComponent },
@@ -30,7 +30,7 @@ const appRoutes: Routes = [
     RouterModule,
     ObjectivesRoutingModule,
     KeyResultsRoutingModule,
-    KpisRoutingModule,
+    KpiRoutingModule,
     DashboardRoutingModule,
   ]
 })
