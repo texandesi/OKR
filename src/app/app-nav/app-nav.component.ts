@@ -11,12 +11,6 @@ import {TnOkrCommonTypes} from "../data-objects/tn-okr-common-types";
 })
 export class AppNavComponent {
 
-// <a mat-list-item href="/objectives">Objectives</a>
-//     <a mat-list-item href="/keyresults">Key Results</a>
-// <a mat-list-item href="/kpis">KPIs</a>
-//
-//     <a mat-list-item href="{{nav_item.nav_link}}" *ngFor="let nav_item of NavItemList">{{ nav_item.name }}</a>
-
   NavItemList : TnOkrCommonTypes[] = [
     {
       "nav_link" : "/objectives",
