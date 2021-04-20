@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Observable } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
+import {TnOkrCommonTypes} from "../data-objects/tn-okr-common-types";
 
 @Component({
   selector: 'app-nav',
@@ -16,7 +17,7 @@ export class AppNavComponent {
 //
 //     <a mat-list-item href="{{nav_item.nav_link}}" *ngFor="let nav_item of NavItemList">{{ nav_item.name }}</a>
 
-  NavItemList : any[] = [
+  NavItemList : TnOkrCommonTypes[] = [
     {
       "nav_link" : "/objectives",
       "name"  : "Objectives",
