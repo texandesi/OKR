@@ -10,6 +10,29 @@ import { map, shareReplay } from 'rxjs/operators';
 })
 export class AppNavComponent {
 
+// <a mat-list-item href="/objectives">Objectives</a>
+//     <a mat-list-item href="/keyresults">Key Results</a>
+// <a mat-list-item href="/kpis">KPIs</a>
+//
+//     <a mat-list-item href="{{nav_item.nav_link}}" *ngFor="let nav_item of NavItemList">{{ nav_item.name }}</a>
+
+  NavItemList : any[] = [
+    {
+      "nav_link" : "/objectives",
+      "name"  : "Objectives",
+    },
+    {
+      "nav_link" : "/keyresults",
+      "name"  : "Key Results",
+    },
+    {
+      "nav_link" : "/kpis",
+      "name"  : "KPIs",
+    },
+
+  ]
+
+
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
     .pipe(
       map(result => result.matches),
