@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import {ObjectiveListComponent} from './objective-list/objective-list.component';
 import {ObjectiveDetailComponent} from './objective-detail/objective-detail.component';
+// import { ObjectiveEditComponent } from './objective-edit/objective-edit.component';
 
 const routes: Routes = [
   {
@@ -14,6 +15,15 @@ const routes: Routes = [
       {
         path: 'detail/:id',
         component: ObjectiveDetailComponent
+      },
+      {
+        path: 'edit/:id',
+        children : [
+          {
+            path: '',
+            component: ObjectiveDetailComponent
+          }
+        ],
       },
     ]
   },

@@ -38,6 +38,7 @@ export class ObjectiveDetailComponent implements OnInit {
 
   save(): void {
     this.objectiveService.updateObjective(this.objective)
-      .subscribe(() => this.goBack());
+    .subscribe();
+      // .subscribe(() => this.goBack());
   }
 }

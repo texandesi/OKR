@@ -1,3 +1,5 @@
+<app-objectives></app-objectives>
+
 <div *ngIf="objective">
   <h2>{{objective.name | uppercase}} Details</h2>
   <div><span>id: </span>{{objective.id}}</div>
@@ -8,5 +10,3 @@
   <button (click)="goBack()">go back</button>
   <button (click)="save()">save</button>
 </div><p>objective-detail works!</p>
-
-<router-outlet></router-outlet>
