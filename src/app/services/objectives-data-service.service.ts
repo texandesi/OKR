@@ -195,7 +195,7 @@ export class ObjectivesDataService {
 
   /** Log a ObjectiveService message with the MessageService */
   private log(message: string) {
-    console.log(`ObjectiveService: ${message}`);
+    // console.log(`ObjectiveService: ${message}`);
     this.messageService.log('Objective-Data-Service',`ObjectiveService: ${message}`);
   }
 }

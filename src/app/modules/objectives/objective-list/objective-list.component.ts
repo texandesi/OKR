@@ -74,9 +74,6 @@ export class ObjectiveListComponent implements OnInit, AfterViewInit {
             event.previousPageIndex=this.pageEvent.previousPageIndex;
           }
 
-
-          // let myPageEvent : PageEvent = this.getPageEvent();
-
           this.dataSource.getObjectives(
             this.paginator.pageSize,
             previousPageIndex,
@@ -84,7 +81,6 @@ export class ObjectiveListComponent implements OnInit, AfterViewInit {
             this.sort.active,
             this.sort.direction
           )
-
         }
       );
   }

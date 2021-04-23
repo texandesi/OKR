@@ -50,7 +50,7 @@ export class EventHandlingService {
     // let eventEmitter = this.eventMap.get(context);
 
     // if (eventEmitter) {
-      console.log('Emitting event ' + context + ' with  value ' + value );
+    //   console.log('Emitting event ' + context + ' with  value ' + value );
       this.objectiveData.next(value);
     // }
   }

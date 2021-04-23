@@ -32,7 +32,7 @@ export class ObjectiveDetailComponent implements OnInit {
 
     this.eventHandlingService.subscribeEvent(EVENT_EMITTER.CONTEXT.ObjectiveList,
       (id : number) => {
-      console.log (' Received event with id : ' + id);
+      // console.log (' Received event with id : ' + id);
 
       this.objectiveService.getObjective(id)
           .subscribe(objective => this.objective = objective);
