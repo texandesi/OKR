@@ -12,6 +12,7 @@ import {merge} from "rxjs";
 import {MessageService} from "../../../services/message.service";
 import {fromEvent} from 'rxjs';
 import { MatTable } from '@angular/material/table';
+import {EVENT_EMITTER, EventHandlingService} from "../../../services/event-handling.service";
 
 @Component({
   selector: 'app-objectives',
@@ -35,6 +36,7 @@ export class ObjectiveListComponent implements OnInit, AfterViewInit {
 
   constructor(
     private objectiveService: ObjectivesDataService,
+    private eventHandlingService : EventHandlingService,
     private dialog: MatDialog,
   ) {
     this.dataSource = new ObjectiveListDataSource(this.objectiveService);
@@ -87,7 +89,15 @@ export class ObjectiveListComponent implements OnInit, AfterViewInit {
       );
   }
 
-  openDialog(record_id ?: number) {
+  openRecordEvent(record_id ?: number) {
+    // let eventHandlingService = new EventHandlingService();
+
+    this.eventHandlingService.emitEvent(EVENT_EMITTER.CONTEXT.ObjectiveList, record_id);
+  }
+
+
+
+    openDialog(record_id ?: number) {
     // this.messages.log('Objective list component row id is ' + record_id);
 
     const dialogConfig = new MatDialogConfig();

@@ -23,6 +23,7 @@ import {MatToolbarModule} from "@angular/material/toolbar";
 import {PageNotFoundComponent} from './modules/page-not-found/page-not-found.component';
 import {ComposeMessageComponent} from './modules/compose-message/compose-message.component';
 import {AppNavComponent} from "./app-nav/app-nav.component";
+import {EventHandlingService} from "./services/event-handling.service";
 // import {ObjectivesRoutingModule} from "./modules/objectives/objectives-routing.module";
 
 @NgModule({
@@ -56,7 +57,10 @@ import {AppNavComponent} from "./app-nav/app-nav.component";
   exports: [
 
   ],
-  providers: [],
+  providers: [
+    // EventHandlingService,
+
+  ],
   bootstrap: [AppComponent],
   entryComponents: []
 })

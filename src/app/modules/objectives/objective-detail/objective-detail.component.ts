@@ -4,6 +4,7 @@ import { Location } from '@angular/common';
 
 import { Objective } from '../../../data-objects/objective';
 import {ObjectivesDataService} from '../../../services/objectives-data-service.service';
+import {EVENT_EMITTER, EventHandlingService} from "../../../services/event-handling.service";
 
 @Component({
   selector: 'app-objective-detail',
@@ -17,6 +18,7 @@ export class ObjectiveDetailComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private objectiveService: ObjectivesDataService,
+    private eventHandlingService : EventHandlingService,
     private location: Location
   ) {}
 
@@ -26,10 +28,21 @@ export class ObjectiveDetailComponent implements OnInit {
 
   getObjective(): void {
     // TODO Added a Typescript ignore because the code was failing. Need to remove the ignore and put proper notation
-    // @ts-ignore
-    const id = +this.route.snapshot.paramMap.get('id');
-    this.objectiveService.getObjective(id)
-      .subscribe(objective => this.objective = objective);
+    // let eventHandlingService = new EventHandlingService();
+
+    this.eventHandlingService.subscribeEvent(EVENT_EMITTER.CONTEXT.ObjectiveList,
+      (id : number) => {
+      console.log (' Received event with id : ' + id);
+
+      this.objectiveService.getObjective(id)
+          .subscribe(objective => this.objective = objective);
+      }
+    );
+
+    // // @ts-ignore
+    // const id = +this.route.snapshot.paramMap.get('id');
+    // this.objectiveService.getObjective(id)
+    //   .subscribe(objective => this.objective = objective);
   }
 
   goBack(): void {
