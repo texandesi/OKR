@@ -11,6 +11,8 @@ import {ObjectivesRoutingModule} from "./modules/objectives/objectives-routing.m
 import {KeyResultsRoutingModule} from "./modules/key-results/key-results-routing.module";
 import {DashboardRoutingModule} from "./modules/dashboard/dashboard-routing.module";
 import { KpiRoutingModule } from './modules/kpis/kpi-routing.module';
+import {AdminRoutingModule} from "./modules/admin/admin-routing.module";
+import {AuthRoutingModule} from "./modules/auth/auth-routing.module";
 
 const appRoutes: Routes = [
   { path: '', component: AppComponent },
@@ -32,6 +34,8 @@ const appRoutes: Routes = [
     KeyResultsRoutingModule,
     KpiRoutingModule,
     DashboardRoutingModule,
+    AdminRoutingModule,
+    AuthRoutingModule,
   ]
 })
 export class AppRoutingModule {

@@ -24,6 +24,7 @@ import {PageNotFoundComponent} from './modules/page-not-found/page-not-found.com
 import {ComposeMessageComponent} from './modules/compose-message/compose-message.component';
 import {AppNavComponent} from "./app-nav/app-nav.component";
 import {EventHandlingService} from "./services/event-handling.service";
+import {AdminModule} from "./modules/admin/admin.module";
 // import {ObjectivesRoutingModule} from "./modules/objectives/objectives-routing.module";
 
 @NgModule({
@@ -34,25 +35,26 @@ import {EventHandlingService} from "./services/event-handling.service";
     PageNotFoundComponent,
   ],
   imports: [
-    AppRoutingModule,
-    AuthModule,
     BrowserAnimationsModule,
     BrowserModule,
     CommonModule,
     FormsModule,
     HttpClientModule,
     LayoutModule,
+    ReactiveFormsModule,
 
     MatIconModule,
     MatListModule,
     MatSidenavModule,
     MatToolbarModule,
 
-    DashboardModule,
+    // DashboardModule,
+    AppRoutingModule,
     ObjectivesModule,
-    ReactiveFormsModule,
     KeyResultsModule,
     KpiModule,
+    AdminModule,
+    AuthModule,
   ],
   exports: [
 

@@ -30,7 +30,7 @@ export class ObjectiveListComponent implements OnInit, AfterViewInit {
   /** Columns displayed in the table. Columns IDs can be added, removed, or reordered. */
   displayedColumns = ['id', 'name', 'description', 'delete'];
 
-  messages: MessageService = new MessageService();
+  private messages: MessageService = new MessageService();
   total_data_length: number = 10;
   pageEvent: PageEvent = new PageEvent();
 
@@ -63,12 +63,26 @@ export class ObjectiveListComponent implements OnInit, AfterViewInit {
 
     this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
 
+    this.eventHandlingService.subscribeEvent(EVENT_EMITTER.CONTEXT.ObjectiveList, (objective : Objective) => {
+        let previousPageIndex = this.pageEvent.previousPageIndex;
+
+        this.dataSource.getObjectives(
+          this.paginator.pageSize,
+          previousPageIndex,
+          this.paginator.pageIndex,
+          this.sort.active,
+          this.sort.direction
+        );
+
+        // this.eventHandlingService.emitEvent(EVENT_EMITTER.CONTEXT.ObjectiveDataEntry, objective);
+      }
+
+
+    );
+
     merge(this.sort.sortChange, this.paginator.page)
       .subscribe(
         event => {
-          // this.messages.log('Verifying that event is of Page Event type is  ' + this.isPageEvent(event));
-          this.messages.log('Objective-List-Component', 'Page event data is ' + JSON.stringify(event));
-
           let previousPageIndex = this.pageEvent.previousPageIndex;
           if(this.isPageEvent(event)) {
             event.previousPageIndex=this.pageEvent.previousPageIndex;
@@ -86,16 +100,10 @@ export class ObjectiveListComponent implements OnInit, AfterViewInit {
   }
 
   openRecordEvent(record_id ?: number) {
-    // let eventHandlingService = new EventHandlingService();
-
     this.eventHandlingService.emitEvent(EVENT_EMITTER.CONTEXT.ObjectiveList, record_id);
   }
 
-
-
-    openDialog(record_id ?: number) {
-    // this.messages.log('Objective list component row id is ' + record_id);
-
+  openDialog(record_id ?: number) {
     const dialogConfig = new MatDialogConfig();
 
     dialogConfig.disableClose = true;
@@ -153,13 +161,7 @@ export class ObjectiveListComponent implements OnInit, AfterViewInit {
       return;
     }
     this.dataSource.addObjective({name: name, description: description} as Objective);
-
-    // this.pageEvent.pageIndex;
-    // this.pageEvent.length=this.pageEvent.length;
-    // this.pageEvent.pageSize=this.pageEvent.pageSize;
-
     this.paginator.page.emit(this.pageEvent);
-
   }
 
   update(
@@ -183,16 +185,8 @@ export class ObjectiveListComponent implements OnInit, AfterViewInit {
 
   // TODO Implement back the page refresh and delete functionality for the Objectives list.
   delete(id: number): void {
-    // this.dataSource.data = this.dataSource.data.filter(h => h !== objective);
-    // console.log('Before deleting key-results-list in data source');
     this.dataSource.deleteObjective(id);
-    // this.table.renderRows();
-
-    // this.pageEvent.length=this.pageEvent.length;
-    // this.pageEvent.pageSize=this.pageEvent.pageSize;
-
     this.paginator.page.emit(this.pageEvent);
-
   }
 
   search(name: string): void {

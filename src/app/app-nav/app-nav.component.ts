@@ -24,6 +24,10 @@ export class AppNavComponent {
       "nav_link" : "/kpis",
       "name"  : "KPIs",
     },
+    {
+      "nav_link" : "/admin",
+      "name"  : "Admin",
+    },
 
   ]
 

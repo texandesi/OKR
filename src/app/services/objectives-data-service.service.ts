@@ -41,15 +41,15 @@ export class ObjectivesDataService {
   ): Observable<Objective[]> {
     let url : string = this.objectivesUrl;
 
-    this.log('current url is : ' + url);
-    this.log('name_filter is : ' + name_filter);
-    this.log('Page Size is : ' + page_size);
-    this.log('Previous page index is is : ' + prev_page_index);
-    this.log('Current page index is is : ' + curr_page_index);
-    this.log('Sort column is : ' + sort_column);
-    this.log('Sort direction is : ' + sort_direction);
-    this.log('Previous url is : ' + this.previous_url);
-    this.log('Next url is : ' + this.next_url);
+    // this.log('current url is : ' + url);
+    // this.log('name_filter is : ' + name_filter);
+    // this.log('Page Size is : ' + page_size);
+    // this.log('Previous page index is is : ' + prev_page_index);
+    // this.log('Current page index is is : ' + curr_page_index);
+    // this.log('Sort column is : ' + sort_column);
+    // this.log('Sort direction is : ' + sort_direction);
+    // this.log('Previous url is : ' + this.previous_url);
+    // this.log('Next url is : ' + this.next_url);
 
     if (prev_page_index > curr_page_index) {
       if(this.previous_url) {
@@ -87,7 +87,6 @@ export class ObjectivesDataService {
     url = url_with_param.toString();
 
     this.log('url in service to get objectives is : ' + url);
-
 
     return this.http.get<any>(url, {
       params: new HttpParams()
@@ -138,14 +137,9 @@ export class ObjectivesDataService {
     return this.getObjectives(term);
   }
 
-  //////// Save methods //////////
-
   /** POST: add a new objective to the server */
   addObjective(objective: Objective): Observable<Objective> {
-
-
     //TODO - Add error handling for name and description
-
     return this.http.post<Objective>(this.objectivesUrl, objective).pipe(
       tap((newObjective: Objective) => this.log(`added objective w/ id=${newObjective.id}`)),
       catchError(this.handleError<Objective>('addObjective'))
@@ -155,8 +149,6 @@ export class ObjectivesDataService {
   /** DELETE: delete the objective from the server */
   deleteObjective(id: number): Observable<Objective> {
     const url = `${this.objectivesUrl}/${id}/`;
-
-    // this.messageService.log('Objective data service The url with delete param is ' + url); // => 'hello'
 
     return this.http.delete<Objective>(url, this.httpOptions).pipe(
       tap(_ => this.log(`deleted objective id=${id}`)),
