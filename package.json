@@ -1,5 +1,5 @@
 {
-  "name": "techniti-okr-app-a",
+  "name": "techniti-okr-app",
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
@@ -17,6 +17,7 @@
     "@angular/compiler": "~12.0.4",
     "@angular/core": "~12.0.4",
     "@angular/forms": "~12.0.4",
+    "@angular/localize": "^12.0.4",
     "@angular/material": "^12.0.4",
     "@angular/platform-browser": "~12.0.4",
     "@angular/platform-browser-dynamic": "~12.0.4",
