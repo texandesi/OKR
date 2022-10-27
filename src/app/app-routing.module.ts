@@ -13,9 +13,10 @@ import {DashboardRoutingModule} from "./modules/dashboard/dashboard-routing.modu
 import { KpiRoutingModule } from './modules/kpis/kpi-routing.module';
 import {AdminRoutingModule} from "./modules/admin/admin-routing.module";
 import {AuthRoutingModule} from "./modules/auth/auth-routing.module";
+import {ObjectiveListComponent} from "./modules/objectives/objective-list/objective-list.component";
 
 const appRoutes: Routes = [
-  { path: '', component: AppComponent },
+  { path: '', component: ObjectiveListComponent },
   { path: '**', component: PageNotFoundComponent},
 ];
 
