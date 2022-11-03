@@ -23,41 +23,39 @@ import { ObjectiveDetailComponent } from './objective-detail/objective-detail.co
 import { ObjectiveListComponent } from "./objective-list/objective-list.component";
 
 @NgModule({
-  declarations: [
-    ObjectiveListComponent,
-    ObjectiveDetailComponent,
-    ObjectiveSearchComponent,
-    ObjectiveEditComponent,
-  ],
-  imports: [
-    CommonModule,
-    FormsModule,
-    MatTableModule,
-    MatPaginatorModule,
-    MatSortModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatButtonModule,
-    MatDialogModule,
-    MatInputModule,
-    ReactiveFormsModule,
-    LayoutModule,
-    MatToolbarModule,
-    MatSidenavModule,
-    MatIconModule,
-    MatListModule,
-
-    ObjectivesRoutingModule,
-  ],
-  exports: [
-    ObjectiveListComponent,
-    ObjectiveDetailComponent,
-    ObjectiveSearchComponent,
-    ObjectiveEditComponent,
-  ],
-  providers: [],
-  bootstrap: [],
-  entryComponents: [],
+    declarations: [
+        ObjectiveListComponent,
+        ObjectiveDetailComponent,
+        ObjectiveSearchComponent,
+        ObjectiveEditComponent,
+    ],
+    imports: [
+        CommonModule,
+        FormsModule,
+        MatTableModule,
+        MatPaginatorModule,
+        MatSortModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatButtonModule,
+        MatDialogModule,
+        MatInputModule,
+        ReactiveFormsModule,
+        LayoutModule,
+        MatToolbarModule,
+        MatSidenavModule,
+        MatIconModule,
+        MatListModule,
+        ObjectivesRoutingModule,
+    ],
+    exports: [
+        ObjectiveListComponent,
+        ObjectiveDetailComponent,
+        ObjectiveSearchComponent,
+        ObjectiveEditComponent,
+    ],
+    providers: [],
+    bootstrap: []
 })
 export class ObjectivesModule {
 

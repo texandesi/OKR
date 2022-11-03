@@ -28,43 +28,37 @@ import {AdminModule} from "./modules/admin/admin.module";
 // import {ObjectivesRoutingModule} from "./modules/objectives/objectives-routing.module";
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    AppNavComponent,
-    ComposeMessageComponent,
-    PageNotFoundComponent,
-  ],
-  imports: [
-    BrowserAnimationsModule,
-    BrowserModule,
-    CommonModule,
-    FormsModule,
-    HttpClientModule,
-    LayoutModule,
-    ReactiveFormsModule,
-
-    MatIconModule,
-    MatListModule,
-    MatSidenavModule,
-    MatToolbarModule,
-
-    // DashboardModule,
-    AppRoutingModule,
-    ObjectivesModule,
-    KeyResultsModule,
-    KpiModule,
-    AdminModule,
-    AuthModule,
-  ],
-  exports: [
-
-  ],
-  providers: [
+    declarations: [
+        AppComponent,
+        AppNavComponent,
+        ComposeMessageComponent,
+        PageNotFoundComponent,
+    ],
+    imports: [
+        BrowserAnimationsModule,
+        BrowserModule,
+        CommonModule,
+        FormsModule,
+        HttpClientModule,
+        LayoutModule,
+        ReactiveFormsModule,
+        MatIconModule,
+        MatListModule,
+        MatSidenavModule,
+        MatToolbarModule,
+        // DashboardModule,
+        AppRoutingModule,
+        ObjectivesModule,
+        KeyResultsModule,
+        KpiModule,
+        AdminModule,
+        AuthModule,
+    ],
+    exports: [],
+    providers: [
     // EventHandlingService,
-
-  ],
-  bootstrap: [AppComponent],
-  entryComponents: []
+    ],
+    bootstrap: [AppComponent]
 })
 export class AppModule {
 

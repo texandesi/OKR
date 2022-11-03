@@ -109,5 +109,7 @@
       }
     }
   },
-  "defaultProject": "techniti-okr-app-a"
+  "cli": {
+    "analytics": false
+  }
 }
