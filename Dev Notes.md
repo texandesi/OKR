@@ -5,3 +5,10 @@ Setting up my workspace afteer three years. During that time, Node, Dhjango and 
 My code is being checked into two separate branches. That too needs to be fixed.
 
 Still need to do end to end testing.
+
+TODOS
+- Fix my development environment
+- Fix my version conterol
+- Document the goals
+- Document the roadmap
+- Write documentation for the code
