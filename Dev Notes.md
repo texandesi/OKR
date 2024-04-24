@@ -8,7 +8,9 @@ Still need to do end to end testing.
 
 TODOS
 - Fix my development environment
-- Fix my version conterol
+- Fix my version control
+- Check in scripts and configurations used for development
+- Write proper documentation of how to setup the workspace completely
 - Document the goals
 - Document the roadmap
 - Write documentation for the code
