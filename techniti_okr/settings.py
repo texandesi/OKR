@@ -38,12 +38,22 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'keyresults.apps.KeyResultsConfig',
-    'objectives.apps.ObjectivesConfig',
-    'polls.apps.PollsConfig',
+
     'rest_framework',
+    'django_filters',
+    'rest_framework.authtoken',
     # CORS
     'corsheaders',
+
+    'objectives.apps.ObjectivesConfig',
+    'keyresults.apps.KeyResultsConfig',
+    'kpi.apps.KpisConfig',
+    'user.apps.UsersConfig',
+    'organization.apps.OrganizationsConfig',
+    'group.apps.GroupsConfig',
+    'role.apps.RolesConfig',
+    'polls.apps.PollsConfig',
+
 ]
 
 MIDDLEWARE = [
@@ -60,6 +70,7 @@ MIDDLEWARE = [
 ]
 
 CORS_ORIGIN_ALLOW_ALL = True
+DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
 
 
 ROOT_URLCONF = 'techniti_okr.urls'
@@ -85,9 +96,12 @@ WSGI_APPLICATION = 'techniti_okr.wsgi.application'
 
 REST_FRAMEWORK = {
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
-    'PAGE_SIZE': 10
+    'PAGE_SIZE': 10,
+    'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend'],
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.TokenAuthentication',
+    ],
 }
-
 
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
@@ -104,9 +118,15 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'techniti_okr_dev_schema',
+<<<<<<< HEAD
         'USER': 'spai',
         'PASSWORD': 'spai1',
         'HOST': '127.0.0.1',
+=======
+        'USER': 'sanjeev',
+        'PASSWORD': 'sanjeev1',
+        'HOST': 'localhost',
+>>>>>>> development
         'PORT': '3306',
     }
 }
