@@ -1,4 +1,4 @@
-#!/bin/zsh
+#!/bin/bash
 
 if [[ ("$#" -ne 1) && ("$#" -ne 2) ]]; then
 	echo "Usage : 
