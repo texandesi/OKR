@@ -118,15 +118,9 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'techniti_okr_dev_schema',
-<<<<<<< HEAD
         'USER': 'spai',
         'PASSWORD': 'spai1',
         'HOST': '127.0.0.1',
-=======
-        'USER': 'sanjeev',
-        'PASSWORD': 'sanjeev1',
-        'HOST': 'localhost',
->>>>>>> development
         'PORT': '3306',
     }
 }
