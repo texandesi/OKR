@@ -7,10 +7,21 @@ My code is being checked into two separate branches. That too needs to be fixed.
 Still need to do end to end testing.
 
 TODOS
+- Write proper documentation of how to setup the workspace completely
+- Document the goals (good question. Why have I picked this up after three years)
+- Document the roadmap (rise of AI means I need to see if LLMs can be cneaked in somewhere)
+
+Done
 - Fix my development environment
 - Fix my version control
 - Check in scripts and configurations used for development
-- Write proper documentation of how to setup the workspace completely
-- Document the goals
-- Document the roadmap
-- Write documentation for the code
+
+Software
+- github account
+- git
+- setup a gpg signature to sign code
+- VSCode
+- Python 3.9 in a venv environment
+- Django Framework with CORS, Django REST Framewotk and mysql client
+- Angular 2
+- bash shell scripts
