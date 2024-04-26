@@ -28,7 +28,6 @@ git switch $TARGET_BRANCH
 
 git add .
 git commit -S -m $1
-git push 
 
 # restore original branch
 git push origin $TARGET_BRANCH
