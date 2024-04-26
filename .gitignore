@@ -38,13 +38,10 @@ speed-measure-plugin*.json
 /connect.lock
 /coverage
 /libpeerconnection.log
-npm-debug.log
 yarn-error.log
-testem.log
 /typings
 
 # System Files
-.DS_Store
 Thumbs.db
 
 # Created by https://www.toptal.com/developers/gitignore/api/angular,django
@@ -252,3 +249,5 @@ cython_debug/
 #.idea/
 
 # End of https://www.toptal.com/developers/gitignore/api/angular,django
+scripts/.DS_Store
+.DS_Store
