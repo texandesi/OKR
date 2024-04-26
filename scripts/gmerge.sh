@@ -1,8 +1,14 @@
 #!/bin/bash
+##################################-BEGIN-################################################
+#																						#
+# Shell script to quickly add files to a specified branch with the specified message	#
+# 																						#
+# Usage : gmerge.sh target_branch <to_merge_branch>										#
+#																						#
+#########################################################################################
 
 if [[ ("$#" -ne 1) && ("$#" -ne 2) ]]; then
-	echo "Usage : 
-	gmerge.sh target_branch <to_merge_branch>"
+	echo "Usage : gmerge.sh target_branch <to_merge_branch>"
 	# Find a way to differentiate between all defaults and printing usage
 	# echo "default : gmerge.sh master current_branch"
 	exit
@@ -25,3 +31,4 @@ git merge $MERGE_BRANCH
 git push origin $TARGET_BRANCH
 git checkout $CURRENT_BRANCH
 
+###########################-END-#########################################################
