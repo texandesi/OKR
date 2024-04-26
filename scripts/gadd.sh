@@ -31,6 +31,7 @@ git commit -S -m $1
 git push 
 
 # restore original branch
-git switch $CURRENT_BRANCH
+git push origin $TARGET_BRANCH
+git checkout $CURRENT_BRANCH
 
 ###########################-END-#########################################################
