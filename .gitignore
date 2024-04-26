@@ -77,7 +77,7 @@ e2e/*.js
 e2e/*.map
 
 # System Files
-.DS_Store/
+.DS_Store
 
 ### Django ###
 *.log
@@ -249,5 +249,5 @@ cython_debug/
 #.idea/
 
 # End of https://www.toptal.com/developers/gitignore/api/angular,django
-scripts/.DS_Store
-.DS_Store
+#scripts/.DS_Store
+#.DS_Store
