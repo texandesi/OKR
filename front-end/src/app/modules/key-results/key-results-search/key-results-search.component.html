@@ -1,0 +1,14 @@
+<H2>Is this the right page?</H2>
+
+<div id="search-component">
+  <label for="search-box">KeyResult Search</label>
+  <input #searchBox id="search-box" (input)="search(searchBox.value)" />
+
+  <ul class="search-result">
+    <li *ngFor="let keyresult of keyresult$ | async" >
+      <a routerLink="/keyresults/detail/{{keyresult.id}}">
+        {{keyresult.name}}
+      </a>
+    </li>
+  </ul>
+</div>

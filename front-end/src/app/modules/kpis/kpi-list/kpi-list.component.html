@@ -1,0 +1,66 @@
+<!--suppress AngularMissingEventHandler -->
+<div class="mat-elevation-z8">
+  <h2>My KPIs</h2>
+</div>
+
+<div class="mat-elevation-z8 techniti-okr-container" >
+  <!-- (click) passes input value to add() and then clears the input -->
+  <button mat-raised-button (click)="openDialog();"
+          color="primary">
+    Add KPI
+  </button>
+  <mat-form-field class="techniti-okr-form-field">
+    <mat-label>Search for KPIs</mat-label>
+    <input matInput placeholder="Enter KPI name" #input>
+  </mat-form-field>
+</div>
+
+<div class="mat-elevation-z8" >
+  <table mat-table matSort [dataSource]="dataSource" class="techniti-okr-data-table">
+    <!-- Id Column -->
+    <ng-container matColumnDef="id">
+      <th *matHeaderCellDef mat-header-cell mat-sort-header>Id</th>
+      <td *matCellDef="let row" mat-cell>{{row.id}}</td>
+    </ng-container>
+
+    <!-- Name Column -->
+    <ng-container matColumnDef="name">
+      <th *matHeaderCellDef mat-header-cell mat-sort-header>Name</th>
+      <td *matCellDef="let row" mat-cell>{{row.name}}</td>
+    </ng-container>
+
+    <!-- Name Column -->
+    <ng-container matColumnDef="description">
+      <th *matHeaderCellDef mat-header-cell>Description</th>
+      <td *matCellDef="let row" mat-cell><input [(ngModel)]="row.description" matInput type="text"></td>
+
+    </ng-container>
+
+
+    <!-- Delete Column -->
+    <ng-container matColumnDef="delete">
+      <th *matHeaderCellDef mat-header-cell>Delete</th>
+      <td *matCellDef="let row" mat-cell>
+        <button mat-raised-button (click)="delete(row.id);"
+                color="primary">Delete
+        </button>
+
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns" ></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;" (dblclick)="openDialog(row.id);"></tr>
+
+
+  </table>
+
+
+  <mat-paginator #paginator
+                 [length]="dataSource.record_count"
+                 [pageIndex]="0"
+                 [pageSizeOptions]="[5, 10, 20]"
+                 [pageSize]="dataSource.page_length"
+                 (page)="pageEvent = $event">
+  </mat-paginator>
+</div>
+

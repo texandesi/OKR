@@ -1,0 +1,31 @@
+<mat-drawer-container class="sidenav-container">
+  <mat-drawer #drawer class="sidenav" fixedInViewport
+      [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
+      [mode]="(isHandset$ | async) ? 'over' : 'side'"
+      [opened]="(isHandset$ | async) === false">
+    <mat-toolbar>Menu</mat-toolbar>
+    <mat-nav-list>
+      <a mat-list-item href="{{nav_item.nav_link}}" *ngFor="let nav_item of NavItemList">{{ nav_item.name }}</a>
+    </mat-nav-list>
+  </mat-drawer>
+  <mat-drawer-content>
+<!--    <mat-toolbar color="primary">-->
+<!--      <button-->
+<!--        type="button"-->
+<!--        aria-label="Toggle sidenav"-->
+<!--        mat-icon-button-->
+<!--        (click)="drawer.toggle()"-->
+<!--        *ngIf="isHandset$ | async">-->
+<!--        <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>-->
+<!--      </button>-->
+<!--      <span>OKR Tracking System</span>-->
+<!--    </mat-toolbar>-->
+
+<!--    <app-objectives></app-objectives>-->
+<!--    <app-objective-detail></app-objective-detail>-->
+    <router-outlet></router-outlet>
+
+
+  </mat-drawer-content>
+</mat-drawer-container>
+
