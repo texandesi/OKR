@@ -22,21 +22,22 @@ else
 fi
 
 if [[ -n "$1" ]]; then
-	echo starting Django server located at "${DJANGO_APP_LOCATION}"
-
 	cd ${DJANGO_APP_LOCATION}
-	nohup python manage.py runserver &
+  echo "Starting Django server in directory ${DJANGO_APP_LOCATION}"
+
+  nohup python manage.py runserver &
 
   if [[ -n "$2" ]]; then
-    echo starting Angular server located at "${ANGULAR_APP_LOCATION}"
-
     cd ${ANGULAR_APP_LOCATION}
+    echo "Starting Django server in directory ${ANGULAR_APP_LOCATION}"
+
     nohup ng serve &
   else
     echo "variable ANGULAR_APP_LOCATION needs to be set to the path of the Angular application"
 
-    # kill the Django server
+    # kill the Django server and angular server if they are running
     ps ax | grep "manage.py" | grep -v "grep" | awk {'print $1'} | xargs kill
+    ps ax | grep "ng serve" | grep -v "grep" | awk {'print $1'} | xargs kill
 
     exit 2
   fi
