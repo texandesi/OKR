@@ -5,7 +5,7 @@ class Objective(models.Model):
     id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=50)
     description = models.CharField(max_length=100)
-    keyresults = ()
+    # keyresults = ()
     # keyresults = models.aggregates
 
     class Meta:

@@ -47,4 +47,6 @@ else
   exit 2
 fi
 
+#get backl to base directory
+cd $APP_HOME
 
