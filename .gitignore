@@ -251,3 +251,6 @@ cython_debug/
 # End of https://www.toptal.com/developers/gitignore/api/angular,django
 #scripts/.DS_Store
 #.DS_Store
+
+#application specific ignores
+nohup.out
