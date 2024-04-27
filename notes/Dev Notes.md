@@ -1,3 +1,6 @@
+2024-04-26
+Fixing the code but already forgot a lot of the syntactic sugar. So not looking forward to fixing this code and adding features.
+
 2024-04-23
 
 Setting up my workspace afteer three years. During that time, Node, Dhjango and MySQL all have undergone upgrades. The previous development was with PyCharm and IDEA, while now I am using VSCode. Everything that was working was broken. Each piece needed troubleshooting to make sure it would work properly.
@@ -25,3 +28,4 @@ Software
 - Django Framework with CORS, Django REST Framewotk and mysql client
 - Angular 2
 - bash shell scripts
+
