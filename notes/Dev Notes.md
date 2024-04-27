@@ -3,7 +3,7 @@ Fixing the code but already forgot a lot of the syntactic sugar. So not looking 
 
 2024-04-23
 
-Setting up my workspace afteer three years. During that time, Node, Dhjango and MySQL all have undergone upgrades. The previous development was with PyCharm and IDEA, while now I am using VSCode. Everything that was working was broken. Each piece needed troubleshooting to make sure it would work properly.
+Setting up my workspace afteer three years. During that time, Node, Django and MySQL all have undergone upgrades. The previous development was with PyCharm and IDEA, while now I am using VSCode. Everything that was working was broken. Each piece needed troubleshooting to make sure it would work properly.
 
 My code is being checked into two separate branches. That too needs to be fixed.
 
