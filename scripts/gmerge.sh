@@ -10,7 +10,7 @@
 
 
 #if [[ ("$#" -ne 1) && ("$#" -ne 2) ]]; then
-echo "Usage : gmerge.sh target_branch <source_branch>"
+echo "Usage : gmerge.sh [target_branch] [source_branch]"
 
 echo "defaults : gmerge.sh 'stable' branch_of_current_directory"
 #	exit
