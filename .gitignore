@@ -254,3 +254,4 @@ cython_debug/
 
 #application specific ignores
 nohup.out
+.nx/
