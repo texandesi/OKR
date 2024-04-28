@@ -29,16 +29,16 @@ if [[ -n "$1" ]]; then
   DJANGO_APP_LOCATION=${APP_HOME}/$1
 fi
 
-#check if the directory exists
-if [[ -d ${DJANGO_APP_LOCATION} ]]; then
+  #check if the directory exists
+  if [[ -d ${DJANGO_APP_LOCATION} ]]; then
 
-#check of the executable exists
-if [[ ! -f ${DJANGO_APP_LOCATION}/manage.py ]]; then
-  echo "Django executable not found - ${DJANGO_APP_LOCATION}/manage.py"
-  _stop_servers
-else
-  echo "Starting Django server in directory ${DJANGO_APP_LOCATION}"
-fi
+  #check of the executable exists
+  if [[ ! -f ${DJANGO_APP_LOCATION}/manage.py ]]; then
+    echo "Django executable not found - ${DJANGO_APP_LOCATION}/manage.py"
+    _stop_servers
+  else
+    echo "Starting Django server in directory ${DJANGO_APP_LOCATION}"
+  fi
 
 else
   echo "Django directory not found at ${DJANGO_APP_LOCATION}"
