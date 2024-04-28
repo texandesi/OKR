@@ -68,7 +68,7 @@ export class KpiListComponent implements OnInit, AfterViewInit {
           // this.messages.log('Verifying that event is of Page Event type is  ' + this.isPageEvent(event));
           this.messages.log('Objective-List-Component', 'Page event data is ' + JSON.stringify(event));
 
-          let previousPageIndex = this.pageEvent.previousPageIndex;
+          const previousPageIndex = this.pageEvent.previousPageIndex;
           if(this.isPageEvent(event)) {
             event.previousPageIndex=this.pageEvent.previousPageIndex;
           }
@@ -209,7 +209,7 @@ export class KpiListComponent implements OnInit, AfterViewInit {
   }
 
   getPageEvent () : PageEvent {
-    let pageEvent = new PageEvent();
+    const pageEvent = new PageEvent();
 
     return pageEvent;
   }

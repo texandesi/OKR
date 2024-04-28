@@ -64,7 +64,7 @@ export class ObjectiveListComponent implements OnInit, AfterViewInit {
     this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
 
     this.eventHandlingService.subscribeEvent(EVENT_EMITTER.CONTEXT.ObjectiveList, (objective : Objective) => {
-        let previousPageIndex = this.pageEvent.previousPageIndex;
+        const previousPageIndex = this.pageEvent.previousPageIndex;
 
         this.dataSource.getObjectives(
           this.paginator.pageSize,
@@ -83,7 +83,7 @@ export class ObjectiveListComponent implements OnInit, AfterViewInit {
     merge(this.sort.sortChange, this.paginator.page)
       .subscribe(
         event => {
-          let previousPageIndex = this.pageEvent.previousPageIndex;
+          const previousPageIndex = this.pageEvent.previousPageIndex;
           if(this.isPageEvent(event)) {
             event.previousPageIndex=this.pageEvent.previousPageIndex;
           }
@@ -208,7 +208,7 @@ export class ObjectiveListComponent implements OnInit, AfterViewInit {
   }
 
   getPageEvent () : PageEvent {
-    let pageEvent = new PageEvent();
+    const pageEvent = new PageEvent();
 
     return pageEvent;
   }

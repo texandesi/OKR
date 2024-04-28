@@ -55,7 +55,7 @@ export class ObjectiveListDataSource implements DataSource<Objective> {
       o => {
         // this.getObjectives();
         // let arr : Objective [] = this.data.value;
-        let arr = this.data.value.filter(item => item.id !== o.id );
+        const arr = this.data.value.filter(item => item.id !== o.id );
         arr.push(o);
         this.data.next( arr );
         // this.data.next(this.data.value)
@@ -69,7 +69,7 @@ export class ObjectiveListDataSource implements DataSource<Objective> {
       o => {
         // this.getObjectives();
         // let arr : Objective [] = this.data.value;
-        let arr = this.data.value.filter(item => item.id !== id );
+        const arr = this.data.value.filter(item => item.id !== id );
         // console.log('O in datasource delete objective before next is ' + JSON.stringify(o));
         this.data.next( arr );
         // this.data.next(this.data.value)

@@ -25,6 +25,6 @@ export namespace EVENT_EMITTER {
     KpiResultsList      = "KPI_RESULTS_LIST",
     KpiDataEntry        = "KPI_DATA_ENTRY",
     SideNavRefresh      = "SIDENAV_REFRESH",
-  };
+  }
 }
 

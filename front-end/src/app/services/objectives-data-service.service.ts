@@ -62,7 +62,7 @@ export class ObjectivesDataService {
       }
     }
 
-    let url_with_param : URL = new URL( url );
+    const url_with_param : URL = new URL( url );
 
     if (sort_column !== null && sort_direction !== null) {
       let ordering_param : string = sort_column;

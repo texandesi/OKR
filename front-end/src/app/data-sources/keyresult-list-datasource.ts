@@ -55,7 +55,7 @@ export class KeyResultListDataSource implements DataSource<KeyResult> {
       o => {
         // this.getKeyResults();
         // let arr : KeyResult [] = this.data.value;
-        let arr = this.data.value.filter(item => item.id !== o.id );
+        const arr = this.data.value.filter(item => item.id !== o.id );
         arr.push(o);
         this.data.next( arr );
         // this.data.next(this.data.value)
@@ -69,7 +69,7 @@ export class KeyResultListDataSource implements DataSource<KeyResult> {
       o => {
         // this.getKeyResults();
         // let arr : KeyResult [] = this.data.value;
-        let arr = this.data.value.filter(item => item.id !== id );
+        const arr = this.data.value.filter(item => item.id !== id );
         // console.log('O in datasource delete keyresult before next is ' + JSON.stringify(o));
         this.data.next( arr );
         // this.data.next(this.data.value)
