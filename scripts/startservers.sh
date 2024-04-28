@@ -8,7 +8,7 @@
 #																						                                            #
 #########################################################################################
 
-#TODO - Change this shell script to use reusable functions and other scripts like stopserver.sh
+#//TODO - Use reusable functions and other scripts like stopserver.sh
 
 APP_HOME=`pwd`
 DJANGO_APP_LOCATION=${APP_HOME}/back-end
@@ -29,8 +29,8 @@ if [[ -n "$1" ]]; then
   DJANGO_APP_LOCATION=${APP_HOME}/$1
 fi
 
-  #check if the directory exists
-  if [[ -d ${DJANGO_APP_LOCATION} ]]; then
+#check if the directory exists
+if [[ -d ${DJANGO_APP_LOCATION} ]]; then
 
   #check of the executable exists
   if [[ ! -f ${DJANGO_APP_LOCATION}/manage.py ]]; then
