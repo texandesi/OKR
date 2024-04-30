@@ -13,7 +13,7 @@ function _stop_servers {
   ps ax | grep "manage.py" | grep -v "grep" | awk {'print $1'} | xargs kill
   ps ax | grep "ng serve" | grep -v "grep" | awk {'print $1'} | xargs kill
 
-  brew services stop mysql
+  # brew services stop mysql
   exit 2
 }
 
