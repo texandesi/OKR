@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+// import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import {KeyResultsSearchComponent} from "./key-results-search/key-results-search.component";
 import {KeyResultListComponent} from "./key-results-list/key-result-list.component";
@@ -19,10 +19,10 @@ const routes: Routes = [
   },
 ];
 
-@NgModule({
-  imports: [RouterModule.forChild(routes)],
-  exports: [
-    RouterModule,
-  ]
-})
+// @NgModule({
+//   imports: [RouterModule.forChild(routes)],
+//   exports: [
+//     RouterModule,
+//   ]
+// })
 export class KeyResultsRoutingModule { }
