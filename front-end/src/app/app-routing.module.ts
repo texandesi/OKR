@@ -2,8 +2,8 @@ import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 
 import {PageNotFoundComponent} from './modules/page-not-found/page-not-found.component';
-import {MatSidenavModule} from "@angular/material/sidenav";
-import {AppComponent} from "./app.component";
+// import {MatSidenavModule} from "@angular/material/sidenav";
+// import {AppComponent} from "./app.component";
 
 // import {DashboardComponent} from './modules/dashboard/dashboard.component';
 // import {AdminComponent} from './modules/admin/admin/admin.component';
