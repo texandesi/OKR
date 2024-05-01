@@ -2,11 +2,14 @@ import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {Observable} from 'rxjs';
 import {map} from 'rxjs/operators';
+import { NgFor, AsyncPipe } from '@angular/common';
 
 @Component({
-  selector: 'app-admin-dashboard',
-  templateUrl: './admin-dashboard.component.html',
-  styleUrls: ['./admin-dashboard.component.css']
+    selector: 'app-admin-dashboard',
+    templateUrl: './admin-dashboard.component.html',
+    styleUrls: ['./admin-dashboard.component.css'],
+    standalone: true,
+    imports: [NgFor, AsyncPipe]
 })
 export class AdminDashboardComponent implements OnInit {
   sessionId: Observable<string>;

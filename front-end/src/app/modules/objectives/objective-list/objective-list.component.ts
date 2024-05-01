@@ -2,7 +2,7 @@ import {AfterViewInit, Component, ElementRef, OnInit, ViewChild} from '@angular/
 import {Objective} from '../../../data-objects/objective';
 import {MatPaginator} from '@angular/material/paginator';
 import {PageEvent} from '@angular/material/paginator';
-import {MatSort, Sort} from '@angular/material/sort';
+import { MatSort, Sort, MatSortHeader } from '@angular/material/sort';
 import {ObjectivesDataService} from '../../../services/objectives-data-service.service';
 import {MatDialog, MatDialogConfig, MatDialogRef} from '@angular/material/dialog';
 import {ObjectiveEditComponent} from '../objective-edit/objective-edit.component';
@@ -11,13 +11,20 @@ import {debounceTime, distinctUntilChanged, tap} from "rxjs/operators";
 import {merge} from "rxjs";
 import {MessageService} from "../../../services/message.service";
 import {fromEvent} from 'rxjs';
-import { MatTable } from '@angular/material/table';
+import { MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow } from '@angular/material/table';
 import {EVENT_EMITTER, EventHandlingService} from "../../../services/event-handling.service";
+import { ObjectiveDetailComponent } from '../objective-detail/objective-detail.component';
+import { FormsModule } from '@angular/forms';
+import { MatInput } from '@angular/material/input';
+import { MatFormField, MatLabel } from '@angular/material/form-field';
+import { MatButton } from '@angular/material/button';
 
 @Component({
-  selector: 'app-objectives',
-  templateUrl: './objective-list.component.html',
-  styleUrls: ['./objective-list.component.scss']
+    selector: 'app-objectives',
+    templateUrl: './objective-list.component.html',
+    styleUrls: ['./objective-list.component.scss'],
+    standalone: true,
+    imports: [MatButton, MatFormField, MatLabel, MatInput, MatTable, MatSort, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatSortHeader, MatCellDef, MatCell, FormsModule, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow, MatPaginator, ObjectiveDetailComponent]
 })
 export class ObjectiveListComponent implements OnInit, AfterViewInit {
   @ViewChild(MatSort) sort!: MatSort;

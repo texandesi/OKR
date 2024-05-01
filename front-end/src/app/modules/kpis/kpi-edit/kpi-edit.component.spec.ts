@@ -8,8 +8,8 @@ describe('AddObjectiveComponentComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ KpiEditComponent ]
-    })
+    imports: [KpiEditComponent]
+})
     .compileComponents();
   });
 

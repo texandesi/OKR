@@ -1,23 +1,29 @@
 import {AfterViewInit, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {MatPaginator} from '@angular/material/paginator';
 import {PageEvent} from '@angular/material/paginator';
-import {MatSort, Sort} from '@angular/material/sort';
+import { MatSort, Sort, MatSortHeader } from '@angular/material/sort';
 import {MatDialog, MatDialogConfig, MatDialogRef} from '@angular/material/dialog';
 
 import {debounceTime, distinctUntilChanged, tap} from "rxjs/operators";
 import {merge} from "rxjs";
 import {MessageService} from "../../../services/message.service";
 import {fromEvent} from 'rxjs';
-import { MatTable } from '@angular/material/table';
+import { MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow } from '@angular/material/table';
 import {Kpi} from "../../../data-objects/kpi";
 import {KpiDataSource} from "../../../data-sources/kpi-datasource";
 import {KpiDataService} from "../../../services/kpi-data-service.service";
 import {KpiEditComponent} from "../kpi-edit/kpi-edit.component";
+import { FormsModule } from '@angular/forms';
+import { MatInput } from '@angular/material/input';
+import { MatFormField, MatLabel } from '@angular/material/form-field';
+import { MatButton } from '@angular/material/button';
 
 @Component({
-  selector: 'app-key-result',
-  templateUrl: './kpi-list.component.html',
-  styleUrls: ['./kpi-list.component.scss']
+    selector: 'app-key-result',
+    templateUrl: './kpi-list.component.html',
+    styleUrls: ['./kpi-list.component.scss'],
+    standalone: true,
+    imports: [MatButton, MatFormField, MatLabel, MatInput, MatTable, MatSort, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatSortHeader, MatCellDef, MatCell, FormsModule, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow, MatPaginator]
 })
 export class KpiListComponent implements OnInit, AfterViewInit {
   @ViewChild(MatSort) sort!: MatSort;

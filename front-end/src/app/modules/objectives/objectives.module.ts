@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+// import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { FormsModule, ReactiveFormsModule} from '@angular/forms';
@@ -22,41 +22,39 @@ import { ObjectiveEditComponent } from "./objective-edit/objective-edit.componen
 import { ObjectiveDetailComponent } from './objective-detail/objective-detail.component';
 import { ObjectiveListComponent } from "./objective-list/objective-list.component";
 
-@NgModule({
-    declarations: [
-        ObjectiveListComponent,
-        ObjectiveDetailComponent,
-        ObjectiveSearchComponent,
-        ObjectiveEditComponent,
-    ],
-    imports: [
-        CommonModule,
-        FormsModule,
-        MatTableModule,
-        MatPaginatorModule,
-        MatSortModule,
-        MatFormFieldModule,
-        MatInputModule,
-        MatButtonModule,
-        MatDialogModule,
-        MatInputModule,
-        ReactiveFormsModule,
-        LayoutModule,
-        MatToolbarModule,
-        MatSidenavModule,
-        MatIconModule,
-        MatListModule,
-        ObjectivesRoutingModule,
-    ],
-    exports: [
-        ObjectiveListComponent,
-        ObjectiveDetailComponent,
-        ObjectiveSearchComponent,
-        ObjectiveEditComponent,
-    ],
-    providers: [],
-    bootstrap: []
-})
+// @NgModule({
+//     imports: [
+//         CommonModule,
+//         FormsModule,
+//         MatTableModule,
+//         MatPaginatorModule,
+//         MatSortModule,
+//         MatFormFieldModule,
+//         MatInputModule,
+//         MatButtonModule,
+//         MatDialogModule,
+//         MatInputModule,
+//         ReactiveFormsModule,
+//         LayoutModule,
+//         MatToolbarModule,
+//         MatSidenavModule,
+//         MatIconModule,
+//         MatListModule,
+//         ObjectivesRoutingModule,
+//         ObjectiveListComponent,
+//         ObjectiveDetailComponent,
+//         ObjectiveSearchComponent,
+//         ObjectiveEditComponent,
+//     ],
+//     exports: [
+//         ObjectiveListComponent,
+//         ObjectiveDetailComponent,
+//         ObjectiveSearchComponent,
+//         ObjectiveEditComponent,
+//     ],
+//     providers: [],
+//     bootstrap: []
+// })
 export class ObjectivesModule {
 
 

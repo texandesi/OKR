@@ -1,10 +1,14 @@
 import {Component} from '@angular/core';
 import {Router} from '@angular/router';
+import { FormsModule } from '@angular/forms';
+import { NgIf } from '@angular/common';
 
 @Component({
-  selector: 'app-compose-message',
-  templateUrl: './compose-message.component.html',
-  styleUrls: ['./compose-message.component.css']
+    selector: 'app-compose-message',
+    templateUrl: './compose-message.component.html',
+    styleUrls: ['./compose-message.component.css'],
+    standalone: true,
+    imports: [NgIf, FormsModule]
 })
 export class ComposeMessageComponent {
   details: string = '';

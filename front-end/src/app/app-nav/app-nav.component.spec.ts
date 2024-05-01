@@ -15,8 +15,7 @@ describe('KeyResultsNavComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [AppNavComponent],
-      imports: [
+    imports: [
         NoopAnimationsModule,
         LayoutModule,
         MatButtonModule,
@@ -24,8 +23,9 @@ describe('KeyResultsNavComponent', () => {
         MatListModule,
         MatSidenavModule,
         MatToolbarModule,
-      ]
-    }).compileComponents();
+        AppNavComponent,
+    ]
+}).compileComponents();
   }));
 
   beforeEach(() => {

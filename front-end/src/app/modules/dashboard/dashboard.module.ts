@@ -8,22 +8,17 @@ import {KpiModule} from "../kpis/kpi.module";
 import {DashboardComponent} from "./dashboard.component";
 
 @NgModule({
-  declarations: [
-    DashboardComponent,
-
-  ],
-  imports: [
-    CommonModule,
-    DashboardRoutingModule,
-    MatInputModule,
-    MatButtonModule,
-    KpiModule,
-
-  ],
-  exports: [
-    DashboardRoutingModule,
-  ]
-
+    imports: [
+        CommonModule,
+        DashboardRoutingModule,
+        MatInputModule,
+        MatButtonModule,
+        KpiModule,
+        DashboardComponent,
+    ],
+    exports: [
+        DashboardRoutingModule,
+    ]
 })
 export class DashboardModule {
 

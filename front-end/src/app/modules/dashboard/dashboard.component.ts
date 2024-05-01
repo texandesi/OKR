@@ -3,9 +3,10 @@ import {ObjectivesDataService} from '../../services/objectives-data-service.serv
 import {Objective} from "../../data-objects/objective";
 
 @Component({
-  selector: 'app-dashboard',
-  templateUrl: './dashboard.component.html',
-  styleUrls: [ './dashboard.component.scss' ]
+    selector: 'app-dashboard',
+    templateUrl: './dashboard.component.html',
+    styleUrls: ['./dashboard.component.scss'],
+    standalone: true
 })
 export class DashboardComponent implements OnInit {
   objectives: Objective[] = [];

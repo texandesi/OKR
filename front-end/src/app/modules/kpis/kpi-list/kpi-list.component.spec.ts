@@ -7,8 +7,8 @@ describe('KeyResultsComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [KpiListComponent]
-    })
+    imports: [KpiListComponent]
+})
       .compileComponents();
   });
 

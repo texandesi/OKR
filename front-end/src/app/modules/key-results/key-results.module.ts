@@ -22,36 +22,33 @@ import {MatListModule} from "@angular/material/list";
 
 
 @NgModule({
-  declarations: [
-    KeyResultListComponent,
-    KeyResultsSearchComponent,
-    KeyResultEditComponent,
-  ],
-  imports: [
-    CommonModule,
-    FormsModule,
-    MatTableModule,
-    MatPaginatorModule,
-    MatSortModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatButtonModule,
-    MatDialogModule,
-    MatInputModule,
-    ReactiveFormsModule,
-    LayoutModule,
-    MatToolbarModule,
-    MatSidenavModule,
-    MatIconModule,
-    MatListModule,
-
-    KeyResultsRoutingModule,
-  ],
-  exports: [
-    KeyResultsSearchComponent,
-    KeyResultListComponent,
-    KeyResultEditComponent,
-  ]
+    imports: [
+        CommonModule,
+        FormsModule,
+        MatTableModule,
+        MatPaginatorModule,
+        MatSortModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatButtonModule,
+        MatDialogModule,
+        MatInputModule,
+        ReactiveFormsModule,
+        LayoutModule,
+        MatToolbarModule,
+        MatSidenavModule,
+        MatIconModule,
+        MatListModule,
+        KeyResultsRoutingModule,
+        KeyResultListComponent,
+        KeyResultsSearchComponent,
+        KeyResultEditComponent,
+    ],
+    exports: [
+        KeyResultsSearchComponent,
+        KeyResultListComponent,
+        KeyResultEditComponent,
+    ]
 })
 export class KeyResultsModule {
 

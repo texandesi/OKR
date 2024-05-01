@@ -3,11 +3,18 @@ import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Observable } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
 import {TnOkrCommonTypes} from "../data-objects/tn-okr-common-types";
+import { RouterOutlet } from '@angular/router';
+import { NgFor, AsyncPipe } from '@angular/common';
+import { MatNavList, MatListItem } from '@angular/material/list';
+import { MatToolbar } from '@angular/material/toolbar';
+import { MatDrawerContainer, MatDrawer, MatDrawerContent } from '@angular/material/sidenav';
 
 @Component({
-  selector: 'app-nav',
-  templateUrl: './app-nav.component.html',
-  styleUrls: ['./app-nav.component.scss']
+    selector: 'app-nav',
+    templateUrl: './app-nav.component.html',
+    styleUrls: ['./app-nav.component.scss'],
+    standalone: true,
+    imports: [MatDrawerContainer, MatDrawer, MatToolbar, MatNavList, NgFor, MatListItem, MatDrawerContent, RouterOutlet, AsyncPipe]
 })
 export class AppNavComponent {
 

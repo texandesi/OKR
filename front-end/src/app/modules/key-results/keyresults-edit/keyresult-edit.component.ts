@@ -1,11 +1,15 @@
 import {Component, Inject, OnInit} from '@angular/core';
-import {UntypedFormBuilder, UntypedFormGroup} from '@angular/forms';
-import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
+import { UntypedFormBuilder, UntypedFormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MAT_DIALOG_DATA, MatDialogRef, MatDialogTitle, MatDialogContent, MatDialogActions } from '@angular/material/dialog';
+import { MatInput } from '@angular/material/input';
+import { MatFormField } from '@angular/material/form-field';
 
 @Component({
-  selector: 'app-keyresult-edit-component',
-  templateUrl: './keyresult-edit.component.html',
-  styleUrls: ['./keyresult-edit.component.scss']
+    selector: 'app-keyresult-edit-component',
+    templateUrl: './keyresult-edit.component.html',
+    styleUrls: ['./keyresult-edit.component.scss'],
+    standalone: true,
+    imports: [MatDialogTitle, MatDialogContent, FormsModule, ReactiveFormsModule, MatFormField, MatInput, MatDialogActions]
 })
 export class KeyResultEditComponent implements OnInit {
   form!: UntypedFormGroup;

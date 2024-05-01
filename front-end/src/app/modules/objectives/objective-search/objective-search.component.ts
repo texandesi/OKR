@@ -8,11 +8,15 @@ import {
 
 import { Objective } from '../../../data-objects/objective';
 import {ObjectivesDataService} from '../../../services/objectives-data-service.service';
+import { RouterLink } from '@angular/router';
+import { NgFor, AsyncPipe } from '@angular/common';
 
 @Component({
-  selector: 'app-objective-search',
-  templateUrl: './objective-search.component.html',
-  styleUrls: [ './objective-search.component.scss' ]
+    selector: 'app-objective-search',
+    templateUrl: './objective-search.component.html',
+    styleUrls: ['./objective-search.component.scss'],
+    standalone: true,
+    imports: [NgFor, RouterLink, AsyncPipe]
 })
 export class ObjectiveSearchComponent implements OnInit {
   objectives$!: Observable<Objective[]>;

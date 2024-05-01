@@ -1,11 +1,15 @@
 import {Component, Inject, OnInit} from '@angular/core';
-import {UntypedFormBuilder, UntypedFormGroup} from '@angular/forms';
-import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
+import { UntypedFormBuilder, UntypedFormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MAT_DIALOG_DATA, MatDialogRef, MatDialogTitle, MatDialogContent, MatDialogActions } from '@angular/material/dialog';
+import { MatInput } from '@angular/material/input';
+import { MatFormField } from '@angular/material/form-field';
 
 @Component({
-  selector: 'app-add-objective-component',
-  templateUrl: './objective-edit.component.html',
-  styleUrls: ['./objective-edit.component.scss']
+    selector: 'app-add-objective-component',
+    templateUrl: './objective-edit.component.html',
+    styleUrls: ['./objective-edit.component.scss'],
+    standalone: true,
+    imports: [MatDialogTitle, MatDialogContent, FormsModule, ReactiveFormsModule, MatFormField, MatInput, MatDialogActions]
 })
 export class ObjectiveEditComponent implements OnInit {
   form!: UntypedFormGroup;

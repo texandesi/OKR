@@ -8,8 +8,8 @@ describe('ObjectivesComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ObjectiveListComponent]
-    })
+    imports: [ObjectiveListComponent]
+})
       .compileComponents();
   });
 

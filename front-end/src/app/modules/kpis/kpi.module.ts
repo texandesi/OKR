@@ -19,34 +19,31 @@ import { KpiEditComponent} from "./kpi-edit/kpi-edit.component";
 import { KpiRoutingModule} from "./kpi-routing.module";
 
 @NgModule({
-  declarations: [
-    KpiListComponent,
-    KpiEditComponent,
-  ],
-  imports: [
-    CommonModule,
-    FormsModule,
-    MatTableModule,
-    MatPaginatorModule,
-    MatSortModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatButtonModule,
-    MatDialogModule,
-    MatInputModule,
-    ReactiveFormsModule,
-    LayoutModule,
-    MatToolbarModule,
-    MatSidenavModule,
-    MatIconModule,
-    MatListModule,
-
-    KpiRoutingModule,
-  ],
-  exports: [
-    KpiListComponent,
-    KpiEditComponent,
-  ]
+    imports: [
+        CommonModule,
+        FormsModule,
+        MatTableModule,
+        MatPaginatorModule,
+        MatSortModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatButtonModule,
+        MatDialogModule,
+        MatInputModule,
+        ReactiveFormsModule,
+        LayoutModule,
+        MatToolbarModule,
+        MatSidenavModule,
+        MatIconModule,
+        MatListModule,
+        KpiRoutingModule,
+        KpiListComponent,
+        KpiEditComponent,
+    ],
+    exports: [
+        KpiListComponent,
+        KpiEditComponent,
+    ]
 })
 export class KpiModule {
 

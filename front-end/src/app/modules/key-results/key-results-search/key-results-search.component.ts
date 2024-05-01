@@ -7,12 +7,16 @@ import {
 } from 'rxjs/operators';
 import {KeyResultsDataService} from "../../../services/key-results-data-service.service";
 import {KeyResult} from "../../../data-objects/keyresult";
+import { RouterLink } from '@angular/router';
+import { NgFor, AsyncPipe } from '@angular/common';
 
 
 @Component({
-  selector: 'app-key-results-search',
-  templateUrl: './key-results-search.component.html',
-  styleUrls: [ './key-results-search.component.scss' ]
+    selector: 'app-key-results-search',
+    templateUrl: './key-results-search.component.html',
+    styleUrls: ['./key-results-search.component.scss'],
+    standalone: true,
+    imports: [NgFor, RouterLink, AsyncPipe]
 })
 export class KeyResultsSearchComponent implements OnInit {
   keyresult$!: Observable<KeyResult[]>;
