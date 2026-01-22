@@ -54,3 +54,7 @@ npm-debug.log*
 .cache/
 coverage/
 *.local
+
+# PID files
+.backend.pid
+.frontend.pid
