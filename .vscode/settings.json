@@ -1,4 +1,9 @@
 {
-    "python.pythonPath": "/Users/sanjeevpai/.pyenv/versions/3.9.1/bin/python",
-    "typescript.suggest.completeFunctionCalls": true
+  "python.defaultInterpreterPath": "./back-end/.venv/bin/python",
+  "typescript.suggest.completeFunctionCalls": true,
+  "editor.formatOnSave": true,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "[python]": {
+    "editor.defaultFormatter": "charliermarsh.ruff"
+  }
 }
