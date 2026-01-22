@@ -1,9 +1,16 @@
 {
-  "python.defaultInterpreterPath": "./back-end/.venv/bin/python",
+  "python.defaultInterpreterPath": "${workspaceFolder}/back-end/.venv/bin/python",
+  "python.analysis.extraPaths": ["${workspaceFolder}/back-end"],
   "typescript.suggest.completeFunctionCalls": true,
   "editor.formatOnSave": true,
   "editor.defaultFormatter": "esbenp.prettier-vscode",
   "[python]": {
-    "editor.defaultFormatter": "charliermarsh.ruff"
-  }
+    "editor.defaultFormatter": "charliermarsh.ruff",
+    "editor.codeActionsOnSave": {
+      "source.fixAll": "explicit",
+      "source.organizeImports": "explicit"
+    }
+  },
+  "ruff.path": ["${workspaceFolder}/back-end/.venv/bin/ruff"],
+  "mypy.runUsingActiveInterpreter": true
 }
