@@ -1,6 +1,8 @@
 import { useState } from "react";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { DataTable, type Column } from "@/components/DataTable";
+import { DateRangePicker } from "@/components/DateRangePicker";
+import { ReactionBar } from "@/components/ReactionBar";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -19,39 +21,14 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Progress } from "@/components/ui/progress";
+import { Checkbox } from "@/components/ui/checkbox";
 import { keyresultsHooks } from "@/hooks/useApi";
 import { api } from "@/api/client";
 import type { KeyResult, KeyResultCreate } from "@/types";
-import { Plus } from "lucide-react";
-
-const columns: Column<KeyResult>[] = [
-  { key: "id", label: "ID", sortable: true },
-  { key: "name", label: "Name", sortable: true },
-  { key: "objectiveName", label: "Objective" },
-  {
-    key: "progressPercentage",
-    label: "Progress",
-    render: (item) => (
-      <div className="flex items-center gap-2 min-w-[150px]">
-        <Progress value={item.progressPercentage} className="flex-1" />
-        <span className="text-sm text-muted-foreground w-12">
-          {item.progressPercentage.toFixed(0)}%
-        </span>
-      </div>
-    ),
-  },
-  {
-    key: "currentValue",
-    label: "Current / Target",
-    render: (item) => (
-      <span>
-        {item.currentValue ?? 0} / {item.targetValue ?? 100} {item.unit}
-      </span>
-    ),
-  },
-];
+import { Plus, CheckCircle2, Circle, Calendar } from "lucide-react";
 
 export function KeyResultsList() {
+  const queryClient = useQueryClient();
   const [page, setPage] = useState(1);
   const [pageSize] = useState(10);
   const [sortColumn, setSortColumn] = useState("name");
@@ -59,13 +36,15 @@ export function KeyResultsList() {
   const [searchQuery, setSearchQuery] = useState("");
   const [dialogOpen, setDialogOpen] = useState(false);
   const [editingItem, setEditingItem] = useState<KeyResult | null>(null);
-  const [formData, setFormData] = useState<KeyResultCreate>({
+  const [formData, setFormData] = useState<KeyResultCreate & { isComplete?: boolean }>({
     name: "",
     description: "",
     objective: 0,
     targetValue: 100,
     currentValue: 0,
     unit: "%",
+    startDate: null,
+    endDate: null,
   });
 
   const { data, isLoading } = keyresultsHooks.useList({
@@ -83,6 +62,96 @@ export function KeyResultsList() {
   const createMutation = keyresultsHooks.useCreate();
   const updateMutation = keyresultsHooks.useUpdate();
   const deleteMutation = keyresultsHooks.useDelete();
+
+  // Toggle completion mutation
+  const toggleCompleteMutation = useMutation({
+    mutationFn: ({ id, isComplete }: { id: number; isComplete: boolean }) =>
+      api.keyresults.update(id, { isComplete }),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["keyresults"] });
+      queryClient.invalidateQueries({ queryKey: ["objectives"] });
+    },
+  });
+
+  const handleToggleComplete = async (item: KeyResult) => {
+    await toggleCompleteMutation.mutateAsync({
+      id: item.id,
+      isComplete: !item.isComplete,
+    });
+  };
+
+  const columns: Column<KeyResult>[] = [
+    { key: "id", label: "ID", sortable: true },
+    { key: "name", label: "Name", sortable: true },
+    { key: "objectiveName", label: "Objective" },
+    {
+      key: "progressPercentage",
+      label: "Progress",
+      render: (item) => (
+        <div className="flex items-center gap-2 min-w-[150px]">
+          <Progress value={item.progressPercentage} className="flex-1" />
+          <span className="text-sm text-muted-foreground w-12">
+            {item.progressPercentage.toFixed(0)}%
+          </span>
+        </div>
+      ),
+    },
+    {
+      key: "currentValue",
+      label: "Current / Target",
+      render: (item) => (
+        <span>
+          {item.currentValue ?? 0} / {item.targetValue ?? 100} {item.unit}
+        </span>
+      ),
+    },
+    {
+      key: "isComplete",
+      label: "Complete",
+      render: (item) => (
+        <button
+          onClick={(e) => {
+            e.stopPropagation();
+            handleToggleComplete(item);
+          }}
+          className="flex items-center gap-2 hover:opacity-75 transition-opacity"
+        >
+          {item.isComplete ? (
+            <CheckCircle2 className="h-5 w-5 text-green-500" />
+          ) : (
+            <Circle className="h-5 w-5 text-muted-foreground" />
+          )}
+        </button>
+      ),
+    },
+    {
+      key: "reactions",
+      label: "Reactions",
+      render: (item) => (
+        <div onClick={(e) => e.stopPropagation()}>
+          <ReactionBar keyResultId={item.id} />
+        </div>
+      ),
+    },
+    {
+      key: "effectiveStartDate",
+      label: "Dates",
+      render: (item) =>
+        item.effectiveStartDate || item.effectiveEndDate ? (
+          <div className="flex items-center gap-1 text-sm text-muted-foreground">
+            <Calendar className="h-4 w-4" />
+            <span>
+              {item.effectiveStartDate ?? "—"} to {item.effectiveEndDate ?? "—"}
+            </span>
+            {(item.startDate || item.endDate) && (
+              <span className="text-xs">(custom)</span>
+            )}
+          </div>
+        ) : (
+          <span className="text-muted-foreground">—</span>
+        ),
+    },
+  ];
 
   const handleSort = (column: string, direction: "asc" | "desc") => {
     setSortColumn(column);
@@ -104,6 +173,9 @@ export function KeyResultsList() {
         targetValue: item.targetValue ?? 100,
         currentValue: item.currentValue ?? 0,
         unit: item.unit ?? "%",
+        startDate: item.startDate,
+        endDate: item.endDate,
+        isComplete: item.isComplete,
       });
     } else {
       setEditingItem(null);
@@ -114,6 +186,8 @@ export function KeyResultsList() {
         targetValue: 100,
         currentValue: 0,
         unit: "%",
+        startDate: null,
+        endDate: null,
       });
     }
     setDialogOpen(true);
@@ -161,7 +235,7 @@ export function KeyResultsList() {
       />
 
       <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
-        <DialogContent>
+        <DialogContent className="max-w-2xl">
           <DialogHeader>
             <DialogTitle>
               {editingItem ? "Edit Key Result" : "Add Key Result"}
@@ -233,6 +307,30 @@ export function KeyResultsList() {
                 />
               </div>
             </div>
+
+            <DateRangePicker
+              startDate={formData.startDate ?? null}
+              endDate={formData.endDate ?? null}
+              onStartDateChange={(date) => setFormData({ ...formData, startDate: date })}
+              onEndDateChange={(date) => setFormData({ ...formData, endDate: date })}
+              startLabel="Start Date (override)"
+              endLabel="End Date (override)"
+            />
+
+            {editingItem && (
+              <div className="flex items-center space-x-2">
+                <Checkbox
+                  id="isComplete"
+                  checked={formData.isComplete ?? false}
+                  onCheckedChange={(checked) =>
+                    setFormData({ ...formData, isComplete: checked === true })
+                  }
+                />
+                <Label htmlFor="isComplete" className="cursor-pointer">
+                  Mark as complete
+                </Label>
+              </div>
+            )}
           </div>
           <DialogFooter>
             <Button variant="outline" onClick={() => setDialogOpen(false)}>

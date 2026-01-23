@@ -4,48 +4,89 @@
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
-    --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
-    --radius: 0.5rem;
+    /* Warm Organic Minimalism - Light Mode */
+    --background: 40 33% 98%;           /* Warm off-white #FAF8F5 */
+    --foreground: 30 10% 15%;           /* Warm dark gray */
+    --card: 40 30% 99%;                 /* Slightly warmer white */
+    --card-foreground: 30 10% 15%;
+    --popover: 40 30% 99%;
+    --popover-foreground: 30 10% 15%;
+
+    /* Primary: Sage Green */
+    --primary: 150 19% 36%;             /* #4A6B5D */
+    --primary-foreground: 40 33% 98%;
+
+    /* Secondary: Warm neutral */
+    --secondary: 35 20% 93%;
+    --secondary-foreground: 30 10% 25%;
+
+    /* Muted: Subtle warm gray */
+    --muted: 35 15% 92%;
+    --muted-foreground: 30 8% 45%;
+
+    /* Accent: Terracotta */
+    --accent: 18 52% 55%;               /* #C97553 */
+    --accent-foreground: 40 33% 98%;
+
+    /* Semantic colors */
+    --destructive: 9 68% 57%;           /* #D95B4A - Warm red */
+    --destructive-foreground: 40 33% 98%;
+    --success: 152 52% 41%;             /* #369B6C */
+    --success-foreground: 40 33% 98%;
+    --warning: 42 82% 56%;              /* #E9A832 */
+    --warning-foreground: 30 10% 15%;
+
+    /* UI elements */
+    --border: 35 20% 88%;
+    --input: 35 15% 94%;
+    --ring: 150 19% 36%;
+
+    /* Radius - larger for organic feel */
+    --radius: 0.75rem;
+
+    /* Shadows with warm tint */
+    --shadow-color: 30 15% 50%;
   }
 
   .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
-    --primary: 210 40% 98%;
-    --primary-foreground: 222.2 47.4% 11.2%;
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 212.7 26.8% 83.9%;
+    /* Warm Organic Minimalism - Dark Mode */
+    --background: 25 12% 10%;           /* Warm charcoal #1C1815 */
+    --foreground: 35 20% 90%;           /* Warm off-white text */
+    --card: 25 12% 13%;
+    --card-foreground: 35 20% 90%;
+    --popover: 25 12% 13%;
+    --popover-foreground: 35 20% 90%;
+
+    /* Primary: Lighter sage for dark mode */
+    --primary: 150 25% 50%;
+    --primary-foreground: 25 12% 10%;
+
+    /* Secondary */
+    --secondary: 25 10% 18%;
+    --secondary-foreground: 35 20% 85%;
+
+    /* Muted */
+    --muted: 25 10% 20%;
+    --muted-foreground: 35 15% 55%;
+
+    /* Accent: Brighter terracotta for contrast */
+    --accent: 18 55% 60%;
+    --accent-foreground: 25 12% 10%;
+
+    /* Semantic colors - adjusted for dark mode */
+    --destructive: 9 65% 50%;
+    --destructive-foreground: 35 20% 95%;
+    --success: 152 45% 45%;
+    --success-foreground: 35 20% 95%;
+    --warning: 42 75% 50%;
+    --warning-foreground: 25 12% 10%;
+
+    /* UI elements */
+    --border: 25 10% 22%;
+    --input: 25 10% 18%;
+    --ring: 150 25% 50%;
+
+    --shadow-color: 25 20% 5%;
   }
 }
 
@@ -53,9 +94,125 @@
   * {
     @apply border-border;
   }
+
+  html {
+    @apply antialiased;
+  }
+
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground font-sans;
     margin: 0;
     min-height: 100vh;
+  }
+
+  /* Smooth scrolling */
+  html {
+    scroll-behavior: smooth;
+  }
+
+  /* Better focus styles */
+  :focus-visible {
+    @apply outline-none ring-2 ring-ring ring-offset-2 ring-offset-background;
+  }
+}
+
+@layer utilities {
+  /* Text styles for display font */
+  .font-display {
+    font-family: 'Fraunces', serif;
+    font-optical-sizing: auto;
+  }
+
+  /* Mono for numbers */
+  .font-mono-nums {
+    font-family: 'JetBrains Mono', monospace;
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* Warm shadows */
+  .shadow-warm-sm {
+    box-shadow: 0 1px 2px 0 hsl(var(--shadow-color) / 0.05);
+  }
+
+  .shadow-warm {
+    box-shadow:
+      0 1px 3px 0 hsl(var(--shadow-color) / 0.08),
+      0 1px 2px -1px hsl(var(--shadow-color) / 0.08);
+  }
+
+  .shadow-warm-md {
+    box-shadow:
+      0 4px 6px -1px hsl(var(--shadow-color) / 0.08),
+      0 2px 4px -2px hsl(var(--shadow-color) / 0.08);
+  }
+
+  .shadow-warm-lg {
+    box-shadow:
+      0 10px 15px -3px hsl(var(--shadow-color) / 0.08),
+      0 4px 6px -4px hsl(var(--shadow-color) / 0.08);
+  }
+
+  /* Glassmorphism effect */
+  .glass {
+    @apply backdrop-blur-sm bg-card/80;
+  }
+}
+
+/* Custom animations */
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slide-in-right {
+  from {
+    opacity: 0;
+    transform: translateX(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes progress-fill {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
+@keyframes pulse-subtle {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.7;
+  }
+}
+
+@keyframes spin-slow {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
   }
 }
