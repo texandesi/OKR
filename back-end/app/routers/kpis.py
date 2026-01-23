@@ -1,14 +1,19 @@
-from fastapi import APIRouter, Depends, HTTPException, Query, Request
-from sqlalchemy import select, func
+"""KPI router endpoints."""
+
+from fastapi import APIRouter, Depends, Query, Request
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.database import get_db
-from app.models.kpi import Kpi
-from app.schemas.kpi import KpiCreate, KpiUpdate, KpiResponse
-from app.routers.utils import paginate_response
 from app.config import settings
+from app.database import get_db
+from app.schemas.kpi import KpiCreate, KpiResponse, KpiUpdate
+from app.services.kpi import KPIService
 
 router = APIRouter(prefix="/kpis", tags=["kpis"])
+
+
+def get_service(db: AsyncSession = Depends(get_db)) -> KPIService:
+    """Dependency to get KPIService instance."""
+    return KPIService(db)
 
 
 @router.get("/", response_model=None)
@@ -19,81 +24,52 @@ async def list_kpis(
     ordering: str | None = Query(None),
     name: str | None = Query(None),
     description: str | None = Query(None),
-    db: AsyncSession = Depends(get_db),
+    service: KPIService = Depends(get_service),
 ):
-    query = select(Kpi)
-    count_query = select(func.count()).select_from(Kpi)
-
-    if name:
-        query = query.where(Kpi.name.ilike(f"%{name}%"))
-        count_query = count_query.where(Kpi.name.ilike(f"%{name}%"))
-    if description:
-        query = query.where(Kpi.description.ilike(f"%{description}%"))
-        count_query = count_query.where(Kpi.description.ilike(f"%{description}%"))
-
-    if ordering:
-        if ordering.startswith("-"):
-            query = query.order_by(getattr(Kpi, ordering[1:]).desc())
-        else:
-            query = query.order_by(getattr(Kpi, ordering))
-    else:
-        query = query.order_by(Kpi.name)
-
-    total_count = await db.scalar(count_query)
-
-    offset = (page - 1) * page_size
-    query = query.offset(offset).limit(page_size)
-
-    result = await db.execute(query)
-    kpis = result.scalars().all()
-
-    items = [KpiResponse.model_validate(kpi) for kpi in kpis]
-    return paginate_response(request, items, total_count, page, page_size)
+    """List all KPIs with pagination, ordering, and filtering."""
+    filters = {"name": name, "description": description}
+    return await service.get_list(
+        request,
+        page=page,
+        page_size=page_size,
+        ordering=ordering,
+        filters=filters,
+    )
 
 
 @router.post("/", response_model=KpiResponse, status_code=201)
-async def create_kpi(kpi: KpiCreate, db: AsyncSession = Depends(get_db)):
-    db_kpi = Kpi(**kpi.model_dump())
-    db.add(db_kpi)
-    await db.commit()
-    await db.refresh(db_kpi)
-    return KpiResponse.model_validate(db_kpi)
+async def create_kpi(
+    kpi: KpiCreate,
+    service: KPIService = Depends(get_service),
+):
+    """Create a new KPI."""
+    return await service.create(kpi)
 
 
 @router.get("/{kpi_id}/", response_model=KpiResponse)
-async def get_kpi(kpi_id: int, db: AsyncSession = Depends(get_db)):
-    query = select(Kpi).where(Kpi.id == kpi_id)
-    result = await db.execute(query)
-    kpi = result.scalar_one_or_none()
-    if not kpi:
-        raise HTTPException(status_code=404, detail="Kpi not found")
-    return KpiResponse.model_validate(kpi)
+async def get_kpi(
+    kpi_id: int,
+    service: KPIService = Depends(get_service),
+):
+    """Get a KPI by ID."""
+    return await service.get_by_id(kpi_id)
 
 
 @router.put("/{kpi_id}/", response_model=KpiResponse)
-async def update_kpi(kpi_id: int, kpi_update: KpiUpdate, db: AsyncSession = Depends(get_db)):
-    query = select(Kpi).where(Kpi.id == kpi_id)
-    result = await db.execute(query)
-    kpi = result.scalar_one_or_none()
-    if not kpi:
-        raise HTTPException(status_code=404, detail="Kpi not found")
-
-    update_data = kpi_update.model_dump(exclude_unset=True)
-    for field, value in update_data.items():
-        setattr(kpi, field, value)
-
-    await db.commit()
-    await db.refresh(kpi)
-    return KpiResponse.model_validate(kpi)
+async def update_kpi(
+    kpi_id: int,
+    kpi_update: KpiUpdate,
+    service: KPIService = Depends(get_service),
+):
+    """Update an existing KPI."""
+    return await service.update(kpi_id, kpi_update)
 
 
 @router.delete("/{kpi_id}/", status_code=204)
-async def delete_kpi(kpi_id: int, db: AsyncSession = Depends(get_db)):
-    query = select(Kpi).where(Kpi.id == kpi_id)
-    result = await db.execute(query)
-    kpi = result.scalar_one_or_none()
-    if not kpi:
-        raise HTTPException(status_code=404, detail="Kpi not found")
-    await db.delete(kpi)
-    await db.commit()
+async def delete_kpi(
+    kpi_id: int,
+    service: KPIService = Depends(get_service),
+):
+    """Delete a KPI by ID."""
+    await service.delete(kpi_id)
     return None

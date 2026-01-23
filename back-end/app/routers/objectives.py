@@ -1,21 +1,24 @@
-from fastapi import APIRouter, Depends, HTTPException, Query, Request
-from sqlalchemy import select, func
-from sqlalchemy.ext.asyncio import AsyncSession
-from sqlalchemy.orm import selectinload
+"""Objective router endpoints."""
 
+from fastapi import APIRouter, Depends, Query, Request
+from sqlalchemy.ext.asyncio import AsyncSession
+
+from app.config import settings
 from app.database import get_db
-from app.models.objective import Objective
 from app.schemas.objective import (
     ObjectiveCreate,
-    ObjectiveUpdate,
     ObjectiveResponse,
+    ObjectiveUpdate,
     ObjectiveWithKeyResults,
 )
-from app.schemas.common import PaginatedResponse
-from app.routers.utils import paginate_response
-from app.config import settings
+from app.services.objective import ObjectiveService
 
 router = APIRouter(prefix="/objectives", tags=["objectives"])
+
+
+def get_service(db: AsyncSession = Depends(get_db)) -> ObjectiveService:
+    """Dependency to get ObjectiveService instance."""
+    return ObjectiveService(db)
 
 
 @router.get("/", response_model=None)
@@ -26,108 +29,52 @@ async def list_objectives(
     ordering: str | None = Query(None),
     name: str | None = Query(None),
     description: str | None = Query(None),
-    db: AsyncSession = Depends(get_db),
+    service: ObjectiveService = Depends(get_service),
 ):
-    # Build query
-    query = select(Objective)
-    count_query = select(func.count()).select_from(Objective)
-
-    # Apply filters
-    if name:
-        query = query.where(Objective.name.ilike(f"%{name}%"))
-        count_query = count_query.where(Objective.name.ilike(f"%{name}%"))
-    if description:
-        query = query.where(Objective.description.ilike(f"%{description}%"))
-        count_query = count_query.where(Objective.description.ilike(f"%{description}%"))
-
-    # Apply ordering
-    if ordering:
-        if ordering.startswith("-"):
-            query = query.order_by(getattr(Objective, ordering[1:]).desc())
-        else:
-            query = query.order_by(getattr(Objective, ordering))
-    else:
-        query = query.order_by(Objective.name)
-
-    # Get total count
-    total_count = await db.scalar(count_query)
-
-    # Apply pagination
-    offset = (page - 1) * page_size
-    query = query.offset(offset).limit(page_size)
-
-    result = await db.execute(query)
-    objectives = result.scalars().all()
-
-    items = [ObjectiveResponse.model_validate(obj) for obj in objectives]
-    return paginate_response(request, items, total_count, page, page_size)
+    """List all objectives with pagination, ordering, and filtering."""
+    filters = {"name": name, "description": description}
+    return await service.get_list(
+        request,
+        page=page,
+        page_size=page_size,
+        ordering=ordering,
+        filters=filters,
+    )
 
 
 @router.post("/", response_model=ObjectiveResponse, status_code=201)
 async def create_objective(
     objective: ObjectiveCreate,
-    db: AsyncSession = Depends(get_db),
+    service: ObjectiveService = Depends(get_service),
 ):
-    db_objective = Objective(**objective.model_dump())
-    db.add(db_objective)
-    await db.commit()
-    await db.refresh(db_objective)
-    return ObjectiveResponse.model_validate(db_objective)
+    """Create a new objective."""
+    return await service.create(objective)
 
 
 @router.get("/{objective_id}/", response_model=ObjectiveWithKeyResults)
 async def get_objective(
     objective_id: int,
-    db: AsyncSession = Depends(get_db),
+    service: ObjectiveService = Depends(get_service),
 ):
-    query = (
-        select(Objective)
-        .options(selectinload(Objective.keyresults))
-        .where(Objective.id == objective_id)
-    )
-    result = await db.execute(query)
-    objective = result.scalar_one_or_none()
-
-    if not objective:
-        raise HTTPException(status_code=404, detail="Objective not found")
-
-    return ObjectiveWithKeyResults.model_validate(objective)
+    """Get an objective by ID with its key results."""
+    return await service.get_by_id_with_keyresults(objective_id)
 
 
 @router.put("/{objective_id}/", response_model=ObjectiveResponse)
 async def update_objective(
     objective_id: int,
     objective_update: ObjectiveUpdate,
-    db: AsyncSession = Depends(get_db),
+    service: ObjectiveService = Depends(get_service),
 ):
-    query = select(Objective).where(Objective.id == objective_id)
-    result = await db.execute(query)
-    objective = result.scalar_one_or_none()
-
-    if not objective:
-        raise HTTPException(status_code=404, detail="Objective not found")
-
-    update_data = objective_update.model_dump(exclude_unset=True)
-    for field, value in update_data.items():
-        setattr(objective, field, value)
-
-    await db.commit()
-    await db.refresh(objective)
-    return ObjectiveResponse.model_validate(objective)
+    """Update an existing objective."""
+    return await service.update(objective_id, objective_update)
 
 
 @router.delete("/{objective_id}/", status_code=204)
 async def delete_objective(
     objective_id: int,
-    db: AsyncSession = Depends(get_db),
+    service: ObjectiveService = Depends(get_service),
 ):
-    query = select(Objective).where(Objective.id == objective_id)
-    result = await db.execute(query)
-    objective = result.scalar_one_or_none()
-
-    if not objective:
-        raise HTTPException(status_code=404, detail="Objective not found")
-
-    await db.delete(objective)
-    await db.commit()
+    """Delete an objective by ID."""
+    await service.delete(objective_id)
     return None

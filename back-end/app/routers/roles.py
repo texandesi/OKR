@@ -1,14 +1,19 @@
-from fastapi import APIRouter, Depends, HTTPException, Query, Request
-from sqlalchemy import select, func
+"""Role router endpoints."""
+
+from fastapi import APIRouter, Depends, Query, Request
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.database import get_db
-from app.models.role import Role
-from app.schemas.role import RoleCreate, RoleUpdate, RoleResponse
-from app.routers.utils import paginate_response
 from app.config import settings
+from app.database import get_db
+from app.schemas.role import RoleCreate, RoleResponse, RoleUpdate
+from app.services.role import RoleService
 
 router = APIRouter(prefix="/roles", tags=["roles"])
+
+
+def get_service(db: AsyncSession = Depends(get_db)) -> RoleService:
+    """Dependency to get RoleService instance."""
+    return RoleService(db)
 
 
 @router.get("/", response_model=None)
@@ -19,81 +24,52 @@ async def list_roles(
     ordering: str | None = Query(None),
     name: str | None = Query(None),
     description: str | None = Query(None),
-    db: AsyncSession = Depends(get_db),
+    service: RoleService = Depends(get_service),
 ):
-    query = select(Role)
-    count_query = select(func.count()).select_from(Role)
-
-    if name:
-        query = query.where(Role.name.ilike(f"%{name}%"))
-        count_query = count_query.where(Role.name.ilike(f"%{name}%"))
-    if description:
-        query = query.where(Role.description.ilike(f"%{description}%"))
-        count_query = count_query.where(Role.description.ilike(f"%{description}%"))
-
-    if ordering:
-        if ordering.startswith("-"):
-            query = query.order_by(getattr(Role, ordering[1:]).desc())
-        else:
-            query = query.order_by(getattr(Role, ordering))
-    else:
-        query = query.order_by(Role.name)
-
-    total_count = await db.scalar(count_query)
-
-    offset = (page - 1) * page_size
-    query = query.offset(offset).limit(page_size)
-
-    result = await db.execute(query)
-    roles = result.scalars().all()
-
-    items = [RoleResponse.model_validate(role) for role in roles]
-    return paginate_response(request, items, total_count, page, page_size)
+    """List all roles with pagination, ordering, and filtering."""
+    filters = {"name": name, "description": description}
+    return await service.get_list(
+        request,
+        page=page,
+        page_size=page_size,
+        ordering=ordering,
+        filters=filters,
+    )
 
 
 @router.post("/", response_model=RoleResponse, status_code=201)
-async def create_role(role: RoleCreate, db: AsyncSession = Depends(get_db)):
-    db_role = Role(**role.model_dump())
-    db.add(db_role)
-    await db.commit()
-    await db.refresh(db_role)
-    return RoleResponse.model_validate(db_role)
+async def create_role(
+    role: RoleCreate,
+    service: RoleService = Depends(get_service),
+):
+    """Create a new role."""
+    return await service.create(role)
 
 
 @router.get("/{role_id}/", response_model=RoleResponse)
-async def get_role(role_id: int, db: AsyncSession = Depends(get_db)):
-    query = select(Role).where(Role.id == role_id)
-    result = await db.execute(query)
-    role = result.scalar_one_or_none()
-    if not role:
-        raise HTTPException(status_code=404, detail="Role not found")
-    return RoleResponse.model_validate(role)
+async def get_role(
+    role_id: int,
+    service: RoleService = Depends(get_service),
+):
+    """Get a role by ID."""
+    return await service.get_by_id(role_id)
 
 
 @router.put("/{role_id}/", response_model=RoleResponse)
-async def update_role(role_id: int, role_update: RoleUpdate, db: AsyncSession = Depends(get_db)):
-    query = select(Role).where(Role.id == role_id)
-    result = await db.execute(query)
-    role = result.scalar_one_or_none()
-    if not role:
-        raise HTTPException(status_code=404, detail="Role not found")
-
-    update_data = role_update.model_dump(exclude_unset=True)
-    for field, value in update_data.items():
-        setattr(role, field, value)
-
-    await db.commit()
-    await db.refresh(role)
-    return RoleResponse.model_validate(role)
+async def update_role(
+    role_id: int,
+    role_update: RoleUpdate,
+    service: RoleService = Depends(get_service),
+):
+    """Update an existing role."""
+    return await service.update(role_id, role_update)
 
 
 @router.delete("/{role_id}/", status_code=204)
-async def delete_role(role_id: int, db: AsyncSession = Depends(get_db)):
-    query = select(Role).where(Role.id == role_id)
-    result = await db.execute(query)
-    role = result.scalar_one_or_none()
-    if not role:
-        raise HTTPException(status_code=404, detail="Role not found")
-    await db.delete(role)
-    await db.commit()
+async def delete_role(
+    role_id: int,
+    service: RoleService = Depends(get_service),
+):
+    """Delete a role by ID."""
+    await service.delete(role_id)
     return None

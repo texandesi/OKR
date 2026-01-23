@@ -1,14 +1,19 @@
-from fastapi import APIRouter, Depends, HTTPException, Query, Request
-from sqlalchemy import select, func
+"""User router endpoints."""
+
+from fastapi import APIRouter, Depends, Query, Request
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.database import get_db
-from app.models.user import User
-from app.schemas.user import UserCreate, UserUpdate, UserResponse
-from app.routers.utils import paginate_response
 from app.config import settings
+from app.database import get_db
+from app.schemas.user import UserCreate, UserResponse, UserUpdate
+from app.services.user import UserService
 
 router = APIRouter(prefix="/users", tags=["users"])
+
+
+def get_service(db: AsyncSession = Depends(get_db)) -> UserService:
+    """Dependency to get UserService instance."""
+    return UserService(db)
 
 
 @router.get("/", response_model=None)
@@ -19,81 +24,52 @@ async def list_users(
     ordering: str | None = Query(None),
     name: str | None = Query(None),
     description: str | None = Query(None),
-    db: AsyncSession = Depends(get_db),
+    service: UserService = Depends(get_service),
 ):
-    query = select(User)
-    count_query = select(func.count()).select_from(User)
-
-    if name:
-        query = query.where(User.name.ilike(f"%{name}%"))
-        count_query = count_query.where(User.name.ilike(f"%{name}%"))
-    if description:
-        query = query.where(User.description.ilike(f"%{description}%"))
-        count_query = count_query.where(User.description.ilike(f"%{description}%"))
-
-    if ordering:
-        if ordering.startswith("-"):
-            query = query.order_by(getattr(User, ordering[1:]).desc())
-        else:
-            query = query.order_by(getattr(User, ordering))
-    else:
-        query = query.order_by(User.name)
-
-    total_count = await db.scalar(count_query)
-
-    offset = (page - 1) * page_size
-    query = query.offset(offset).limit(page_size)
-
-    result = await db.execute(query)
-    users = result.scalars().all()
-
-    items = [UserResponse.model_validate(user) for user in users]
-    return paginate_response(request, items, total_count, page, page_size)
+    """List all users with pagination, ordering, and filtering."""
+    filters = {"name": name, "description": description}
+    return await service.get_list(
+        request,
+        page=page,
+        page_size=page_size,
+        ordering=ordering,
+        filters=filters,
+    )
 
 
 @router.post("/", response_model=UserResponse, status_code=201)
-async def create_user(user: UserCreate, db: AsyncSession = Depends(get_db)):
-    db_user = User(**user.model_dump())
-    db.add(db_user)
-    await db.commit()
-    await db.refresh(db_user)
-    return UserResponse.model_validate(db_user)
+async def create_user(
+    user: UserCreate,
+    service: UserService = Depends(get_service),
+):
+    """Create a new user."""
+    return await service.create(user)
 
 
 @router.get("/{user_id}/", response_model=UserResponse)
-async def get_user(user_id: int, db: AsyncSession = Depends(get_db)):
-    query = select(User).where(User.id == user_id)
-    result = await db.execute(query)
-    user = result.scalar_one_or_none()
-    if not user:
-        raise HTTPException(status_code=404, detail="User not found")
-    return UserResponse.model_validate(user)
+async def get_user(
+    user_id: int,
+    service: UserService = Depends(get_service),
+):
+    """Get a user by ID."""
+    return await service.get_by_id(user_id)
 
 
 @router.put("/{user_id}/", response_model=UserResponse)
-async def update_user(user_id: int, user_update: UserUpdate, db: AsyncSession = Depends(get_db)):
-    query = select(User).where(User.id == user_id)
-    result = await db.execute(query)
-    user = result.scalar_one_or_none()
-    if not user:
-        raise HTTPException(status_code=404, detail="User not found")
-
-    update_data = user_update.model_dump(exclude_unset=True)
-    for field, value in update_data.items():
-        setattr(user, field, value)
-
-    await db.commit()
-    await db.refresh(user)
-    return UserResponse.model_validate(user)
+async def update_user(
+    user_id: int,
+    user_update: UserUpdate,
+    service: UserService = Depends(get_service),
+):
+    """Update an existing user."""
+    return await service.update(user_id, user_update)
 
 
 @router.delete("/{user_id}/", status_code=204)
-async def delete_user(user_id: int, db: AsyncSession = Depends(get_db)):
-    query = select(User).where(User.id == user_id)
-    result = await db.execute(query)
-    user = result.scalar_one_or_none()
-    if not user:
-        raise HTTPException(status_code=404, detail="User not found")
-    await db.delete(user)
-    await db.commit()
+async def delete_user(
+    user_id: int,
+    service: UserService = Depends(get_service),
+):
+    """Delete a user by ID."""
+    await service.delete(user_id)
     return None

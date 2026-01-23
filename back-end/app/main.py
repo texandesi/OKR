@@ -1,24 +1,32 @@
+"""FastAPI application entry point."""
+
 from contextlib import asynccontextmanager
 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from app.config import settings
+from app.core.logging import setup_logging
+from app.core.middleware import error_handler_middleware
 from app.database import create_tables
 from app.routers import (
-    objectives,
+    groups,
     keyresults,
     kpis,
-    users,
-    roles,
-    groups,
+    objectives,
     organizations,
     polls,
+    roles,
+    users,
 )
+
+# Configure logging at module load
+setup_logging()
 
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
+    """Application lifespan context manager."""
     # Startup: create database tables
     await create_tables()
     yield
@@ -31,6 +39,9 @@ app = FastAPI(
     version="1.0.0",
     lifespan=lifespan,
 )
+
+# Error handling middleware (must be added before other middleware)
+app.middleware("http")(error_handler_middleware)
 
 # CORS middleware
 if settings.cors_allow_all:
@@ -63,6 +74,7 @@ app.include_router(polls.router)
 
 @app.get("/")
 async def root():
+    """Root endpoint with API information."""
     return {
         "message": "Welcome to OKR API",
         "docs": "/docs",
@@ -72,4 +84,5 @@ async def root():
 
 @app.get("/health")
 async def health_check():
+    """Health check endpoint."""
     return {"status": "healthy"}

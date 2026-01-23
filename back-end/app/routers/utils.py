@@ -3,8 +3,6 @@ from typing import Any
 from fastapi import Request
 from pydantic import BaseModel
 
-from app.config import settings
-
 
 def build_pagination_urls(
     request: Request,

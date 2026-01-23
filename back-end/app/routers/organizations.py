@@ -1,14 +1,19 @@
-from fastapi import APIRouter, Depends, HTTPException, Query, Request
-from sqlalchemy import select, func
+"""Organization router endpoints."""
+
+from fastapi import APIRouter, Depends, Query, Request
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.database import get_db
-from app.models.organization import Organization
-from app.schemas.organization import OrganizationCreate, OrganizationUpdate, OrganizationResponse
-from app.routers.utils import paginate_response
 from app.config import settings
+from app.database import get_db
+from app.schemas.organization import OrganizationCreate, OrganizationResponse, OrganizationUpdate
+from app.services.organization import OrganizationService
 
 router = APIRouter(prefix="/organizations", tags=["organizations"])
+
+
+def get_service(db: AsyncSession = Depends(get_db)) -> OrganizationService:
+    """Dependency to get OrganizationService instance."""
+    return OrganizationService(db)
 
 
 @router.get("/", response_model=None)
@@ -19,81 +24,52 @@ async def list_organizations(
     ordering: str | None = Query(None),
     name: str | None = Query(None),
     description: str | None = Query(None),
-    db: AsyncSession = Depends(get_db),
+    service: OrganizationService = Depends(get_service),
 ):
-    query = select(Organization)
-    count_query = select(func.count()).select_from(Organization)
-
-    if name:
-        query = query.where(Organization.name.ilike(f"%{name}%"))
-        count_query = count_query.where(Organization.name.ilike(f"%{name}%"))
-    if description:
-        query = query.where(Organization.description.ilike(f"%{description}%"))
-        count_query = count_query.where(Organization.description.ilike(f"%{description}%"))
-
-    if ordering:
-        if ordering.startswith("-"):
-            query = query.order_by(getattr(Organization, ordering[1:]).desc())
-        else:
-            query = query.order_by(getattr(Organization, ordering))
-    else:
-        query = query.order_by(Organization.name)
-
-    total_count = await db.scalar(count_query)
-
-    offset = (page - 1) * page_size
-    query = query.offset(offset).limit(page_size)
-
-    result = await db.execute(query)
-    organizations = result.scalars().all()
-
-    items = [OrganizationResponse.model_validate(org) for org in organizations]
-    return paginate_response(request, items, total_count, page, page_size)
+    """List all organizations with pagination, ordering, and filtering."""
+    filters = {"name": name, "description": description}
+    return await service.get_list(
+        request,
+        page=page,
+        page_size=page_size,
+        ordering=ordering,
+        filters=filters,
+    )
 
 
 @router.post("/", response_model=OrganizationResponse, status_code=201)
-async def create_organization(organization: OrganizationCreate, db: AsyncSession = Depends(get_db)):
-    db_organization = Organization(**organization.model_dump())
-    db.add(db_organization)
-    await db.commit()
-    await db.refresh(db_organization)
-    return OrganizationResponse.model_validate(db_organization)
+async def create_organization(
+    organization: OrganizationCreate,
+    service: OrganizationService = Depends(get_service),
+):
+    """Create a new organization."""
+    return await service.create(organization)
 
 
 @router.get("/{organization_id}/", response_model=OrganizationResponse)
-async def get_organization(organization_id: int, db: AsyncSession = Depends(get_db)):
-    query = select(Organization).where(Organization.id == organization_id)
-    result = await db.execute(query)
-    organization = result.scalar_one_or_none()
-    if not organization:
-        raise HTTPException(status_code=404, detail="Organization not found")
-    return OrganizationResponse.model_validate(organization)
+async def get_organization(
+    organization_id: int,
+    service: OrganizationService = Depends(get_service),
+):
+    """Get an organization by ID."""
+    return await service.get_by_id(organization_id)
 
 
 @router.put("/{organization_id}/", response_model=OrganizationResponse)
-async def update_organization(organization_id: int, organization_update: OrganizationUpdate, db: AsyncSession = Depends(get_db)):
-    query = select(Organization).where(Organization.id == organization_id)
-    result = await db.execute(query)
-    organization = result.scalar_one_or_none()
-    if not organization:
-        raise HTTPException(status_code=404, detail="Organization not found")
-
-    update_data = organization_update.model_dump(exclude_unset=True)
-    for field, value in update_data.items():
-        setattr(organization, field, value)
-
-    await db.commit()
-    await db.refresh(organization)
-    return OrganizationResponse.model_validate(organization)
+async def update_organization(
+    organization_id: int,
+    organization_update: OrganizationUpdate,
+    service: OrganizationService = Depends(get_service),
+):
+    """Update an existing organization."""
+    return await service.update(organization_id, organization_update)
 
 
 @router.delete("/{organization_id}/", status_code=204)
-async def delete_organization(organization_id: int, db: AsyncSession = Depends(get_db)):
-    query = select(Organization).where(Organization.id == organization_id)
-    result = await db.execute(query)
-    organization = result.scalar_one_or_none()
-    if not organization:
-        raise HTTPException(status_code=404, detail="Organization not found")
-    await db.delete(organization)
-    await db.commit()
+async def delete_organization(
+    organization_id: int,
+    service: OrganizationService = Depends(get_service),
+):
+    """Delete an organization by ID."""
+    await service.delete(organization_id)
     return None

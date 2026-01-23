@@ -1,14 +1,19 @@
-from fastapi import APIRouter, Depends, HTTPException, Query, Request
-from sqlalchemy import select, func
+"""Group router endpoints."""
+
+from fastapi import APIRouter, Depends, Query, Request
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.database import get_db
-from app.models.group import Group
-from app.schemas.group import GroupCreate, GroupUpdate, GroupResponse
-from app.routers.utils import paginate_response
 from app.config import settings
+from app.database import get_db
+from app.schemas.group import GroupCreate, GroupResponse, GroupUpdate
+from app.services.group import GroupService
 
 router = APIRouter(prefix="/groups", tags=["groups"])
+
+
+def get_service(db: AsyncSession = Depends(get_db)) -> GroupService:
+    """Dependency to get GroupService instance."""
+    return GroupService(db)
 
 
 @router.get("/", response_model=None)
@@ -19,81 +24,52 @@ async def list_groups(
     ordering: str | None = Query(None),
     name: str | None = Query(None),
     description: str | None = Query(None),
-    db: AsyncSession = Depends(get_db),
+    service: GroupService = Depends(get_service),
 ):
-    query = select(Group)
-    count_query = select(func.count()).select_from(Group)
-
-    if name:
-        query = query.where(Group.name.ilike(f"%{name}%"))
-        count_query = count_query.where(Group.name.ilike(f"%{name}%"))
-    if description:
-        query = query.where(Group.description.ilike(f"%{description}%"))
-        count_query = count_query.where(Group.description.ilike(f"%{description}%"))
-
-    if ordering:
-        if ordering.startswith("-"):
-            query = query.order_by(getattr(Group, ordering[1:]).desc())
-        else:
-            query = query.order_by(getattr(Group, ordering))
-    else:
-        query = query.order_by(Group.name)
-
-    total_count = await db.scalar(count_query)
-
-    offset = (page - 1) * page_size
-    query = query.offset(offset).limit(page_size)
-
-    result = await db.execute(query)
-    groups = result.scalars().all()
-
-    items = [GroupResponse.model_validate(group) for group in groups]
-    return paginate_response(request, items, total_count, page, page_size)
+    """List all groups with pagination, ordering, and filtering."""
+    filters = {"name": name, "description": description}
+    return await service.get_list(
+        request,
+        page=page,
+        page_size=page_size,
+        ordering=ordering,
+        filters=filters,
+    )
 
 
 @router.post("/", response_model=GroupResponse, status_code=201)
-async def create_group(group: GroupCreate, db: AsyncSession = Depends(get_db)):
-    db_group = Group(**group.model_dump())
-    db.add(db_group)
-    await db.commit()
-    await db.refresh(db_group)
-    return GroupResponse.model_validate(db_group)
+async def create_group(
+    group: GroupCreate,
+    service: GroupService = Depends(get_service),
+):
+    """Create a new group."""
+    return await service.create(group)
 
 
 @router.get("/{group_id}/", response_model=GroupResponse)
-async def get_group(group_id: int, db: AsyncSession = Depends(get_db)):
-    query = select(Group).where(Group.id == group_id)
-    result = await db.execute(query)
-    group = result.scalar_one_or_none()
-    if not group:
-        raise HTTPException(status_code=404, detail="Group not found")
-    return GroupResponse.model_validate(group)
+async def get_group(
+    group_id: int,
+    service: GroupService = Depends(get_service),
+):
+    """Get a group by ID."""
+    return await service.get_by_id(group_id)
 
 
 @router.put("/{group_id}/", response_model=GroupResponse)
-async def update_group(group_id: int, group_update: GroupUpdate, db: AsyncSession = Depends(get_db)):
-    query = select(Group).where(Group.id == group_id)
-    result = await db.execute(query)
-    group = result.scalar_one_or_none()
-    if not group:
-        raise HTTPException(status_code=404, detail="Group not found")
-
-    update_data = group_update.model_dump(exclude_unset=True)
-    for field, value in update_data.items():
-        setattr(group, field, value)
-
-    await db.commit()
-    await db.refresh(group)
-    return GroupResponse.model_validate(group)
+async def update_group(
+    group_id: int,
+    group_update: GroupUpdate,
+    service: GroupService = Depends(get_service),
+):
+    """Update an existing group."""
+    return await service.update(group_id, group_update)
 
 
 @router.delete("/{group_id}/", status_code=204)
-async def delete_group(group_id: int, db: AsyncSession = Depends(get_db)):
-    query = select(Group).where(Group.id == group_id)
-    result = await db.execute(query)
-    group = result.scalar_one_or_none()
-    if not group:
-        raise HTTPException(status_code=404, detail="Group not found")
-    await db.delete(group)
-    await db.commit()
+async def delete_group(
+    group_id: int,
+    service: GroupService = Depends(get_service),
+):
+    """Delete a group by ID."""
+    await service.delete(group_id)
     return None
