@@ -12,6 +12,7 @@ dependencies = [
     "pydantic>=2.0.0",
     "pydantic-settings>=2.0.0",
     "python-multipart>=0.0.6",
+    "urllib3>=2.6.3",
 ]
 
 [dependency-groups]
@@ -43,3 +44,7 @@ ignore_missing_imports = true
 [tool.pytest.ini_options]
 asyncio_mode = "auto"
 testpaths = ["tests"]
+
+[tool.uv]
+# Always use project-local virtual environment
+python-preference = "only-managed"
