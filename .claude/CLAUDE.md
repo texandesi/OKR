@@ -63,3 +63,7 @@ mypy src/                   # Type checking
 3. Include brief explanations for non-obvious code decisions
 4. Flag potential security concerns or performance issues
 5. Prefer simple solutions over clever ones
+
+# Starting and stopping the server
+
+- The scripts to start and stop the server are in the scripts folder of this project. start.sh starts the servers and stop.sh stops them
