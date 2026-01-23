@@ -26,6 +26,8 @@ import type {
   EmojiType,
   ReactionResponse,
   KeyResultReactions,
+  GroupStreakResponse,
+  StreakCheckResponse,
 } from "../types";
 
 const API_BASE_URL = "http://127.0.0.1:8000";
@@ -176,6 +178,14 @@ const membershipApi = {
     }),
 };
 
+// Streaks API
+const streaksApi = {
+  get: (groupId: number): Promise<GroupStreakResponse> =>
+    request(`/groups/${groupId}/streak`),
+  check: (groupId: number): Promise<StreakCheckResponse> =>
+    request(`/groups/${groupId}/streak/check`, { method: "POST" }),
+};
+
 // Reactions API
 const reactionsApi = {
   toggle: (
@@ -240,4 +250,5 @@ export const api = {
   memberships: membershipApi,
   ownership: ownershipApi,
   reactions: reactionsApi,
+  streaks: streaksApi,
 };

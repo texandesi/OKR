@@ -21,6 +21,7 @@ from app.routers import (
     polls,
     reactions,
     roles,
+    streaks,
     users,
 )
 
@@ -77,6 +78,7 @@ app.include_router(memberships.router)
 app.include_router(ownership.router)
 app.include_router(polls.router)
 app.include_router(reactions.router)
+app.include_router(streaks.router)
 
 
 @app.get("/")

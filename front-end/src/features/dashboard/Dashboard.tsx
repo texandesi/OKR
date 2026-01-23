@@ -3,6 +3,7 @@ import { api } from "@/api/client";
 import { Target, KeyRound, BarChart3, Users } from "lucide-react";
 import { StatCard } from "@/components/StatCard";
 import { OverallProgressCard } from "@/components/OverallProgressCard";
+import { StreakBanner } from "@/components/StreakBanner";
 import type { KeyResult } from "@/types";
 
 function getGreeting(): string {
@@ -40,6 +41,11 @@ export function Dashboard() {
   const { data: users, isLoading: usersLoading } = useQuery({
     queryKey: ["users", { pageSize: 1 }],
     queryFn: () => api.users.list({ pageSize: 1 }),
+  });
+
+  const { data: groups } = useQuery({
+    queryKey: ["groups", { pageSize: 10 }],
+    queryFn: () => api.groups.list({ pageSize: 10 }),
   });
 
   const isLoading = objectivesLoading || keyresultsLoading || kpisLoading || usersLoading;
@@ -132,6 +138,24 @@ export function Dashboard() {
             Create objectives and key results to start tracking your progress.
           </p>
         </div>
+      )}
+
+      {/* Group Streaks */}
+      {groups && groups.results.length > 0 && (
+        <section className="space-y-4">
+          <h2 className="text-sm font-medium uppercase tracking-wider text-muted-foreground">
+            Group Streaks
+          </h2>
+          <div className="grid gap-4 md:grid-cols-2">
+            {groups.results.slice(0, 4).map((group) => (
+              <StreakBanner
+                key={group.id}
+                groupId={group.id}
+                className="animate-fade-in-up"
+              />
+            ))}
+          </div>
+        </section>
       )}
 
       {/* Stats Grid */}

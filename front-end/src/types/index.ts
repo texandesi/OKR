@@ -246,3 +246,22 @@ export interface KeyResultReactions {
   reactions: ReactionSummary[];
   totalCount: number;
 }
+
+// Streak types
+export interface GroupStreakResponse {
+  id: number;
+  groupId: number;
+  groupName: string;
+  currentStreak: number;
+  longestStreak: number;
+  lastActivityDate: string | null;
+  streakStartedAt: string | null;
+  isActiveToday: boolean;
+}
+
+export interface StreakCheckResponse {
+  groupId: number;
+  currentStreak: number;
+  streakIncreased: boolean;
+  message: string;
+}

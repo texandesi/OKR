@@ -10,6 +10,7 @@ from app.models.associations import (
     user_roles,
 )
 from app.models.group import Group
+from app.models.group_streak import GroupStreak
 from app.models.keyresult import KeyResult
 from app.models.kpi import Kpi
 from app.models.objective import Objective
@@ -26,6 +27,7 @@ __all__ = [
     "User",
     "Role",
     "Group",
+    "GroupStreak",
     "Organization",
     "Question",
     "Choice",
