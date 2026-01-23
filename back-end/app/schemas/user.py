@@ -1,4 +1,4 @@
-from pydantic import BaseModel, ConfigDict
+from pydantic import BaseModel, ConfigDict, Field
 
 
 class UserBase(BaseModel):
@@ -13,12 +13,6 @@ class UserCreate(UserBase):
 class UserUpdate(BaseModel):
     name: str | None = None
     description: str | None = None
-
-
-class UserResponse(UserBase):
-    id: int
-
-    model_config = ConfigDict(from_attributes=True)
 
 
 # Lightweight reference for nested responses
@@ -43,11 +37,15 @@ class OrganizationRef(BaseModel):
     model_config = ConfigDict(from_attributes=True)
 
 
-# Detailed response with relationships
-class UserDetailResponse(UserBase):
+# Main response with relationships
+class UserResponse(UserBase):
     id: int
-    roles: list[RoleRef] = []
-    groups: list[GroupRef] = []
-    organizations: list[OrganizationRef] = []
+    roles: list[RoleRef] = Field(default_factory=list)
+    groups: list[GroupRef] = Field(default_factory=list)
+    organizations: list[OrganizationRef] = Field(default_factory=list)
 
     model_config = ConfigDict(from_attributes=True)
+
+
+# Alias for backwards compatibility
+UserDetailResponse = UserResponse

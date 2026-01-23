@@ -20,6 +20,7 @@ from app.routers import (
     ownership,
     polls,
     reactions,
+    recurring,
     roles,
     streaks,
     users,
@@ -78,6 +79,7 @@ app.include_router(memberships.router)
 app.include_router(ownership.router)
 app.include_router(polls.router)
 app.include_router(reactions.router)
+app.include_router(recurring.router)
 app.include_router(streaks.router)
 
 

@@ -28,6 +28,11 @@ import type {
   KeyResultReactions,
   GroupStreakResponse,
   StreakCheckResponse,
+  RecurringScheduleCreate,
+  RecurringScheduleUpdate,
+  RecurringScheduleResponse,
+  DueTodayItem,
+  RegenerateResponse,
 } from "../types";
 
 const API_BASE_URL = "http://127.0.0.1:8000";
@@ -204,6 +209,36 @@ const reactionsApi = {
     request(`/key-results/${keyResultId}/reactions`),
 };
 
+// Recurring API
+const recurringApi = {
+  create: (
+    keyResultId: number,
+    data: RecurringScheduleCreate
+  ): Promise<RecurringScheduleResponse> =>
+    request(`/recurring/keyresults/${keyResultId}`, {
+      method: "POST",
+      body: JSON.stringify(data),
+    }),
+  get: (keyResultId: number): Promise<RecurringScheduleResponse | null> =>
+    request(`/recurring/keyresults/${keyResultId}`),
+  update: (
+    keyResultId: number,
+    data: RecurringScheduleUpdate
+  ): Promise<RecurringScheduleResponse> =>
+    request(`/recurring/keyresults/${keyResultId}`, {
+      method: "PATCH",
+      body: JSON.stringify(data),
+    }),
+  delete: (keyResultId: number): Promise<void> =>
+    request(`/recurring/keyresults/${keyResultId}`, { method: "DELETE" }),
+  getDueToday: (groupId?: number): Promise<DueTodayItem[]> =>
+    request(`/recurring/due-today${groupId ? `?group_id=${groupId}` : ""}`),
+  getGroupSchedules: (groupId: number): Promise<RecurringScheduleResponse[]> =>
+    request(`/recurring/groups/${groupId}`),
+  regenerate: (): Promise<RegenerateResponse> =>
+    request("/recurring/regenerate", { method: "POST" }),
+};
+
 // Ownership API
 const ownershipApi = {
   addOwner: (
@@ -250,5 +285,6 @@ export const api = {
   memberships: membershipApi,
   ownership: ownershipApi,
   reactions: reactionsApi,
+  recurring: recurringApi,
   streaks: streaksApi,
 };

@@ -25,7 +25,7 @@ class Reaction(Base):
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
     key_result_id: Mapped[int] = mapped_column(
-        Integer, ForeignKey("keyresults.id", ondelete="CASCADE"), nullable=False
+        Integer, ForeignKey("key_results.id", ondelete="CASCADE"), nullable=False
     )
     user_id: Mapped[int] = mapped_column(
         Integer, ForeignKey("users.id", ondelete="CASCADE"), nullable=False

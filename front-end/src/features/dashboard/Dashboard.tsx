@@ -4,6 +4,7 @@ import { Target, KeyRound, BarChart3, Users } from "lucide-react";
 import { StatCard } from "@/components/StatCard";
 import { OverallProgressCard } from "@/components/OverallProgressCard";
 import { StreakBanner } from "@/components/StreakBanner";
+import { DueTodayCard } from "@/components/DueTodayCard";
 import type { KeyResult } from "@/types";
 
 function getGreeting(): string {
@@ -140,23 +141,26 @@ export function Dashboard() {
         </div>
       )}
 
-      {/* Group Streaks */}
-      {groups && groups.results.length > 0 && (
-        <section className="space-y-4">
-          <h2 className="text-sm font-medium uppercase tracking-wider text-muted-foreground">
-            Group Streaks
-          </h2>
-          <div className="grid gap-4 md:grid-cols-2">
-            {groups.results.slice(0, 4).map((group) => (
-              <StreakBanner
-                key={group.id}
-                groupId={group.id}
-                className="animate-fade-in-up"
-              />
-            ))}
-          </div>
-        </section>
-      )}
+      {/* Due Today & Group Streaks */}
+      <section className="space-y-4">
+        <h2 className="text-sm font-medium uppercase tracking-wider text-muted-foreground">
+          Activity
+        </h2>
+        <div className="grid gap-4 md:grid-cols-2">
+          <DueTodayCard className="animate-fade-in-up" />
+          {groups && groups.results.length > 0 && (
+            <div className="space-y-4">
+              {groups.results.slice(0, 2).map((group) => (
+                <StreakBanner
+                  key={group.id}
+                  groupId={group.id}
+                  className="animate-fade-in-up"
+                />
+              ))}
+            </div>
+          )}
+        </div>
+      </section>
 
       {/* Stats Grid */}
       <section className="space-y-4">

@@ -22,14 +22,6 @@ class GroupUpdate(BaseModel):
     model_config = ConfigDict(populate_by_name=True)
 
 
-class GroupResponse(GroupBase):
-    id: int
-    parent_id: int | None = Field(default=None, serialization_alias="parentId")
-    owner_id: int | None = Field(default=None, serialization_alias="ownerId")
-
-    model_config = ConfigDict(from_attributes=True, populate_by_name=True)
-
-
 # Lightweight reference for nested responses
 class GroupRef(BaseModel):
     id: int
@@ -52,17 +44,39 @@ class RoleRef(BaseModel):
     model_config = ConfigDict(from_attributes=True)
 
 
-# Detailed response with relationships
+class OrganizationRef(BaseModel):
+    id: int
+    name: str
+
+    model_config = ConfigDict(from_attributes=True)
+
+
+# Main response with relationships
+class GroupResponse(GroupBase):
+    id: int
+    parent_id: int | None = Field(default=None, serialization_alias="parentId")
+    owner_id: int | None = Field(default=None, serialization_alias="ownerId")
+    parent: GroupRef | None = None
+    owner: UserRef | None = None
+    users: list[UserRef] = Field(default_factory=list)
+    roles: list[RoleRef] = Field(default_factory=list)
+    organizations: list[OrganizationRef] = Field(default_factory=list)
+
+    model_config = ConfigDict(from_attributes=True, populate_by_name=True)
+
+
+# Detailed response with full relationships (includes children and delegates)
 class GroupDetailResponse(GroupBase):
     id: int
     parent_id: int | None = Field(default=None, serialization_alias="parentId")
     owner_id: int | None = Field(default=None, serialization_alias="ownerId")
     parent: GroupRef | None = None
     owner: UserRef | None = None
-    children: list[GroupRef] = []
-    delegates: list[UserRef] = []
-    users: list[UserRef] = []
-    roles: list[RoleRef] = []
+    children: list[GroupRef] = Field(default_factory=list)
+    delegates: list[UserRef] = Field(default_factory=list)
+    users: list[UserRef] = Field(default_factory=list)
+    roles: list[RoleRef] = Field(default_factory=list)
+    organizations: list[OrganizationRef] = Field(default_factory=list)
 
     model_config = ConfigDict(from_attributes=True, populate_by_name=True)
 

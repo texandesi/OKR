@@ -105,10 +105,35 @@ export interface KpiCreate {
   description: string;
 }
 
+// Lightweight reference types for nested relationships
+export interface UserRef {
+  id: number;
+  name: string;
+}
+
+export interface RoleRef {
+  id: number;
+  name: string;
+}
+
+export interface GroupRef {
+  id: number;
+  name: string;
+}
+
+export interface OrganizationRef {
+  id: number;
+  name: string;
+}
+
+// Full entity types with relationships
 export interface User {
   id: number;
   name: string;
   description: string;
+  roles?: RoleRef[];
+  groups?: GroupRef[];
+  organizations?: OrganizationRef[];
 }
 
 export interface UserCreate {
@@ -120,6 +145,8 @@ export interface Role {
   id: number;
   name: string;
   description: string;
+  users?: UserRef[];
+  groups?: GroupRef[];
 }
 
 export interface RoleCreate {
@@ -131,17 +158,30 @@ export interface Group {
   id: number;
   name: string;
   description: string;
+  parentId?: number | null;
+  ownerId?: number | null;
+  parent?: GroupRef | null;
+  owner?: UserRef | null;
+  children?: GroupRef[];
+  delegates?: UserRef[];
+  users?: UserRef[];
+  roles?: RoleRef[];
+  organizations?: OrganizationRef[];
 }
 
 export interface GroupCreate {
   name: string;
   description: string;
+  parentId?: number | null;
+  ownerId?: number | null;
 }
 
 export interface Organization {
   id: number;
   name: string;
   description: string;
+  users?: UserRef[];
+  groups?: GroupRef[];
 }
 
 export interface OrganizationCreate {
@@ -266,5 +306,50 @@ export interface StreakCheckResponse {
   groupId: number;
   currentStreak: number;
   streakIncreased: boolean;
+  message: string;
+}
+
+// Recurring schedule types
+export type Frequency = "daily" | "weekly" | "monthly";
+
+export interface RecurringScheduleCreate {
+  frequency: Frequency;
+  rotationEnabled?: boolean;
+  rotationUsers?: number[];
+  nextDueDate: string;
+}
+
+export interface RecurringScheduleUpdate {
+  frequency?: Frequency;
+  rotationEnabled?: boolean;
+  rotationUsers?: number[];
+  nextDueDate?: string;
+}
+
+export interface RecurringScheduleResponse {
+  id: number;
+  keyResultId: number;
+  keyResultName: string;
+  frequency: Frequency;
+  rotationEnabled: boolean;
+  rotationUsers: number[] | null;
+  currentRotationIndex: number;
+  nextDueDate: string;
+  lastGeneratedAt: string | null;
+  currentAssigneeId: number | null;
+}
+
+export interface DueTodayItem {
+  keyResultId: number;
+  keyResultName: string;
+  objectiveName: string;
+  frequency: Frequency;
+  assigneeId: number | null;
+  assigneeName: string | null;
+}
+
+export interface RegenerateResponse {
+  regeneratedCount: number;
+  rotatedCount: number;
   message: string;
 }
