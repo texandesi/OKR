@@ -1,5 +1,7 @@
 """User router endpoints."""
 
+from typing import Any
+
 from fastapi import APIRouter, Depends, Query, Request
 from sqlalchemy.ext.asyncio import AsyncSession
 
@@ -25,7 +27,7 @@ async def list_users(
     name: str | None = Query(None),
     description: str | None = Query(None),
     service: UserService = Depends(get_service),
-):
+) -> dict[str, Any]:
     """List all users with pagination, ordering, and filtering."""
     filters = {"name": name, "description": description}
     return await service.get_list(
@@ -41,7 +43,7 @@ async def list_users(
 async def create_user(
     user: UserCreate,
     service: UserService = Depends(get_service),
-):
+) -> UserResponse:
     """Create a new user."""
     return await service.create(user)
 
@@ -50,7 +52,7 @@ async def create_user(
 async def get_user(
     user_id: int,
     service: UserService = Depends(get_service),
-):
+) -> UserResponse:
     """Get a user by ID."""
     return await service.get_by_id(user_id)
 
@@ -60,7 +62,7 @@ async def update_user(
     user_id: int,
     user_update: UserUpdate,
     service: UserService = Depends(get_service),
-):
+) -> UserResponse:
     """Update an existing user."""
     return await service.update(user_id, user_update)
 
@@ -69,7 +71,6 @@ async def update_user(
 async def delete_user(
     user_id: int,
     service: UserService = Depends(get_service),
-):
+) -> None:
     """Delete a user by ID."""
     await service.delete(user_id)
-    return None

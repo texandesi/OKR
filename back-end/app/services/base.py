@@ -1,6 +1,6 @@
 """Base service with generic CRUD operations."""
 
-from typing import Any, Generic, TypeVar
+from typing import Any, ClassVar, Generic, TypeVar
 
 from fastapi import Request
 from pydantic import BaseModel
@@ -26,12 +26,13 @@ class BaseService(Generic[ModelType, CreateSchemaType, UpdateSchemaType, Respons
     - _validate_create/_validate_update/_validate_delete: For custom validation.
     """
 
-    repository_class: type[BaseRepository[ModelType, CreateSchemaType, UpdateSchemaType]]
-    response_schema: type[ResponseSchemaType]
+    repository_class: ClassVar[type[BaseRepository[Any, Any, Any]]]
+    response_schema: ClassVar[type[BaseModel]]
 
     def __init__(self, db: AsyncSession) -> None:
         self.db = db
-        self.repository = self.repository_class(db)
+        # Concrete repository classes have __init__(db: AsyncSession), so this call is valid at runtime
+        self.repository: BaseRepository[ModelType, CreateSchemaType, UpdateSchemaType] = self.repository_class(db)  # type: ignore[arg-type, call-arg]
 
     def _to_response(self, instance: ModelType) -> ResponseSchemaType:
         """Convert model instance to response schema.
@@ -44,7 +45,7 @@ class BaseService(Generic[ModelType, CreateSchemaType, UpdateSchemaType, Respons
         Returns:
             Response schema instance.
         """
-        return self.response_schema.model_validate(instance)
+        return self.response_schema.model_validate(instance)  # type: ignore[return-value]
 
     async def _validate_create(self, data: CreateSchemaType) -> None:
         """Validate data before creation.

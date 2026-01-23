@@ -3,7 +3,7 @@
 from typing import Any
 
 
-class AppException(Exception):
+class AppError(Exception):
     """Base exception for all application errors.
 
     Attributes:
@@ -35,7 +35,7 @@ class AppException(Exception):
         }
 
 
-class NotFoundError(AppException):
+class NotFoundError(AppError):
     """Resource not found (404)."""
 
     def __init__(
@@ -44,7 +44,7 @@ class NotFoundError(AppException):
         resource_id: int | str | None = None,
         message: str | None = None,
     ) -> None:
-        details = {"resource": resource}
+        details: dict[str, Any] = {"resource": resource}
         if resource_id is not None:
             details["id"] = resource_id
 
@@ -62,7 +62,7 @@ class NotFoundError(AppException):
         )
 
 
-class ValidationError(AppException):
+class ValidationError(AppError):
     """Validation error (400)."""
 
     def __init__(
@@ -85,7 +85,7 @@ class ValidationError(AppException):
         )
 
 
-class DatabaseError(AppException):
+class DatabaseError(AppError):
     """Database operation failure (500)."""
 
     def __init__(
@@ -105,7 +105,7 @@ class DatabaseError(AppException):
         )
 
 
-class IntegrityError(AppException):
+class IntegrityError(AppError):
     """Database constraint violation (409)."""
 
     def __init__(
@@ -125,7 +125,7 @@ class IntegrityError(AppException):
         )
 
 
-class InvalidFieldError(AppException):
+class InvalidFieldError(AppError):
     """Invalid field for ordering or filtering (400)."""
 
     def __init__(

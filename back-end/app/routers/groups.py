@@ -1,5 +1,7 @@
 """Group router endpoints."""
 
+from typing import Any
+
 from fastapi import APIRouter, Depends, Query, Request
 from sqlalchemy.ext.asyncio import AsyncSession
 
@@ -25,7 +27,7 @@ async def list_groups(
     name: str | None = Query(None),
     description: str | None = Query(None),
     service: GroupService = Depends(get_service),
-):
+) -> dict[str, Any]:
     """List all groups with pagination, ordering, and filtering."""
     filters = {"name": name, "description": description}
     return await service.get_list(
@@ -41,7 +43,7 @@ async def list_groups(
 async def create_group(
     group: GroupCreate,
     service: GroupService = Depends(get_service),
-):
+) -> GroupResponse:
     """Create a new group."""
     return await service.create(group)
 
@@ -50,7 +52,7 @@ async def create_group(
 async def get_group(
     group_id: int,
     service: GroupService = Depends(get_service),
-):
+) -> GroupResponse:
     """Get a group by ID."""
     return await service.get_by_id(group_id)
 
@@ -60,7 +62,7 @@ async def update_group(
     group_id: int,
     group_update: GroupUpdate,
     service: GroupService = Depends(get_service),
-):
+) -> GroupResponse:
     """Update an existing group."""
     return await service.update(group_id, group_update)
 
@@ -69,7 +71,6 @@ async def update_group(
 async def delete_group(
     group_id: int,
     service: GroupService = Depends(get_service),
-):
+) -> None:
     """Delete a group by ID."""
     await service.delete(group_id)
-    return None

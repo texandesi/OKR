@@ -1,6 +1,6 @@
 """Base repository with generic CRUD operations."""
 
-from typing import Any, Generic, TypeVar
+from typing import Any, Generic, TypeVar, cast
 
 from pydantic import BaseModel
 from sqlalchemy import Select, func, select
@@ -49,6 +49,11 @@ class BaseRepository(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
         """Get human-readable model name for error messages."""
         return self.model.__name__
 
+    @property
+    def _id_column(self) -> InstrumentedAttribute[int]:
+        """Get the id column for the model."""
+        return cast(InstrumentedAttribute[int], getattr(self.model, "id"))
+
     def _validate_order_field(self, field: str) -> str:
         """Validate ordering field against whitelist.
 
@@ -79,7 +84,7 @@ class BaseRepository(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
         Returns:
             SQLAlchemy column attribute.
         """
-        return getattr(self.model, field)
+        return cast(InstrumentedAttribute[Any], getattr(self.model, field))
 
     def _apply_ordering(self, query: Select[tuple[ModelType]], ordering: str | None) -> Select[tuple[ModelType]]:
         """Apply ordering to query.
@@ -198,7 +203,7 @@ class BaseRepository(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
         Raises:
             NotFoundError: If item not found.
         """
-        query = select(self.model).where(self.model.id == id)
+        query = select(self.model).where(self._id_column == id)  # type: ignore[arg-type]
         result = await self.db.execute(query)
         item = result.scalar_one_or_none()
         if not item:
@@ -305,6 +310,6 @@ class BaseRepository(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
         Returns:
             True if item exists, False otherwise.
         """
-        query = select(func.count()).select_from(self.model).where(self.model.id == id)
+        query = select(func.count()).select_from(self.model).where(self._id_column == id)  # type: ignore[arg-type]
         count = await self.db.scalar(query)
         return bool(count and count > 0)

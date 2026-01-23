@@ -1,6 +1,6 @@
 """Choice service for polls."""
 
-from typing import Any
+from typing import Any, cast
 
 from fastapi import Request
 
@@ -40,7 +40,7 @@ class ChoiceService(BaseService[Choice, ChoiceCreate, ChoiceUpdate, ChoiceRespon
         Returns:
             Paginated response dictionary.
         """
-        repo: ChoiceRepository = self.repository
+        repo = cast(ChoiceRepository, self.repository)
         items, total_count = await repo.get_list(
             page=page,
             page_size=page_size,

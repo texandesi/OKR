@@ -1,5 +1,7 @@
 """KPI router endpoints."""
 
+from typing import Any
+
 from fastapi import APIRouter, Depends, Query, Request
 from sqlalchemy.ext.asyncio import AsyncSession
 
@@ -25,7 +27,7 @@ async def list_kpis(
     name: str | None = Query(None),
     description: str | None = Query(None),
     service: KPIService = Depends(get_service),
-):
+) -> dict[str, Any]:
     """List all KPIs with pagination, ordering, and filtering."""
     filters = {"name": name, "description": description}
     return await service.get_list(
@@ -41,7 +43,7 @@ async def list_kpis(
 async def create_kpi(
     kpi: KpiCreate,
     service: KPIService = Depends(get_service),
-):
+) -> KpiResponse:
     """Create a new KPI."""
     return await service.create(kpi)
 
@@ -50,7 +52,7 @@ async def create_kpi(
 async def get_kpi(
     kpi_id: int,
     service: KPIService = Depends(get_service),
-):
+) -> KpiResponse:
     """Get a KPI by ID."""
     return await service.get_by_id(kpi_id)
 
@@ -60,7 +62,7 @@ async def update_kpi(
     kpi_id: int,
     kpi_update: KpiUpdate,
     service: KPIService = Depends(get_service),
-):
+) -> KpiResponse:
     """Update an existing KPI."""
     return await service.update(kpi_id, kpi_update)
 
@@ -69,7 +71,6 @@ async def update_kpi(
 async def delete_kpi(
     kpi_id: int,
     service: KPIService = Depends(get_service),
-):
+) -> None:
     """Delete a KPI by ID."""
     await service.delete(kpi_id)
-    return None

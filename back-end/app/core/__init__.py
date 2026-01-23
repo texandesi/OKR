@@ -1,7 +1,7 @@
 """Core application components: exceptions, logging, and middleware."""
 
 from app.core.exceptions import (
-    AppException,
+    AppError,
     DatabaseError,
     IntegrityError,
     InvalidFieldError,
@@ -10,7 +10,7 @@ from app.core.exceptions import (
 )
 
 __all__ = [
-    "AppException",
+    "AppError",
     "NotFoundError",
     "ValidationError",
     "DatabaseError",

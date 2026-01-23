@@ -1,5 +1,7 @@
 """KeyResult router endpoints."""
 
+from typing import Any
+
 from fastapi import APIRouter, Depends, Query, Request
 from sqlalchemy.ext.asyncio import AsyncSession
 
@@ -25,7 +27,7 @@ async def list_keyresults(
     name: str | None = Query(None),
     description: str | None = Query(None),
     service: KeyResultService = Depends(get_service),
-):
+) -> dict[str, Any]:
     """List all key results with pagination, ordering, and filtering."""
     filters = {"name": name, "description": description}
     return await service.get_list(
@@ -41,7 +43,7 @@ async def list_keyresults(
 async def create_keyresult(
     keyresult: KeyResultCreate,
     service: KeyResultService = Depends(get_service),
-):
+) -> KeyResultResponse:
     """Create a new key result."""
     return await service.create(keyresult)
 
@@ -50,7 +52,7 @@ async def create_keyresult(
 async def get_keyresult(
     keyresult_id: int,
     service: KeyResultService = Depends(get_service),
-):
+) -> KeyResultResponse:
     """Get a key result by ID."""
     return await service.get_by_id(keyresult_id)
 
@@ -60,7 +62,7 @@ async def update_keyresult(
     keyresult_id: int,
     keyresult_update: KeyResultUpdate,
     service: KeyResultService = Depends(get_service),
-):
+) -> KeyResultResponse:
     """Update an existing key result."""
     return await service.update(keyresult_id, keyresult_update)
 
@@ -69,7 +71,6 @@ async def update_keyresult(
 async def delete_keyresult(
     keyresult_id: int,
     service: KeyResultService = Depends(get_service),
-):
+) -> None:
     """Delete a key result by ID."""
     await service.delete(keyresult_id)
-    return None

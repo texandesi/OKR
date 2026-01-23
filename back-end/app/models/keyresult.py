@@ -1,7 +1,14 @@
+from __future__ import annotations
+
+from typing import TYPE_CHECKING
+
 from sqlalchemy import Float, ForeignKey, Integer, String
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from app.database import Base
+
+if TYPE_CHECKING:
+    from app.models.objective import Objective
 
 
 class KeyResult(Base):
@@ -16,7 +23,7 @@ class KeyResult(Base):
     current_value: Mapped[float | None] = mapped_column(Float, nullable=True, default=0.0)
     unit: Mapped[str | None] = mapped_column(String(20), nullable=True, default="%")
 
-    objective: Mapped["Objective"] = relationship("Objective", back_populates="keyresults")
+    objective: Mapped[Objective] = relationship("Objective", back_populates="keyresults")
 
     @property
     def progress_percentage(self) -> float:

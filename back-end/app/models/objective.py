@@ -1,7 +1,14 @@
+from __future__ import annotations
+
+from typing import TYPE_CHECKING
+
 from sqlalchemy import Integer, String
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from app.database import Base
+
+if TYPE_CHECKING:
+    from app.models.keyresult import KeyResult
 
 
 class Objective(Base):
@@ -11,7 +18,7 @@ class Objective(Base):
     name: Mapped[str] = mapped_column(String(50), nullable=False)
     description: Mapped[str] = mapped_column(String(100), nullable=False)
 
-    keyresults: Mapped[list["KeyResult"]] = relationship(
+    keyresults: Mapped[list[KeyResult]] = relationship(
         "KeyResult", back_populates="objective", cascade="all, delete-orphan"
     )
 

@@ -1,5 +1,7 @@
 """Organization router endpoints."""
 
+from typing import Any
+
 from fastapi import APIRouter, Depends, Query, Request
 from sqlalchemy.ext.asyncio import AsyncSession
 
@@ -25,7 +27,7 @@ async def list_organizations(
     name: str | None = Query(None),
     description: str | None = Query(None),
     service: OrganizationService = Depends(get_service),
-):
+) -> dict[str, Any]:
     """List all organizations with pagination, ordering, and filtering."""
     filters = {"name": name, "description": description}
     return await service.get_list(
@@ -41,7 +43,7 @@ async def list_organizations(
 async def create_organization(
     organization: OrganizationCreate,
     service: OrganizationService = Depends(get_service),
-):
+) -> OrganizationResponse:
     """Create a new organization."""
     return await service.create(organization)
 
@@ -50,7 +52,7 @@ async def create_organization(
 async def get_organization(
     organization_id: int,
     service: OrganizationService = Depends(get_service),
-):
+) -> OrganizationResponse:
     """Get an organization by ID."""
     return await service.get_by_id(organization_id)
 
@@ -60,7 +62,7 @@ async def update_organization(
     organization_id: int,
     organization_update: OrganizationUpdate,
     service: OrganizationService = Depends(get_service),
-):
+) -> OrganizationResponse:
     """Update an existing organization."""
     return await service.update(organization_id, organization_update)
 
@@ -69,7 +71,6 @@ async def update_organization(
 async def delete_organization(
     organization_id: int,
     service: OrganizationService = Depends(get_service),
-):
+) -> None:
     """Delete an organization by ID."""
     await service.delete(organization_id)
-    return None

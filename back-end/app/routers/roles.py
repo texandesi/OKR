@@ -1,5 +1,7 @@
 """Role router endpoints."""
 
+from typing import Any
+
 from fastapi import APIRouter, Depends, Query, Request
 from sqlalchemy.ext.asyncio import AsyncSession
 
@@ -25,7 +27,7 @@ async def list_roles(
     name: str | None = Query(None),
     description: str | None = Query(None),
     service: RoleService = Depends(get_service),
-):
+) -> dict[str, Any]:
     """List all roles with pagination, ordering, and filtering."""
     filters = {"name": name, "description": description}
     return await service.get_list(
@@ -41,7 +43,7 @@ async def list_roles(
 async def create_role(
     role: RoleCreate,
     service: RoleService = Depends(get_service),
-):
+) -> RoleResponse:
     """Create a new role."""
     return await service.create(role)
 
@@ -50,7 +52,7 @@ async def create_role(
 async def get_role(
     role_id: int,
     service: RoleService = Depends(get_service),
-):
+) -> RoleResponse:
     """Get a role by ID."""
     return await service.get_by_id(role_id)
 
@@ -60,7 +62,7 @@ async def update_role(
     role_id: int,
     role_update: RoleUpdate,
     service: RoleService = Depends(get_service),
-):
+) -> RoleResponse:
     """Update an existing role."""
     return await service.update(role_id, role_update)
 
@@ -69,7 +71,6 @@ async def update_role(
 async def delete_role(
     role_id: int,
     service: RoleService = Depends(get_service),
-):
+) -> None:
     """Delete a role by ID."""
     await service.delete(role_id)
-    return None

@@ -1,5 +1,7 @@
 """Objective router endpoints."""
 
+from typing import Any
+
 from fastapi import APIRouter, Depends, Query, Request
 from sqlalchemy.ext.asyncio import AsyncSession
 
@@ -30,7 +32,7 @@ async def list_objectives(
     name: str | None = Query(None),
     description: str | None = Query(None),
     service: ObjectiveService = Depends(get_service),
-):
+) -> dict[str, Any]:
     """List all objectives with pagination, ordering, and filtering."""
     filters = {"name": name, "description": description}
     return await service.get_list(
@@ -46,7 +48,7 @@ async def list_objectives(
 async def create_objective(
     objective: ObjectiveCreate,
     service: ObjectiveService = Depends(get_service),
-):
+) -> ObjectiveResponse:
     """Create a new objective."""
     return await service.create(objective)
 
@@ -55,7 +57,7 @@ async def create_objective(
 async def get_objective(
     objective_id: int,
     service: ObjectiveService = Depends(get_service),
-):
+) -> ObjectiveWithKeyResults:
     """Get an objective by ID with its key results."""
     return await service.get_by_id_with_keyresults(objective_id)
 
@@ -65,7 +67,7 @@ async def update_objective(
     objective_id: int,
     objective_update: ObjectiveUpdate,
     service: ObjectiveService = Depends(get_service),
-):
+) -> ObjectiveResponse:
     """Update an existing objective."""
     return await service.update(objective_id, objective_update)
 
@@ -74,7 +76,6 @@ async def update_objective(
 async def delete_objective(
     objective_id: int,
     service: ObjectiveService = Depends(get_service),
-):
+) -> None:
     """Delete an objective by ID."""
     await service.delete(objective_id)
-    return None

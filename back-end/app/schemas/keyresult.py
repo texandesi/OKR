@@ -1,4 +1,11 @@
+from __future__ import annotations
+
+from typing import TYPE_CHECKING, Self
+
 from pydantic import BaseModel, ConfigDict, Field
+
+if TYPE_CHECKING:
+    from app.models.keyresult import KeyResult
 
 
 def to_camel(string: str) -> str:
@@ -45,7 +52,7 @@ class KeyResultResponse(BaseModel):
     model_config = ConfigDict(from_attributes=True, populate_by_name=True)
 
     @classmethod
-    def from_orm_with_objective(cls, keyresult):
+    def from_orm_with_objective(cls, keyresult: KeyResult) -> Self:
         return cls(
             id=keyresult.id,
             name=keyresult.name,

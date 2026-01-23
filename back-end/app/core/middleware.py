@@ -8,7 +8,7 @@ from fastapi.responses import JSONResponse
 from sqlalchemy.exc import IntegrityError as SQLAlchemyIntegrityError
 from sqlalchemy.exc import SQLAlchemyError
 
-from app.core.exceptions import AppException
+from app.core.exceptions import AppError
 from app.core.logging import get_logger
 
 logger = get_logger(__name__)
@@ -21,10 +21,10 @@ async def error_handler_middleware(
     """Global error handling middleware with request correlation.
 
     Catches and handles:
-    - AppException: Custom application errors → structured JSON response
-    - SQLAlchemyIntegrityError: Constraint violations → 409 response
-    - SQLAlchemyError: Database errors → 500 response
-    - Unhandled exceptions: → 500 response with logging
+    - AppError: Custom application errors -> structured JSON response
+    - SQLAlchemyIntegrityError: Constraint violations -> 409 response
+    - SQLAlchemyError: Database errors -> 500 response
+    - Unhandled exceptions: -> 500 response with logging
 
     Adds request_id to all responses for correlation.
     """
@@ -36,7 +36,7 @@ async def error_handler_middleware(
         response.headers["X-Request-ID"] = request_id
         return response
 
-    except AppException as exc:
+    except AppError as exc:
         logger.warning(
             "Application error | request_id=%s | path=%s | error_code=%s | message=%s",
             request_id,

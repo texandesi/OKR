@@ -1,6 +1,6 @@
 """Objective service with eager loading support."""
 
-
+from typing import cast
 
 from app.models.objective import Objective
 from app.repositories.objective import ObjectiveRepository
@@ -31,6 +31,6 @@ class ObjectiveService(BaseService[Objective, ObjectiveCreate, ObjectiveUpdate, 
         Raises:
             NotFoundError: If objective not found.
         """
-        repo: ObjectiveRepository = self.repository
+        repo = cast(ObjectiveRepository, self.repository)
         instance = await repo.get_by_id_with_keyresults(id)
         return ObjectiveWithKeyResults.model_validate(instance)
