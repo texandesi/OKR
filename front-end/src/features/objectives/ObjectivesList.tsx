@@ -1,8 +1,9 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { DataTable, type Column } from "@/components/DataTable";
 import { DateRangePicker } from "@/components/DateRangePicker";
 import { OwnershipSelector } from "@/components/OwnershipSelector";
+import { useCelebration } from "@/hooks/useCelebration";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -70,6 +71,7 @@ const columns: Column<Objective>[] = [
 
 export function ObjectivesList() {
   const queryClient = useQueryClient();
+  const { triggerCelebration, CelebrationComponent } = useCelebration();
   const [page, setPage] = useState(1);
   const [pageSize] = useState(10);
   const [sortColumn, setSortColumn] = useState("name");
@@ -95,6 +97,23 @@ export function ObjectivesList() {
   const createMutation = objectivesHooks.useCreate();
   const updateMutation = objectivesHooks.useUpdate();
   const deleteMutation = objectivesHooks.useDelete();
+
+  // Check for celebration triggers when data loads
+  useEffect(() => {
+    if (data?.results) {
+      // Only trigger for objectives with celebration milestones
+      for (const objective of data.results) {
+        if (objective.celebrationTrigger) {
+          triggerCelebration(
+            objective.id,
+            objective.name,
+            objective.celebrationTrigger
+          );
+          break; // Only show one celebration at a time
+        }
+      }
+    }
+  }, [data?.results, triggerCelebration]);
 
   const addOwnerMutation = useMutation({
     mutationFn: ({
@@ -274,6 +293,9 @@ export function ObjectivesList() {
           </DialogFooter>
         </DialogContent>
       </Dialog>
+
+      {/* Celebration overlay */}
+      {CelebrationComponent}
     </div>
   );
 }

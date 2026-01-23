@@ -48,5 +48,24 @@ class Objective(Base):
         total_progress = sum(kr.progress_percentage for kr in self.keyresults)
         return total_progress / len(self.keyresults)
 
+    @property
+    def celebration_trigger(self) -> str | None:
+        """Determine if a celebration should be triggered based on progress.
+
+        Returns:
+            - "hit_100" when objective is complete or at 100%
+            - "hit_75" when progress is 75-99%
+            - "hit_50" when progress is 50-74%
+            - None otherwise
+        """
+        progress = self.progress_percentage
+        if self.is_complete or progress >= 100:
+            return "hit_100"
+        elif progress >= 75:
+            return "hit_75"
+        elif progress >= 50:
+            return "hit_50"
+        return None
+
     def __repr__(self) -> str:
         return f"Objective(id={self.id}, name={self.name})"

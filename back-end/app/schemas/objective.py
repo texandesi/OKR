@@ -6,7 +6,7 @@ from typing import TYPE_CHECKING, Self
 from pydantic import BaseModel, ConfigDict, Field
 
 if TYPE_CHECKING:
-    from app.models.objective import Objective
+    from app.models.objective import Objective as ObjectiveModel
 
 
 class ObjectiveOwnershipResponse(BaseModel):
@@ -48,8 +48,34 @@ class ObjectiveResponse(ObjectiveBase):
     end_date: date | None = Field(default=None, serialization_alias="endDate")
     is_complete: bool = Field(default=False, serialization_alias="isComplete")
     progress_percentage: float = Field(default=0.0, serialization_alias="progressPercentage")
+    celebration_trigger: str | None = Field(
+        default=None, serialization_alias="celebrationTrigger"
+    )
 
     model_config = ConfigDict(from_attributes=True, populate_by_name=True)
+
+    @classmethod
+    def from_objective(cls, objective: ObjectiveModel) -> Self:
+        """Create response with celebration trigger computed."""
+        progress = objective.progress_percentage
+        trigger = None
+        if objective.is_complete or progress >= 100:
+            trigger = "hit_100"
+        elif progress >= 75:
+            trigger = "hit_75"
+        elif progress >= 50:
+            trigger = "hit_50"
+
+        return cls(
+            id=objective.id,
+            name=objective.name,
+            description=objective.description,
+            start_date=objective.start_date,
+            end_date=objective.end_date,
+            is_complete=objective.is_complete,
+            progress_percentage=progress,
+            celebration_trigger=trigger,
+        )
 
 
 class KeyResultInObjective(BaseModel):
@@ -74,7 +100,7 @@ class ObjectiveWithKeyResults(ObjectiveResponse):
     @classmethod
     def from_orm_with_ownerships(
         cls,
-        objective: Objective,
+        objective: ObjectiveModel,
         owner_names: dict[tuple[str, int], str] | None = None,
     ) -> Self:
         """Create response with resolved owner names.
@@ -96,6 +122,17 @@ class ObjectiveWithKeyResults(ObjectiveResponse):
             )
             for o in objective.ownerships
         ]
+
+        # Compute celebration trigger
+        progress = objective.progress_percentage
+        trigger = None
+        if objective.is_complete or progress >= 100:
+            trigger = "hit_100"
+        elif progress >= 75:
+            trigger = "hit_75"
+        elif progress >= 50:
+            trigger = "hit_50"
+
         return cls(
             id=objective.id,
             name=objective.name,
@@ -103,7 +140,8 @@ class ObjectiveWithKeyResults(ObjectiveResponse):
             start_date=objective.start_date,
             end_date=objective.end_date,
             is_complete=objective.is_complete,
-            progress_percentage=objective.progress_percentage,
+            progress_percentage=progress,
+            celebration_trigger=trigger,
             keyresults=[
                 KeyResultInObjective(
                     id=kr.id,

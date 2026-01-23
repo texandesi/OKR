@@ -24,6 +24,8 @@ export interface ObjectiveOwnership {
 }
 
 // Core entities
+export type CelebrationTrigger = "hit_50" | "hit_75" | "hit_100" | null;
+
 export interface Objective {
   id: number;
   name: string;
@@ -32,6 +34,7 @@ export interface Objective {
   endDate: string | null;
   isComplete: boolean;
   progressPercentage: number;
+  celebrationTrigger: CelebrationTrigger;
   keyresults?: KeyResult[];
   ownerships?: ObjectiveOwnership[];
 }
