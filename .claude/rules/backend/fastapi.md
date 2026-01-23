@@ -4,7 +4,43 @@ paths:
   - "tests/**/test_*.py"
 ---
 
+# Standards & Guodelines
+
 ## Coding Guidelines
+
+### Style (Python)
+
+- Use type hints for all function signatures
+- Follow PEP 8 style guidelines (enforced via ruff)
+- Use async/await for I/O-bound operations
+- Keep files under 300 lines; split into smaller modules when needed
+- Use dataclasses or Pydantic models for structured data
+- Prefer composition over inheritance
+
+### Naming Conventions (Python)
+
+- Modules/packages: snake_case (e.g., `user_service.py`)
+- Classes: PascalCase (e.g., `UserRepository`)
+- Functions/variables: snake_case (e.g., `get_user_by_id`)
+- Constants: SCREAMING_SNAKE_CASE
+- Private members: prefix with underscore (e.g., `_internal_method`)
+
+### Code Organization (Python)
+
+```
+src/
+  api/            # FastAPI/Flask routes and endpoints
+  models/         # Pydantic models and SQLAlchemy ORM
+  services/       # Business logic layer
+  repositories/   # Data access layer
+  utils/          # Helper functions
+  config/         # Configuration and settings
+tests/
+  unit/           # Unit tests
+  integration/    # Integration tests
+```
+
+## More Coding Guidelines
 
 1. **Use Type Annotations**: Always use type hints for function parameters and return types to improve code readability and enable better IDE support.
 2. **Follow PEP 8**: Adhere to the PEP 8 style guide for Python code to maintain consistency and readability.
