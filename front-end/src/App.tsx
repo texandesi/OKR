@@ -12,11 +12,13 @@ import { GroupDetail } from "@/features/groups/GroupDetail";
 import { OrganizationsList } from "@/features/organizations/OrganizationsList";
 import { OrganizationDetail } from "@/features/organizations/OrganizationDetail";
 import { MyOKRs } from "@/features/myokrs/MyOKRs";
+import { WebSocketProvider } from "@/lib/websocket";
 
 function App() {
   return (
     <BrowserRouter>
-      <Routes>
+      <WebSocketProvider>
+        <Routes>
         <Route path="/" element={<Layout />}>
           <Route index element={<Dashboard />} />
           <Route path="objectives" element={<ObjectivesList />} />
@@ -32,6 +34,7 @@ function App() {
           <Route path="my-okrs" element={<MyOKRs />} />
         </Route>
       </Routes>
+      </WebSocketProvider>
     </BrowserRouter>
   );
 }

@@ -5,6 +5,7 @@ from sqlalchemy.orm import selectinload
 
 from app.models.keyresult import KeyResult
 from app.models.objective import Objective
+from app.core.websockets import manager
 from app.repositories.keyresult import KeyResultRepository
 from app.schemas.keyresult import KeyResultCreate, KeyResultResponse, KeyResultUpdate
 from app.services.base import BaseService
@@ -49,6 +50,16 @@ class KeyResultService(BaseService[KeyResult, KeyResultCreate, KeyResultUpdate, 
 
         # Check if we need to auto-complete the objective
         await self._check_and_auto_complete_objective(instance.objective_id)
+
+        # Broadcast update
+        await manager.broadcast({
+            "type": "keyresult_update",
+            "data": {
+                "id": instance.id,
+                "objectiveId": instance.objective_id,
+                "progress": instance.progress_percentage
+            }
+        })
 
         return self._to_response(instance)
 

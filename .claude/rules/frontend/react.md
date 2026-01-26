@@ -1,7 +1,9 @@
 ---
 paths:
-  - "src/**/*.ts, src/**/*.tsx"
-  - "tests/**/*.ts, src/**/*.tsx"
+  - "src/**/*.ts"
+  - "src/**/*.tsx"
+  - "tests/**/*.ts"
+  - "tests/**/*.tsx"
 ---
 
 # React Framework Guidelines

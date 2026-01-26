@@ -16,6 +16,7 @@ import {
 import { cn } from "@/lib/utils";
 import { NavItem } from "./NavItem";
 import { ThemeToggle } from "@/components/ThemeToggle";
+import { useRealTimeUpdates } from "@/hooks/useRealTimeUpdates";
 
 const mainNavItems = [
   { path: "/", label: "Dashboard", icon: LayoutDashboard },
@@ -37,6 +38,8 @@ const allNavItems = [...mainNavItems, ...adminNavItems];
 export function Layout() {
   const location = useLocation();
   const [isCollapsed, setIsCollapsed] = useState(false);
+
+  useRealTimeUpdates();
 
   const currentPage = allNavItems.find((item) => item.path === location.pathname);
 

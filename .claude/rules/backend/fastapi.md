@@ -4,7 +4,7 @@ paths:
   - "tests/**/test_*.py"
 ---
 
-# Standards & Guodelines
+# Standards & Guidelines
 
 ## Coding Guidelines
 
