@@ -7,27 +7,34 @@ class ConnectionManager:
     """Manages active WebSocket connections."""
 
     def __init__(self) -> None:
-        self.active_connections: list[WebSocket] = []
+        self.active_connections: set[WebSocket] = set()
 
     async def connect(self, websocket: WebSocket) -> None:
-        """Accept connection and add to list."""
+        """Accept connection and add to set."""
         await websocket.accept()
-        self.active_connections.append(websocket)
+        self.active_connections.add(websocket)
 
     def disconnect(self, websocket: WebSocket) -> None:
-        """Remove connection using O(1) by value or handle missing safely."""
-        if websocket in self.active_connections:
-            self.active_connections.remove(websocket)
+        """Remove connection from set (O(1) operation)."""
+        self.active_connections.discard(websocket)
 
     async def broadcast(self, message: dict[str, Any]) -> None:
-        """Broadcast JSON message to all active connections."""
+        """Broadcast JSON message to all active connections.
+
+        Failed connections are removed from the active set.
+        """
+        failed_connections: list[WebSocket] = []
+
         for connection in self.active_connections:
             try:
                 await connection.send_json(message)
             except Exception:
-                # If sending fails, we might want to remove the connection,
-                # but for simplicity we'll let the disconnect handler do it.
-                pass
+                failed_connections.append(connection)
+
+        # Clean up failed connections
+        for connection in failed_connections:
+            self.active_connections.discard(connection)
 
 
 manager = ConnectionManager()
+

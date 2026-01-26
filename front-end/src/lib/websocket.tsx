@@ -7,41 +7,62 @@ type WebSocketContextType = {
 
 const WebSocketContext = createContext<WebSocketContextType | undefined>(undefined);
 
+// Configuration constants
+const MAX_RECONNECT_ATTEMPTS = 10;
+const BASE_RECONNECT_DELAY_MS = 1000;
+const MAX_RECONNECT_DELAY_MS = 30000;
+
+/** Calculate exponential backoff delay with jitter */
+function getReconnectDelay(attempt: number): number {
+  const delay = Math.min(
+    BASE_RECONNECT_DELAY_MS * Math.pow(2, attempt),
+    MAX_RECONNECT_DELAY_MS
+  );
+  // Add 10% jitter to prevent thundering herd
+  return delay + Math.random() * delay * 0.1;
+}
+
 export function WebSocketProvider({ children }: { children: React.ReactNode }) {
   const [isConnected, setIsConnected] = useState(false);
   const socketRef = useRef<WebSocket | null>(null);
-  // Track retry count for exponential backoff or similar (simple implementation for now)
   const retryCount = useRef(0);
+  const reconnectTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
     const connect = () => {
-      // In dev, Vite proxies /api but usually not ws://. We assume default localhost:8000 for backend
-      // Adjust if env vars provided
-      const wsUrl = 'ws://localhost:8000/ws';
+      // Read URL from environment variable with fallback
+      const wsUrl = import.meta.env.VITE_WS_URL || 'ws://localhost:8000/ws';
       const ws = new WebSocket(wsUrl);
 
       ws.onopen = () => {
-        console.log('WebSocket Connected');
+        console.log('WebSocket connected');
         setIsConnected(true);
         retryCount.current = 0;
       };
 
       ws.onclose = () => {
-        console.log('WebSocket Disconnected');
+        console.log('WebSocket disconnected');
         setIsConnected(false);
         socketRef.current = null;
 
-        // Simple reconnect logic: try again in 3s
-        setTimeout(() => {
+        // Exponential backoff reconnection with max attempts
+        if (retryCount.current < MAX_RECONNECT_ATTEMPTS) {
+          const delay = getReconnectDelay(retryCount.current);
+          console.log(`Reconnecting in ${Math.round(delay / 1000)}s (attempt ${retryCount.current + 1}/${MAX_RECONNECT_ATTEMPTS})...`);
+
+          reconnectTimeoutRef.current = setTimeout(() => {
             if (!socketRef.current) {
-                console.log('Attempting to reconnect...');
-                connect();
+              retryCount.current++;
+              connect();
             }
-        }, 3000);
+          }, delay);
+        } else {
+          console.warn('Max reconnect attempts reached. Please refresh the page.');
+        }
       };
 
       ws.onerror = (error) => {
-        console.error('WebSocket Error:', error);
+        console.error('WebSocket error:', error);
       };
 
       socketRef.current = ws;
@@ -50,6 +71,10 @@ export function WebSocketProvider({ children }: { children: React.ReactNode }) {
     connect();
 
     return () => {
+      // Clear any pending reconnect timeout
+      if (reconnectTimeoutRef.current) {
+        clearTimeout(reconnectTimeoutRef.current);
+      }
       if (socketRef.current) {
         socketRef.current.close();
       }

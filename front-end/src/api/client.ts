@@ -35,7 +35,35 @@ import type {
   RegenerateResponse,
 } from "../types";
 
-const API_BASE_URL = "http://127.0.0.1:8000";
+// Configurable API URL with fallback
+const API_BASE_URL = import.meta.env.VITE_API_URL || "http://127.0.0.1:8000";
+
+/** Typed error class for API errors with status and response details */
+export class ApiError extends Error {
+  readonly status: number;
+  readonly statusText: string;
+  readonly body?: unknown;
+
+  constructor(status: number, statusText: string, body?: unknown) {
+    const message = ApiError.formatMessage(status, statusText, body);
+    super(message);
+    this.name = "ApiError";
+    this.status = status;
+    this.statusText = statusText;
+    this.body = body;
+  }
+
+  private static formatMessage(
+    status: number,
+    statusText: string,
+    body?: unknown
+  ): string {
+    if (body && typeof body === "object" && "detail" in body) {
+      return `API Error ${status}: ${(body as { detail: string }).detail}`;
+    }
+    return `API Error: ${status} ${statusText}`;
+  }
+}
 
 function buildQueryString(params: QueryParams): string {
   const searchParams = new URLSearchParams();
@@ -61,7 +89,14 @@ async function request<T>(
   });
 
   if (!response.ok) {
-    throw new Error(`API Error: ${response.status} ${response.statusText}`);
+    // Try to parse error response body
+    let errorBody: unknown;
+    try {
+      errorBody = await response.json();
+    } catch {
+      // Response body isn't JSON, leave errorBody undefined
+    }
+    throw new ApiError(response.status, response.statusText, errorBody);
   }
 
   if (response.status === 204) {
