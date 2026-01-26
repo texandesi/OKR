@@ -1,0 +1,24 @@
+{
+  "permissions": {
+    "allow": [
+      "Skill(security-audit)",
+      "Bash(npm audit:*)",
+      "Bash(npm outdated:*)",
+      "Bash(npm install:*)",
+      "Bash(npm run build)",
+      "Bash(gh api:*)",
+      "Bash(gh pr view:*)",
+      "Bash(gh pr create:*)",
+      "Bash(git push:*)",
+      "Bash(git fetch:*)",
+      "Bash(git pull:*)",
+      "Bash(uv run python:*)",
+      "Bash(uv run pytest:*)",
+      "Bash(uv run mypy:*)",
+      "Bash(uv run pyright:*)",
+      "Bash(uv run ruff:*)",
+      "Bash(grep:*)",
+      "Bash(find:*)"
+    ]
+  }
+}

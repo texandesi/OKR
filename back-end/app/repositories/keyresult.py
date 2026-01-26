@@ -92,6 +92,8 @@ class KeyResultRepository(BaseRepository[KeyResult, KeyResultCreate, KeyResultUp
             target_value=data.target_value,
             current_value=data.current_value,
             unit=data.unit,
+            start_date=data.start_date,
+            end_date=data.end_date,
         )
         self.db.add(item)
         await self.db.commit()
