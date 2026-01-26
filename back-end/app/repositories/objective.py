@@ -104,8 +104,8 @@ class ObjectiveRepository(BaseRepository[Objective, ObjectiveCreate, ObjectiveUp
         )
         self.db.add(item)
         await self.db.commit()
-        await self.db.refresh(item)
-        return item
+        await self.db.commit()
+        return await self.get_by_id(item.id)
 
     async def update(self, id: int, data: ObjectiveUpdate) -> Objective:
         """Update objective.
