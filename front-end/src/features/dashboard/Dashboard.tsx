@@ -5,6 +5,7 @@ import { StatCard } from "@/components/StatCard";
 import { OverallProgressCard } from "@/components/OverallProgressCard";
 import { StreakBanner } from "@/components/StreakBanner";
 import { DueTodayCard } from "@/components/DueTodayCard";
+import { ObjectiveProgressChart } from "@/components/ObjectiveProgressChart";
 import type { KeyResult } from "@/types";
 
 function getGreeting(): string {
@@ -179,6 +180,19 @@ export function Dashboard() {
               style={{ animationDelay: `${index * 100}ms` } as React.CSSProperties}
             />
           ))}
+        </div>
+      </section>
+
+      {/* Progress Analytics */}
+      <section className="space-y-4">
+        <h2 className="text-sm font-medium uppercase tracking-wider text-muted-foreground">
+          Analytics
+        </h2>
+        <div className="grid gap-4 md:grid-cols-2">
+           <ObjectiveProgressChart
+             objectives={objectives?.results ?? []}
+             className="animate-fade-in-up"
+           />
         </div>
       </section>
 

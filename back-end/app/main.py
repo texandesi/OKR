@@ -24,6 +24,7 @@ from app.routers import (
     roles,
     streaks,
     users,
+    ws,
 )
 
 # Configure logging at module load
@@ -81,6 +82,7 @@ app.include_router(polls.router)
 app.include_router(reactions.router)
 app.include_router(recurring.router)
 app.include_router(streaks.router)
+app.include_router(ws.router)
 
 
 @app.get("/")
