@@ -1,10 +1,4 @@
 {
-  "recommendations": [
-    "esbenp.prettier-vscode",
-    "charliermarsh.ruff",
-    "ms-python.python",
-    "ms-python.vscode-pylance",
-    "ms-python.mypy"
-  ],
+  "recommendations": ["ms-python.vscode-pylance"],
   "unwantedRecommendations": []
 }
