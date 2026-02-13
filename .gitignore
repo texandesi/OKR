@@ -58,3 +58,9 @@ coverage/
 # PID files
 .backend.pid
 .frontend.pid
+
+# npm
+.npm/
+.eslintcache
+yarn-error.log*
+.npm-cache/
